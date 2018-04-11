@@ -58,15 +58,24 @@ If we have time, we'll also plan to use Accelarate framework, CPU SIMD API on iO
 ## Platform Choice
 
 We will choose iOS and macOS as hosting OS. Metal 2 framework and Accelarate framework will be used to implementation our framework. We will choose Swift as our primary language. The specific related hardware platform currently decided incorporating:
+
 ARM:
+
 * iPhone 6s
   * Processor: Apple A9 (2 Cores CPU with ARMv8-A Architecture and 6 cores GPU)
   * 2 GB LPDDR4 RAM
 * iPad Air
+  * Processor: Apple A7 (2 Cores CPU with ARMv8-A Architecture and 4 cores GPU)
+  * 2 GB LPDDR4 RAM
 
 X86:
+
 * MacBook Pro
+  * Intel Iris Graphics 6100 1536 MB
+  * Intel Core i5-5257U CPU (2 cores with hyper-threading)
+  * 8GB DDR3 RAM
 * MacBook Air
+  * Intel HD Graphics 5000 1536 MB
   * Intel Core i5-4250U CPU (2 cores with hyper-threading)
   * 4GB DDR3 RAM
 
