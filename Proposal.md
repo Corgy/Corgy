@@ -2,7 +2,7 @@
 
 By [Buqian Zheng](https://github.com/zhengbuqian)(buqianz) and [Yongkang Huang](https://github.com/MrDwZ)(yongkan1)
 
-We are going to implement a neural network parallelized by Metal 2 so we can run popular NN models on iOS devices or Mac very fast.
+We are going to implement a neural network parallelized by Metal 2 so we can run popular NN models on iOS and macOS devices very fast.
 
 ## Background
 
@@ -25,11 +25,31 @@ This project will be implemented from scratch. We'll be using iPhone, iPad and M
 
 ## Goals and Deliverables
 
+### Plan to achieve
+
+Our goal in this project is to implement a parallel Neural Network framework that runs on Apple's devices with iOS and macOS. We will explore the parallel ability of the GPU on those devices. Due to the limitation of power and computation resources of mobile devices, this framework will mainly focus on the evaluation of trained neural network.
+
+With this framework, programmers can:
+
+1. Simplify the process of migrating general neural network model trained by mainstream open-source deeplearning frameworks such as PyTorch and Keras to iOS and macOS devices.
+2. Leverage the power of the GPU computing resources of iOS and macOS devices by utilizing built-in frameworks such as Metal 2.
+3. Make the evaluation of neural network mobile-friendly, such as compress model to reduce application package size, or try to use less energy so the battery can last longer.
+
+This framework will add support for common layers such as `FullyConnected`, `ReLU`, `Dense`, `MaxPooling`, `AveragePooling`,`Convolution`, `SoftMax` layers.
+
+We will make a demo application that runs on iPhone as the host app of a popular trained neural network model Tiny YOLO to do object recognition. We hope that we can process 5 to 10 images captured by camera on iPhone which is almost realtime.
+
+### Hope to Achieve
+
+If we have time, we'll also plan to use Accelarate framework, CPU SIMD API on iOS/macOS, to implement a CPU version. Then we will do benchmark comparing the performance of the GPU version and the CPU version.
+
 ## Platform Choice
 
 We will choose iOS and macOS as hosting OS. Metal 2 framework and Accelarate framework will be used to implementation our framework. We will choose Swift as our primary language.
 
 ## Schedule
+
+Checkpoint 1: April 18, Checkpoint 1: April 27, Due: May 7
 
 |Time|Task|Status|
 |---|---|---|
