@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Corgy
 
 class ViewController: UIViewController {
     
@@ -18,7 +19,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var previewView: UIView!
     
     @IBAction func takePhoto(_ sender: Any) {
-        
+        let nn = NeuralNetwork()
+        let variable = Variable()
+        _ = nn.add(CPU.relu).add(GPU.relu)
+        let r = nn.forward(variable)
+        print(r)
     }
     
     override func viewWillAppear(_ animated: Bool) {

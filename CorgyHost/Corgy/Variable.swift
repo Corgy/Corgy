@@ -8,8 +8,10 @@
 
 import Foundation
 
-class Variable : CustomStringConvertible {
-    typealias DataType = Float
+public typealias Layer = (_: Variable) -> Variable
+
+public class Variable : CustomStringConvertible {
+    public typealias DataType = Float
     var shape: [Int]
     private var count: Int
     public var value: [DataType]
