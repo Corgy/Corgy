@@ -1,4 +1,4 @@
-#CORGY - A Neural Network Framework Parallelized by Metal 2
+# CORGY - A Neural Network Framework Parallelized by Metal 2
 
 By [Buqian Zheng](https://github.com/zhengbuqian)(buqianz) and [Yongkang Huang](https://github.com/MrDwZ)(yongkan1)
 
@@ -80,7 +80,7 @@ X86:
 
 ## Schedule
 
-Checkpoint 1: April 18, Checkpoint 1: April 27, Due: May 7
+Checkpoint 1: April 18, Checkpoint 2: April 27, Due: May 7
 
 |Time|Task|Status|
 |---|---|---|
