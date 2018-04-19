@@ -12,7 +12,7 @@ class Variable : CustomStringConvertible {
     typealias DataType = Float
     var shape: [Int]
     private var count: Int
-    var value: [DataType]
+    public var value: [DataType]
     
     public init(_ dimensions: Int...) {
         shape = []
