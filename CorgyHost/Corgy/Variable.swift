@@ -10,12 +10,22 @@ import Foundation
 
 public typealias Layer = (_: Variable) -> Variable
 
+public enum PoolType {
+    case Average, Max
+}
+
 public class Variable : CustomStringConvertible {
     public typealias DataType = Float
     var shape: [Int]
     private var count: Int
     public var value: [DataType]
     
+    private init() {
+        shape = []
+        value = []
+        count = 0
+    }
+    /// dimension(shape): (batchSize, channels, height, width)
     public init(_ dimensions: Int...) {
         shape = []
         count = 1
@@ -41,13 +51,14 @@ public class Variable : CustomStringConvertible {
     func index(_ indices: [Int]) -> Int {
         assert(validIndex(indices))
         var ret = 0
-        for i in 0..<shape.count {
-            ret += indices[i] * shape[i]
+        for i in 0..<shape.count-1 {
+            ret += indices[i] * shape[i+1]
         }
+        ret += indices[shape.count-1]
         return ret
     }
     
-    subscript(indices: Int...) -> DataType {
+    public subscript(indices: Int...) -> DataType {
         get {
             return value[index(indices)]
         }
