@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EB2F8B42089811300DDFEEC /* Conv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F8B32089811200DDFEEC /* Conv2D.swift */; };
 		1EBAFA2A20892B490045C486 /* Corgy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EBAFA2820892B490045C486 /* Corgy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1EBAFA2D20892B490045C486 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBAFA2620892B490045C486 /* Corgy.framework */; };
 		1EBAFA2E20892B490045C486 /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBAFA2620892B490045C486 /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -53,6 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1EB2F8B32089811200DDFEEC /* Conv2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conv2D.swift; sourceTree = "<group>"; };
 		1EBAFA2620892B490045C486 /* Corgy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Corgy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EBAFA2820892B490045C486 /* Corgy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Corgy.h; sourceTree = "<group>"; };
 		1EBAFA2920892B490045C486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,6 +98,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EB2F8B52089814D00DDFEEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1EBAFA2720892B490045C486 /* Corgy */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +121,7 @@
 		1EBAFA3B20892DCC0045C486 /* CPU */ = {
 			isa = PBXGroup;
 			children = (
+				1EB2F8B32089811200DDFEEC /* Conv2D.swift */,
 				1EBAFA3320892B7E0045C486 /* CPULayer.swift */,
 			);
 			path = CPU;
@@ -131,6 +141,7 @@
 				1EE9C30E2087DDA500048A96 /* CorgyHost */,
 				1EBAFA2720892B490045C486 /* Corgy */,
 				1EE9C30D2087DDA500048A96 /* Products */,
+				1EB2F8B52089814D00DDFEEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -303,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EB2F8B42089811300DDFEEC /* Conv2D.swift in Sources */,
 				1EBAFA3820892B820045C486 /* Variable.swift in Sources */,
 				1EBAFA3920892B820045C486 /* CPULayer.swift in Sources */,
 				1EBAFA3A20892B820045C486 /* NeuralNetwork.swift in Sources */,

@@ -26,11 +26,11 @@ public struct CPU {
   /// - parameter strideStep: default stride is poolSize
   /// - parameter dilation: not supported yet
   /// - parameter padding: not supported yet
-  public static func pool2dGen(poolSize: (Int, Int),
-                               strideStep: (Int, Int) = (-1,-1),
-                               poolType: PoolType,
-                               dilation: (Int, Int) = (1,1),
-                               padding: (Int, Int) = (0,0)
+  public static func Pool2D(poolSize: (Int, Int),
+                            strideStep: (Int, Int) = (-1,-1),
+                            poolType: PoolType,
+                            dilation: (Int, Int) = (1,1),
+                            padding: (Int, Int) = (0,0)
     ) -> Layer {
     return { (_ input: Variable) -> Variable in
       let batchSize = input.shape[0]
