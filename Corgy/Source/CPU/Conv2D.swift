@@ -8,13 +8,13 @@
 
 import Foundation
 
-// TODO: support dilation, droup and bias
+// TODO: support dilation, group and bias
 func Conv2D(inChannels: Int,
             outChannels: Int,
             kernelSize: Int,
             stride: Int = 1,
             padding: Int = 0,
-            dilation: Int = 1,
+            dilation: Int = 0,
             groups: Int = 1,
             bias: Bool = true
     ) -> (Variable) -> Variable {

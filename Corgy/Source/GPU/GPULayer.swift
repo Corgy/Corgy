@@ -13,7 +13,7 @@ public struct GPU {
     
     /// an inplace ReLU layer, it will modify
     /// and return the input
-    public static let relu = { (_ input: Variable) -> Variable in
+    public static let ReLU = { (_ input: Variable) -> Variable in
         for i in 0..<input.value.count {
             if input.value[i] < 0 {
                 input.value[i] = 0
