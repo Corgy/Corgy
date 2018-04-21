@@ -19,19 +19,28 @@ public class Variable : CustomStringConvertible {
     var shape: [Int]
     private var count: Int
     public var value: [DataType]
+    private var indexAuxilary: [Int]
     
     private init() {
         shape = []
         value = []
+        indexAuxilary = []
         count = 0
     }
+    
     /// dimension(shape): (batchSize, channels, height, width)
     public init(_ dimensions: Int...) {
         shape = []
+        indexAuxilary = []
         count = 1
         for dimension in dimensions {
             shape.append(dimension)
+            indexAuxilary.append(0)
             count *= dimension
+        }
+        indexAuxilary[shape.count - 1] = 1
+        for i in (0..<shape.count-1).reversed() {
+            indexAuxilary[i] = indexAuxilary[i + 1] * shape[i + 1]
         }
         value = [DataType](repeating: 0, count: count)
     }
@@ -51,10 +60,9 @@ public class Variable : CustomStringConvertible {
     func index(_ indices: [Int]) -> Int {
         assert(validIndex(indices))
         var ret = 0
-        for i in 0..<shape.count-1 {
-            ret += indices[i] * shape[i+1]
+        for i in 0..<shape.count {
+            ret += indices[i] * indexAuxilary[i]
         }
-        ret += indices[shape.count-1]
         return ret
     }
     
@@ -68,6 +76,6 @@ public class Variable : CustomStringConvertible {
     }
     
     public var description: String {
-        return "Shape: \(shape)\nvalue: \(value)\n"
+        return "Shape: \(shape)\nvalue: \(value)\n\(indexAuxilary)"
     }
 }

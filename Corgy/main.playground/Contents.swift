@@ -1,23 +1,17 @@
-//: Playground - noun: a place where people can play
-
 import Cocoa
 import Corgy
 
 var str = "Hello, playground"
 
-let input = Variable(1, 1, 4, 4)
-
-for y in 0..<4 {
-    for x in 0..<4 {
-        input[0, 0, y, x] = Float(arc4random() % 100)
-    }
+let kernelWeight = Variable(1, 2, 2, 2)
+for i in 0..<kernelWeight.value.count {
+    kernelWeight.value[i] = Float(i)
 }
 
-print(input)
+let conv2d = CPU.Conv2D(inChannels: 1, outChannels: 2, kernelSize: 2, weight: kernelWeight)
 
-let maxPool = CPU.Pool2D(poolSize: (2, 2), poolType: .Max)
-let avgPool = CPU.Pool2D(poolSize: (2, 2), poolType: .Average)
-
-print(maxPool(input))
-print(avgPool(input))
-
+let input = Variable(1, 1, 4, 4)
+for i in 0..<input.value.count {
+    input.value[i] = Float(i)  
+}
+print(conv2d(input))
