@@ -13,13 +13,11 @@ import Metal
 public struct Corgy {
     
     public init() { }
-
-    // TODO: solve reference cycle on closure and network
     
     /// an inplace ReLU layer, it will modify
     /// and return the input
     public static func ReLU(network: NeuralNetwork) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { [unowned network] (_ input: Variable) -> Variable in
             submitWork(network, name: "ReLU", data: input)
             return input
         }
@@ -36,7 +34,7 @@ public struct Corgy {
                               dilation: (Int, Int) = (1,1),
                               padding: (Int, Int) = (0,0)
         ) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { [unowned network] (_ input: Variable) -> Variable in
             let batchSize = input.shape[0]
             let channels = input.shape[1]
             let height = input.shape[2]
@@ -62,7 +60,7 @@ public struct Corgy {
     /// - parameter p: percentage to be dropped out
     /// - parameter seed: optional, random seed
     public static func DropOut(network: NeuralNetwork, p: Double) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { [unowned network] (_ input: Variable) -> Variable in
             assert(p >= 0 && p <= 1)
             submitWork(network, name: "DropOut", data: input)
             return input
@@ -73,7 +71,7 @@ public struct Corgy {
     /// - parameter weight: dimension: num output class * input dimension
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(network: NeuralNetwork, weight: Variable, bias: Variable?) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { [unowned network] (_ input: Variable) -> Variable in
             assert(weight.shape.count == 2 && weight.shape[1] == input.value.count)
             if bias != nil {
                 assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
