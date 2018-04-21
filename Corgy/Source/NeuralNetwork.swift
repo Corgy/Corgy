@@ -7,12 +7,24 @@
 //
 
 import Foundation
+import Metal
 
 public class NeuralNetwork {
     var layers : [Layer]
+    // TODO: replace ! with Non-optional type and do proper error return
+    let device: MTLDevice!
+    let library: MTLLibrary!
+    let commandQueue: MTLCommandQueue!
+    let commandBuffer: MTLCommandBuffer!
+    let computeEncoder: MTLComputeCommandEncoder!
     
     public init() {
         self.layers = []
+        device = MTLCreateSystemDefaultDevice()
+        library = device.makeDefaultLibrary()
+        commandQueue = device.makeCommandQueue()
+        commandBuffer = commandQueue.makeCommandBuffer()
+        computeEncoder = commandBuffer.makeComputeCommandEncoder()
     }
     
     public func forward(_ x: Variable) ->Variable {

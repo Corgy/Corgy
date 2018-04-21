@@ -85,6 +85,7 @@ public struct CPU {
             return output
         }
     }
+    
     /// return an inplace DropOut layer, it will modify
     /// and return the input
     /// - parameter p: percentage to be dropped out
