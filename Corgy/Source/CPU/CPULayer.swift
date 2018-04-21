@@ -22,7 +22,7 @@ public struct CPU {
         return input
     }
     
-    /// return a pooling layer
+    /// return a Pooling layer
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet
     /// - parameter padding: not supported yet
@@ -89,16 +89,36 @@ public struct CPU {
     /// and return the input
     /// - parameter p: percentage to be dropped out
     /// - parameter seed: optional, random seed
-    public static func DropOut(_ p: Double, seed: Int = -1) -> Layer {
+    public static func DropOut(_ p: Double, seed: Int?) -> Layer {
         return { (_ input: Variable) -> Variable in
             assert(p >= 0 && p <= 1)
-            seed == -1 ? srand48(Int(arc4random())) : srand48(seed)
+            srand48(seed ?? Int(arc4random()))
             for i in 0..<input.value.count {
                 if input.value[i] < 0 {
                     input.value[i] = drand48() > p ? input.value[i] : 0
                 }
             }
             return input
+        }
+    }
+    
+    /// return an Full Connected layer
+    /// - parameter weight: dimension: num output class * input dimension
+    /// - parameter bias: dimension: num output class * 1
+    public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
+        return { (_ input: Variable) -> Variable in
+            assert(weight.shape.count == 2 && weight.shape[1] == input.value.count)
+            if bias != nil {
+                assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
+            }
+            let out = Variable(weight.shape[0])
+            for i in 0..<weight.shape[0] {
+                out[i] = bias?[i] ?? 0
+                for j in 0..<weight.shape[1] {
+                    out[0] += input.value[j] * weight[i, j]
+                }
+            }
+            return out
         }
     }
 }
