@@ -1,6 +1,6 @@
 //
 //  CPULayer.swift
-//  CPU
+//  Corgy
 //
 //  Created by buqian zheng on 4/19/18.
 //  Copyright © 2018 buqian zheng. All rights reserved.
@@ -32,7 +32,7 @@ public struct CPU {
                               dilation: (Int, Int) = (1,1),
                               padding: (Int, Int) = (0,0)
         ) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { (_ input) in
             let batchSize = input.shape[0]
             let channels = input.shape[1]
             let height = input.shape[2]
@@ -91,7 +91,7 @@ public struct CPU {
     /// - parameter p: percentage to be dropped out
     /// - parameter seed: optional, random seed
     public static func DropOut(_ p: Double, seed: Int?) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { (_ input) in
             assert(p >= 0 && p <= 1)
             srand48(seed ?? Int(arc4random()))
             for i in 0..<input.value.count {
@@ -107,7 +107,7 @@ public struct CPU {
     /// - parameter weight: dimension: num output class * input dimension
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { (_ input) in
             assert(weight.shape.count == 2 && weight.shape[1] == input.value.count)
             if bias != nil {
                 assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])

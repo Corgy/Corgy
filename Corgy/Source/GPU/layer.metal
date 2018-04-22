@@ -13,7 +13,7 @@ struct TEMP_PARAM {
 };
 
 // Example of a kernel that reads an input and writes to an output
-kernel void testNeg2(constant device float *input [[ buffer(0) ]],
+kernel void testNeg2(const device float *input [[ buffer(0) ]],
                      device float *output [[ buffer(1) ]],
                      uint2 gsize [[threadgroups_per_grid]],       // number of thread groups
                      uint2 gid [[threadgroup_position_in_grid]], // coordinate of current thread group

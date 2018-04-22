@@ -1,6 +1,6 @@
 //
 //  MTLUtil.swift
-//  Corgy iOS
+//  Corgy
 //
 //  Created by buqian zheng on 4/21/18.
 //
@@ -29,6 +29,7 @@ func submitWork(_ network: NeuralNetwork,
                        param: TEMP_PARAM? = nil,
                        threadGroups: MTLSize,
                        threadsPerThreadgroup: MTLSize) {
+    // 坑: must create new command buffer and encoder for each compute task.
     let commandBuffer = network.commandQueue.makeCommandBuffer()!
     let f = network.library.makeFunction(name: function)!
     let encoder = commandBuffer.makeComputeCommandEncoder()!
@@ -55,6 +56,7 @@ func submitWork(_ network: NeuralNetwork,
     commandBuffer.commit()
     commandBuffer.waitUntilCompleted()
     
+    // TODO: after makeBuffer(bytesNoCopy) is used, following code can be get rid of
     let content = NSData(bytesNoCopy: outputBuffer.contents(), length: outputLength, freeWhenDone: false)
     if output != nil {
         content.getBytes(&output!.value, length: length)

@@ -1,6 +1,6 @@
 //
 //  Conv2D.swift
-//  CLI
+//  Corgy
 //
 //  Created by HOPE on 4/19/18.
 //  Copyright © 2018 buqian zheng. All rights reserved.
@@ -18,12 +18,11 @@ extension CPU {
                             groups: Int = 1,
                             weight: Variable,
                             bias: Variable = Variable(0)
-    ) -> (Variable) -> Variable {
+    ) -> Layer {
     assert(weight.shape.count == 4 && weight.shape[2] == weight.shape[3] && weight.shape[2] == kernelSize)
     let kernelWeights = weight
     
-    let ret = {
-      (_ input: Variable)->Variable in
+    return { (_ input) in
       // input is inChannels * width * height
       // output is ouputChannels * (width - (kernelSize - 1) * 2) * (height - (kernelSize - 1) * 2)
       let dimNum = input.shape.count
@@ -92,7 +91,5 @@ extension CPU {
       }
       return output
     }
-    
-    return ret
   }
 }

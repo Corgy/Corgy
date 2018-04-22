@@ -1,6 +1,6 @@
 //
 //  Variable.swift
-//  CorgyHost
+//  Corgy
 //
 //  Created by buqian zheng on 4/18/18.
 //  Copyright © 2018 buqian zheng. All rights reserved.
