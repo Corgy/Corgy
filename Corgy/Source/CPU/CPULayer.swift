@@ -22,6 +22,16 @@ public struct CPU {
         return input
     }
     
+    public static let flatten = { (_ input: Variable) -> Variable in
+        var size = 1
+        for num in input.shape {
+            size = size * num
+        }
+        
+        input.shape = [1, size]
+        return input
+    }
+    
     /// return a Pooling layer
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet
@@ -109,6 +119,7 @@ public struct CPU {
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
         return { (_ input) in
             assert(weight.shape.count == 2 && weight.shape[1] == input.value.count)
+            
             if bias != nil {
                 assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
             }

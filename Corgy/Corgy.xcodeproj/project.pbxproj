@@ -41,6 +41,12 @@
 		1EB2F9B12089991A00DDFEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9B02089991A00DDFEEC /* Assets.xcassets */; };
 		1EB2F9B42089991A00DDFEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9B22089991A00DDFEEC /* LaunchScreen.storyboard */; };
 		1EB2F9BE20899CDC00DDFEEC /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B99E87CE208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
+		B99E87CF208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
+		B99E87D0208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
+		B99E87D1208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
+		B99E87D3208E5FA100E21C10 /* ModelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* ModelImporter.swift */; };
+		B99E87D4208E5FA100E21C10 /* ModelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* ModelImporter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +107,8 @@
 		1EB2F9B02089991A00DDFEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1EB2F9B32089991A00DDFEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1EB2F9B52089991A00DDFEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
+		B99E87D2208E5FA100E21C10 /* ModelImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelImporter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +159,7 @@
 		1EB2F9402089927900DDFEEC = {
 			isa = PBXGroup;
 			children = (
+				B99E87CD208E56BD00E21C10 /* Models */,
 				1EB2F962208992DF00DDFEEC /* Source */,
 				1E9CCDA7208BCB2500DA6C55 /* testcode.swift */,
 				1EB2F9A82089991A00DDFEEC /* CorgyiOS */,
@@ -174,13 +183,14 @@
 		1EB2F962208992DF00DDFEEC /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */,
 				1EB2F96E2089945600DDFEEC /* CPU */,
 				1EB2F96C2089945600DDFEEC /* GPU */,
-				1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */,
 				1EB2F9722089945700DDFEEC /* Variable.swift */,
 				1EB2F9692089940700DDFEEC /* Corgy.h */,
 				1EB2F9632089931200DDFEEC /* Info-iOS.plist */,
 				1EB2F9642089931200DDFEEC /* Info-macOS.plist */,
+				B99E87D2208E5FA100E21C10 /* ModelImporter.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -373,6 +383,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B99E87D1208E56BD00E21C10 /* Models in Resources */,
 				1E859A642089A1C500379883 /* Assets.xcassets in Resources */,
 				1E859A672089A1C500379883 /* MainMenu.xib in Resources */,
 			);
@@ -382,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B99E87CE208E56BD00E21C10 /* Models in Resources */,
 				1EB2F9662089931200DDFEEC /* Info-macOS.plist in Resources */,
 				1EB2F9652089931200DDFEEC /* Info-iOS.plist in Resources */,
 			);
@@ -391,6 +403,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B99E87CF208E56BD00E21C10 /* Models in Resources */,
 				1EB2F9682089931C00DDFEEC /* Info-macOS.plist in Resources */,
 				1EB2F9672089931C00DDFEEC /* Info-iOS.plist in Resources */,
 			);
@@ -402,6 +415,7 @@
 			files = (
 				1EB2F9B42089991A00DDFEEC /* LaunchScreen.storyboard in Resources */,
 				1EB2F9B12089991A00DDFEEC /* Assets.xcassets in Resources */,
+				B99E87D0208E56BD00E21C10 /* Models in Resources */,
 				1EB2F9AF2089991A00DDFEEC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +444,7 @@
 				1E9CCD9D208AFC4C00DA6C55 /* MTLUtil.swift in Sources */,
 				1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */,
 				1EB2F9772089945700DDFEEC /* Variable.swift in Sources */,
+				B99E87D3208E5FA100E21C10 /* ModelImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +457,7 @@
 				1EB2F97A2089946700DDFEEC /* GPULayer.swift in Sources */,
 				1EB2F9782089946700DDFEEC /* Conv2D.swift in Sources */,
 				1E9CCD9E208AFE1500DA6C55 /* MTLUtil.swift in Sources */,
+				B99E87D4208E5FA100E21C10 /* ModelImporter.swift in Sources */,
 				1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */,
 				1EB2F97C2089946700DDFEEC /* Variable.swift in Sources */,
 			);
@@ -537,7 +553,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -604,7 +620,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -961,7 +977,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1028,7 +1044,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
