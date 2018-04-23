@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 
 
+# CNN Model (2 conv layer)
 class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
@@ -13,7 +14,7 @@ class CNN(nn.Module):
             nn.Conv2d(16, 32, kernel_size=5),
             nn.ReLU(),
             nn.MaxPool2d(2))
-        self.fc = nn.Linear(7 * 7 * 32, 10)
+        self.fc = nn.Linear(4 * 4 * 32, 10)
 
     def forward(self, x):
         out = self.layer1(x)
