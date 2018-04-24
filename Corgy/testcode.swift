@@ -9,5 +9,9 @@ import Foundation
 import Corgy
 
 func test () {
-    _ = ModelImporter.loadMNISTCNN("MNIST_CNN")
+    let network = ModelImporter.loadMNISTCNN("MNIST_CNN")
+    let image = Image(named: Image.Name("five"))!
+    let input = Variable.of(grayScaleImage: image)
+    let output = network.forward(input)
+    print(output)
 }

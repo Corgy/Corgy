@@ -1,0 +1,8 @@
+16x1x5x5            layer
+32x16x5x5           layer
+10 * 512            Linear Layer
+
+
+
+
+

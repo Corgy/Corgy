@@ -56,7 +56,7 @@ extension CPU {
               }
             }
             
-            print("SlicedImages", slicedImages)
+//            print("SlicedImages", slicedImages)
             for outChannelIndex in 0..<outChannels {
               let kernels = Variable(inChannels, kernelSize, kernelSize)
               for ii in 0..<inChannels {
@@ -67,7 +67,7 @@ extension CPU {
                   }
                 }
               }
-              print(kernels)
+//              print(kernels)
               var sum = Float(0.0)
               for inChannelIndex in 0..<inChannels {
                 for ii in 0..<kernelSize {
@@ -84,7 +84,7 @@ extension CPU {
               }
               
               output[i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol] = sum
-              print(i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol, sum)
+//              print(i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol, sum)
             }
           }
         }

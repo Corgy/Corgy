@@ -29,7 +29,11 @@ public class Variable : CustomStringConvertible {
     }
     
     /// dimension(shape): (batchSize, channels, height, width)
-    public init(_ dimensions: Int...) {
+    public convenience init(_ dimensions: Int...) {
+        self.init(dimensions)
+    }
+    
+    public init(_ dimensions: [Int]) {
         shape = []
         indexAuxilary = []
         count = 1
@@ -77,5 +81,39 @@ public class Variable : CustomStringConvertible {
     
     public var description: String {
         return "Shape: \(shape)\nvalue: \(value)\n\(indexAuxilary)"
+    }
+}
+
+extension Variable {
+    public func toString() -> String {
+        var str = ""
+        for s in shape {
+            str.append(String(s) + " ")
+        }
+        str.append("\n")
+        
+        for f in value {
+            str.append(String(f) + " ")
+        }
+        return str
+    }
+    static public func fromString(input: String) -> Variable {
+        let lines = input.split(separator: "\n", maxSplits: 1)
+        let head = lines[0]
+        let shape = head.split(separator: " ").map { Int($0)! }
+        let v = Variable(shape)
+        let tail = lines[1]
+        v.value = tail.replacingOccurrences(of: "\n", with: " ").split(separator: " ")
+        .map { Float($0)! }
+        return v
+    }
+}
+
+extension Variable: Equatable {
+    public static func ==(lhs: Variable, rhs: Variable) -> Bool {
+        return lhs.count == rhs.count &&
+                lhs.shape == rhs.shape &&
+                lhs.indexAuxilary == rhs.indexAuxilary &&
+                lhs.value == rhs.value
     }
 }

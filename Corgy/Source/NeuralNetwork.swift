@@ -27,6 +27,7 @@ public class NeuralNetwork {
         var output = x
         for layer in layers {
             output = layer(output)
+            print("One layer!")
         }
         return output
     }
