@@ -130,7 +130,7 @@ public struct CPU {
             for i in 0..<weight.getShape()[0] {
                 out[i] = bias?[i] ?? 0
                 for j in 0..<weight.getShape()[1] {
-                    out[0] += input.value[j] * weight[i, j]
+                    out[i] += input.value[j] * weight[i, j]
                 }
             }
             return out
