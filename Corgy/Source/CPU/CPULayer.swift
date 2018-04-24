@@ -24,11 +24,11 @@ public struct CPU {
     
     public static let flatten = { (_ input: Variable) -> Variable in
         var size = 1
-        for num in input.shape {
+        for num in input.getShape() {
             size = size * num
         }
         
-        input.shape = [1, size]
+        input.setShape([1, size])
         return input
     }
     
@@ -43,10 +43,11 @@ public struct CPU {
                               padding: (Int, Int) = (0,0)
         ) -> Layer {
         return { (_ input) in
-            let batchSize = input.shape[0]
-            let channels = input.shape[1]
-            let height = input.shape[2]
-            let width = input.shape[3]
+            let varShape = input.getShape()
+            let batchSize = varShape[0]
+            let channels = varShape[1]
+            let height = varShape[2]
+            let width = varShape[3]
             
             let poolW = poolSize.0
             let poolH = poolSize.1
@@ -92,6 +93,7 @@ public struct CPU {
                     }
                 }
             }
+            print(output.getShape())
             return output
         }
     }
@@ -118,15 +120,16 @@ public struct CPU {
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
         return { (_ input) in
-            assert(weight.shape.count == 2 && weight.shape[1] == input.value.count)
+            let weightShape = weight.getShape()
+            assert(weightShape.count == 2 && weightShape[1] == input.value.count)
             
             if bias != nil {
-                assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
+                assert(bias?.getShape().count == 1 && bias?.getShape()[0] == weight.getShape()[0])
             }
-            let out = Variable(weight.shape[0])
-            for i in 0..<weight.shape[0] {
+            let out = Variable(weight.getShape()[0])
+            for i in 0..<weight.getShape()[0] {
                 out[i] = bias?[i] ?? 0
-                for j in 0..<weight.shape[1] {
+                for j in 0..<weight.getShape()[1] {
                     out[0] += input.value[j] * weight[i, j]
                 }
             }

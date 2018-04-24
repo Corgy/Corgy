@@ -16,16 +16,30 @@ public enum PoolType {
 
 public class Variable : CustomStringConvertible {
     public typealias DataType = Float
-    var shape: [Int]
+    private var shape: [Int]
+    
     private var count: Int
     public var value: [DataType]
     private var indexAuxilary: [Int]
     
     private init() {
-        shape = []
         value = []
         indexAuxilary = []
         count = 0
+        self.shape = []
+    }
+    
+    public func setShape(_ shape:[Int]) {
+        self.shape = shape
+        indexAuxilary[shape.count - 1] = 1
+        for i in (0..<shape.count-1).reversed() {
+            indexAuxilary[i] = indexAuxilary[i + 1] * shape[i + 1]
+        }
+    }
+    
+    public func getShape() -> [Int]{
+        let ret = self.shape
+        return ret
     }
     
     /// dimension(shape): (batchSize, channels, height, width)
@@ -34,9 +48,11 @@ public class Variable : CustomStringConvertible {
     }
     
     public init(_ dimensions: [Int]) {
-        shape = []
         indexAuxilary = []
         count = 1
+        value = []
+        shape = []
+        
         for dimension in dimensions {
             shape.append(dimension)
             indexAuxilary.append(0)
