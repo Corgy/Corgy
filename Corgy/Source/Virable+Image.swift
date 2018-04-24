@@ -34,13 +34,12 @@ public extension Variable {
         let height = cgImage.height
         let bitsPerComponent = cgImage.bitsPerComponent
         let bytesPerRow = cgImage.bytesPerRow
-        let totalBytes = height * bytesPerRow
         
         let colorSpace = CGColorSpaceCreateDeviceGray()
-        var pixelValues = [UInt8](repeating: 0, count: totalBytes)
+        var pixelValues = [UInt8](repeating: 0, count: height * width)
         
         let contextRef = CGContext(data: &pixelValues, width: width, height: height, bitsPerComponent: bitsPerComponent,
-                                   bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: 0)
+                                   bytesPerRow: bytesPerRow / 2, space: colorSpace, bitmapInfo: 0)
         contextRef?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
         
         let v = Variable(1, 1, height, width)
