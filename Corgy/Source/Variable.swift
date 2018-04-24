@@ -38,8 +38,7 @@ public class Variable : CustomStringConvertible {
     }
     
     public func getShape() -> [Int]{
-        let ret = self.shape
-        return ret
+        return self.shape
     }
     
     /// dimension(shape): (batchSize, channels, height, width)
