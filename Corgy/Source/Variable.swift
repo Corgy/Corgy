@@ -122,6 +122,15 @@ extension Variable {
         .map { Float($0)! }
         return v
     }
+    
+    static func printOneLayer(_ input: Variable, batch: Int = 0, channel: Int = 0) {
+        for i in 0..<input.getShape()[2] {
+            for j in 0..<input.getShape()[3] {
+                print(String(format: " %.4f", input[batch,channel,i,j]), terminator: "")
+            }
+            print("")
+        }
+    }
 }
 
 extension Variable: Equatable {

@@ -10,94 +10,26 @@ import Foundation
 public class ModelImporter {
     public static func loadMNISTCNN(_ path: String) -> NeuralNetwork {
         let ret = NeuralNetwork()
-//        let ret1 = NeuralNetwork()
         let kernelSize = 5
-//
-//        var layers: [Variable] = []
-//        let names = ["conv1_weight", "conv1_bias", "conv2_weight", "conv2_bias", "fc_weight", "fc_bias"]
-//
-//        for name in names {
-//            if let modelPath = Bundle.main.path(forResource: "MNIST_CNN_" + name, ofType: "txt", inDirectory: "Models") {
-//                let contentOfFile = try! String(contentsOfFile: modelPath)
-//                layers.append(Variable.fromString(input: contentOfFile))
-//            }
-//        }
-//
-//        ret.add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
-//            .add(CPU.ReLU)
-//            .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
-//            .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
-//            .add(CPU.ReLU)
-//            .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
-//            .add(CPU.flatten)
-//            .add(CPU.FullConnected(weight: layers[4], bias: layers[5]))
-        
-        
-        let conv_1_weight = Variable(16, 1, kernelSize, kernelSize)
-        let conv_1_bias   = Variable(16)
-        let conv_2_weight = Variable(32, 16, kernelSize, kernelSize)
-        let conv_2_bias   = Variable(32)
-        var fc_weight     = Variable(10, 4 * 4 * 32)
-        let fc_bias       = Variable(10)
-        
-        if let modelPath = Bundle.main.path(forResource: "MNIST_CNN", ofType: "txt", inDirectory: "Models") {
-            print(modelPath)
-            do {
-                let contentOfFile = try String(contentsOfFile: modelPath)
-                let scanner = Scanner(string: contentOfFile)
-                
-                for out in 0..<16 {
-                    for i in 0..<kernelSize {
-                        for j in 0..<kernelSize {
-                            scanner.scanFloat(&conv_1_weight[out, 0, i, j])
-                        }
-                    }
-                }
-                
-                for out in 0..<16 {
-                    scanner.scanFloat(&conv_1_bias[out])
-                }
-                
-                for outchannel in 0..<32 {
-                    for inchannel in 0..<16 {
-                        for i in 0..<kernelSize {
-                            for j in 0..<kernelSize {
-                                scanner.scanFloat(&conv_2_weight[outchannel, inchannel, i, j])
-                            }
-                        }
-                    }
-                }
-                
-                for channel in 0..<32 {
-                    scanner.scanFloat(&conv_2_bias[channel])
-                }
-                
-                for i in 0..<512/6 + 1 {
-                    for k in 0..<10 {
-                        for j in i * 6 ..< min((i+1)*6, 512) {
-                            scanner.scanFloat(&fc_weight[k, j])
-                        }
-                    }
-                }
-                
-                //fc_weight = CPU.flatten(fc_weight)
-                print(fc_weight)
-                for i in 0..<10 {
-                    scanner.scanFloat(&fc_bias[i])
-                }
-                
-                ret.add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: conv_1_weight, bias: conv_1_bias))
-                    .add(CPU.ReLU)
-                    .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
-                    .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: conv_2_weight, bias: conv_2_bias))
-                    .add(CPU.ReLU)
-                    .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
-                    .add(CPU.flatten)
-                    .add(CPU.FullConnected(weight: fc_weight, bias: fc_bias))
-            } catch {
-                print("Failed to read text")
+
+        var layers: [Variable] = []
+        let names = ["conv1_weight", "conv1_bias", "conv2_weight", "conv2_bias", "fc_weight", "fc_bias"]
+
+        for name in names {
+            if let modelPath = Bundle.main.path(forResource: "MNIST_CNN_" + name, ofType: "txt", inDirectory: "Models") {
+                let contentOfFile = try! String(contentsOfFile: modelPath)
+                layers.append(Variable.fromString(input: contentOfFile))
             }
         }
+
+        ret.add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
+            .add(CPU.ReLU)
+            .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
+            .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
+            .add(CPU.ReLU)
+            .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
+            .add(CPU.flatten)
+            .add(CPU.FullConnected(weight: layers[4], bias: layers[5]))
         
         return ret
     }

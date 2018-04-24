@@ -43,7 +43,15 @@ public extension Variable {
         contextRef?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
         
         let v = Variable(1, 1, height, width)
-        v.value = pixelValues.map { Float($0) / 255 }
+        v.value = pixelValues.map { 1 - Float($0) / 255 }
+        
+//        for i in 0..<28 {
+//            for j in 0..<28 {
+//                print(String(format: " %.4f", v.value[i*28+j]), terminator: "")
+//            }
+//            print("")
+//        }
+        
         return v
     }
 }

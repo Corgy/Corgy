@@ -49,6 +49,9 @@ public struct CPU {
             let height = varShape[2]
             let width = varShape[3]
             
+            print("Pool Input:")
+            Variable.printOneLayer(input, batch: 0, channel: 0)
+            
             let poolW = poolSize.0
             let poolH = poolSize.1
             
@@ -93,7 +96,8 @@ public struct CPU {
                     }
                 }
             }
-            print(output.getShape())
+            print("Pool Output:")
+            Variable.printOneLayer(output, batch: 0, channel: 0)
             return output
         }
     }
