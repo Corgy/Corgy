@@ -27,7 +27,7 @@ extension CPU {
       // input is inChannels * width * height
       // output is ouputChannels * (width - (kernelSize - 1) * 2) * (height - (kernelSize - 1) * 2)
       let dimNum = input.getShape().count
-      
+        
       if dimNum == 0 {
         return Variable(0)
       }
@@ -45,8 +45,6 @@ extension CPU {
           for kernelTopLeftCol in 0..<outputWidth {
             let kernelButtomRightRow = kernelTopLeftRow + kernelSize
             let kernelButtomRightCol = kernelTopLeftCol + kernelSize
-//            print(kernelTopLeftRow, kernelTopLeftCol)
-//            print(kernelButtomRightRow, kernelButtomRightCol)
             let slicedImages = Variable(inChannels, kernelSize, kernelSize)
             
             for ii in 0..<inChannels {
@@ -58,7 +56,6 @@ extension CPU {
               }
             }
             
-//            print("SlicedImages", slicedImages)
             for outChannelIndex in 0..<outChannels {
               let kernels = Variable(inChannels, kernelSize, kernelSize)
               for ii in 0..<inChannels {
@@ -69,7 +66,6 @@ extension CPU {
                   }
                 }
               }
-//              print(kernels)
               var sum = Float(0.0)
               for inChannelIndex in 0..<inChannels {
                 for ii in 0..<kernelSize {
@@ -86,7 +82,6 @@ extension CPU {
               }
               
               output[i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol] = sum
-//              print(i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol, sum)
             }
           }
         }

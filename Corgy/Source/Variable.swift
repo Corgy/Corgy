@@ -31,6 +31,7 @@ public class Variable : CustomStringConvertible {
     
     public func setShape(_ shape:[Int]) {
         self.shape = shape
+        indexAuxilary = Array(repeating: 0, count: shape.count)
         indexAuxilary[shape.count - 1] = 1
         for i in (0..<shape.count-1).reversed() {
             indexAuxilary[i] = indexAuxilary[i + 1] * shape[i + 1]
@@ -77,7 +78,7 @@ public class Variable : CustomStringConvertible {
     }
     
     func index(_ indices: [Int]) -> Int {
-        assert(validIndex(indices))
+//        assert(validIndex(indices))
         var ret = 0
         for i in 0..<shape.count {
             ret += indices[i] * indexAuxilary[i]
@@ -124,9 +125,28 @@ extension Variable {
     }
     
     static func printOneLayer(_ input: Variable, batch: Int = 0, channel: Int = 0) {
-        for i in 0..<input.getShape()[2] {
-            for j in 0..<input.getShape()[3] {
-                print(String(format: " %.4f", input[batch,channel,i,j]), terminator: "")
+        let numRow: Int
+        let numCol: Int
+        if input.getShape().count == 2 {
+            numRow = input.getShape()[0]
+            numCol = input.getShape()[1]
+        } else {
+            numRow = input.getShape()[2]
+            numCol = input.getShape()[3]
+        }
+        
+        for i in 0..<numRow {
+            for j in 0..<numCol {
+                let data: DataType
+                if input.getShape().count == 2 {
+                    data = input[i,j]
+                } else {
+                    data = input[batch,channel,i,j]
+                }
+                if data >= 0 {
+                    print(" ", terminator: "")
+                }
+                print(String(format: " %.4f", data), terminator: "")
             }
             print("")
         }

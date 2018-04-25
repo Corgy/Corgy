@@ -80,7 +80,10 @@ correct = 0
 total = 0
 for images, labels in test_loader:
     images = Variable(images)
+    print(images)
     outputs = cnn(images)
+    print(images)
+    break
     _, predicted = torch.max(outputs.data, 1)
     total += labels.size(0)
     correct += (predicted == labels).sum()

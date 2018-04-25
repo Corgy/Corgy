@@ -49,9 +49,6 @@ public struct CPU {
             let height = varShape[2]
             let width = varShape[3]
             
-            print("Pool Input:")
-            Variable.printOneLayer(input, batch: 0, channel: 0)
-            
             let poolW = poolSize.0
             let poolH = poolSize.1
             
@@ -96,8 +93,6 @@ public struct CPU {
                     }
                 }
             }
-            print("Pool Output:")
-            Variable.printOneLayer(output, batch: 0, channel: 0)
             return output
         }
     }
@@ -123,7 +118,7 @@ public struct CPU {
     /// - parameter weight: dimension: num output class * input dimension
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
-        return { (_ input) in
+        return { (_ input: Variable) -> Variable in
             let weightShape = weight.getShape()
             assert(weightShape.count == 2 && weightShape[1] == input.value.count)
             

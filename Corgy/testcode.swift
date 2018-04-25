@@ -12,7 +12,6 @@ func test () {
     let network = ModelImporter.loadMNISTCNN("MNIST_CNN")
     let image = Image(named: Image.Name("four"))!
     let input = Variable.of(grayScaleImage: image)
-    print(input.getShape())
     let output = network.forward(input)
     print(output)
 }
