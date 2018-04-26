@@ -7,12 +7,17 @@
 
 import Foundation
 import Metal
-
 let THREAD_PER_GROUP = 128
 
 // TODO: temperal placeholder struct, needs refractor
-struct TEMP_PARAM {
+struct WorkParams {
+    public var threadGroups : MTLSize!
+    public var threadsPerThreadgroup : MTLSize!
     
+    init(threadGroups: MTLSize!, threadsPerThreadgroup: MTLSize!) {
+        self.threadGroups = threadGroups
+        self.threadsPerThreadgroup = threadsPerThreadgroup
+    }
 }
 
 /// submit work to GPU work queue of a neural network and wait until finish.

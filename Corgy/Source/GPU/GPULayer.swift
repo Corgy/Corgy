@@ -28,7 +28,12 @@ public struct Corgy {
     /// and return the input
     public static func ReLU() -> Layer {
         return {(_ input) in
-            submitWork(resource, name: "ReLU", in: input)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
+            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+            
+            submitWork(name: "ReLU", in: input, param: param)
             return input
         }
     }
@@ -70,7 +75,13 @@ public struct Corgy {
             case .Average:  name = "Pool2DAVG"
             case .Max:      name = "Pool2DMAX"
             }
-            submitWork(resource, name: name, in: input, output)
+            
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
+            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+            
+            submitWork(name: name, in: input, output, param: param)
             return output
         }
     }
@@ -103,10 +114,9 @@ public struct Corgy {
     }
  */
     
-    internal static func submitWork(_ resource: CorgyResource,
-                    name function: String,
+    internal static func submitWork(name function: String,
                     in input: Variable...,
-        param: TEMP_PARAM? = nil) {
+        param: WorkParams!) {
         let output = input[input.count-1]
         // PITFALL: must create new command buffer and encoder for each compute task.
         let commandBuffer = resource.commandQueue.makeCommandBuffer()!
@@ -124,10 +134,13 @@ public struct Corgy {
             (outputBuffer, outputLength) = (buf, length)
         }
         
-        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.value.count), 1, 1)
-        let threadGroups = MTLSizeMake((output.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+//        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.value.count), 1, 1)
+//        let threadGroups = MTLSizeMake((output.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
         
-        encoder.dispatchThreadgroups(threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+        let threadsPerThreadGroup = param.threadsPerThreadgroup
+        let threadGroups = param.threadGroups
+        
+        encoder.dispatchThreadgroups(threadGroups!, threadsPerThreadgroup: threadsPerThreadGroup!)
         
         encoder.endEncoding()
         commandBuffer.commit()
@@ -140,16 +153,32 @@ public struct Corgy {
 }
 
 public extension Corgy {
+    static func getGroupNum (_ eleNum: Int, _ eleNumPerGroup: Int) -> Int {
+        return  (eleNum + eleNumPerGroup - 1) / eleNumPerGroup
+    }
+    
     public static func Neg() -> Layer {
         return { ( _ input) in
-            submitWork(resource, name: "testNeg", in: input)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
+            let threadGroups = MTLSizeMake(getGroupNum(input.value.count, THREAD_PER_GROUP), 1, 1)
+            
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+            
+            submitWork(name: "testNeg", in: input, param: param)
             return input
         }
     }
+    
+    
     public static func Neg2(network: NeuralNetwork) -> Layer {
         return { ( _ input) in
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
+            let threadGroups = MTLSizeMake(getGroupNum(input.value.count, THREAD_PER_GROUP), 1, 1)
+            
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+            
             let output = Variable(input.getShape())
-            submitWork(resource, name: "testNeg2", in: input, output)
+            submitWork(name: "testNeg2", in: input, output, param: param)
             return output
         }
     }
