@@ -118,7 +118,7 @@ public struct CPU {
     /// - parameter weight: dimension: num output class * input dimension
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
-        return { (_ input: Variable) -> Variable in
+        return { (_ input) in
             let weightShape = weight.getShape()
             assert(weightShape.count == 2 && weightShape[1] == input.value.count)
             

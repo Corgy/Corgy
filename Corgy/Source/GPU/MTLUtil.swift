@@ -8,6 +8,8 @@
 import Foundation
 import Metal
 
+let THREAD_PER_GROUP = 128
+
 // TODO: temperal placeholder struct, needs refractor
 struct TEMP_PARAM {
     
@@ -21,47 +23,40 @@ struct TEMP_PARAM {
 /// If output is not provided, the computation result will be stored inplace
 /// in input. Else the result will be stored in output.
 ///
-/// - parameter threadGroups: number of thread groups in a grid
+/// - parameter input: Variables in input will be set to buffer of encoder
+///             in order(from 1). Last one will be used as output
 func submitWork(_ network: NeuralNetwork,
                        name function: String,
-                       in input: Variable,
-                       out output: Variable? = nil,
-                       param: TEMP_PARAM? = nil,
-                       threadGroups: MTLSize,
-                       threadsPerThreadgroup: MTLSize) {
+                       in input: Variable...,
+                       param: TEMP_PARAM? = nil) {
+    let output = input[input.count-1]
     // 坑: must create new command buffer and encoder for each compute task.
     let commandBuffer = network.commandQueue.makeCommandBuffer()!
     let f = network.library.makeFunction(name: function)!
     let encoder = commandBuffer.makeComputeCommandEncoder()!
     let pipelineState = try! network.device.makeComputePipelineState(function: f)
     encoder.setComputePipelineState(pipelineState)
-    let length = input.value.count * MemoryLayout<Variable.DataType>.stride
     
-    // TODO: use bytes no copy, which might cause a large amount of refractor
-    let buffer = network.device.makeBuffer(bytes: input.value, length: length, options: [])!
-    encoder.setBuffer(buffer, offset: 0, index: 0)
-    let outputBuffer: MTLBuffer, outputLength: Int
-    if output != nil {
-        let l = output!.value.count * MemoryLayout<Variable.DataType>.stride
-        let buf = network.device.makeBuffer(bytes: output!.value, length: l, options: [])
-        (outputBuffer, outputLength) = (buf!, l)
-        encoder.setBuffer(buf, offset: 0, index: 1)
-    } else {
-        (outputBuffer, outputLength) = (buffer, length)
+    var outputBuffer: MTLBuffer?, outputLength: Int?
+    for (i, variable) in input.enumerated() {
+        let length = variable.value.count * MemoryLayout<Variable.DataType>.stride
+        // TODO: use bytes no copy, which might cause a large amount of refractor
+        let buf = network.device.makeBuffer(bytes: variable.value, length: length, options: [])
+        encoder.setBuffer(buf, offset: 0, index: i)
+        (outputBuffer, outputLength) = (buf, length)
     }
     
-    encoder.dispatchThreadgroups(threadGroups, threadsPerThreadgroup: threadsPerThreadgroup)
+    let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.value.count), 1, 1)
+    let threadGroups = MTLSizeMake((output.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+    
+    encoder.dispatchThreadgroups(threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
     
     encoder.endEncoding()
     commandBuffer.commit()
     commandBuffer.waitUntilCompleted()
     
     // TODO: after makeBuffer(bytesNoCopy) is used, following code can be get rid of
-    let content = NSData(bytesNoCopy: outputBuffer.contents(), length: outputLength, freeWhenDone: false)
-    if output != nil {
-        content.getBytes(&output!.value, length: length)
-    } else {
-        content.getBytes(&input.value, length: length)
-    }
+    let content = NSData(bytesNoCopy: outputBuffer!.contents(), length: outputLength!, freeWhenDone: false)
+    content.getBytes(&output.value, length: outputLength!)
 }
 
