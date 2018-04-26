@@ -15,16 +15,10 @@ struct TEMP_PARAM {
     
 }
 
-/// submit work to queue of a neural network
-///
-/// Always pass both or none of `threadGroups` and `threadPerThreadGroup`. If
-/// both not provided, a default will be computed.
-///
-/// If output is not provided, the computation result will be stored inplace
-/// in input. Else the result will be stored in output.
+/// submit work to GPU work queue of a neural network and wait until finish.
 ///
 /// - parameter input: Variables in input will be set to buffer of encoder
-///             in order(from 1). Last one will be used as output
+///             in order(from 1). Last one will be used as output.
 func submitWork(_ network: NeuralNetwork,
                        name function: String,
                        in input: Variable...,

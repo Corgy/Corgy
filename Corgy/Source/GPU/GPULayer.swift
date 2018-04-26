@@ -23,11 +23,13 @@ public struct Corgy {
     }
     public init() { }
     
-/*
+
     /// return a Pooling layer
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet
     /// - parameter padding: not supported yet
+    /// - require: results of input.width / poolSize.x and
+    ///            input.height / poolSize.y must be integer
     public static func Pool2D(network: NeuralNetwork,
                               poolSize: (Int, Int),
                               strideStep: (Int, Int) = (-1,-1),
@@ -36,10 +38,10 @@ public struct Corgy {
                               padding: (Int, Int) = (0,0)
         ) -> Layer {
         return { [unowned network] (_ input) in
-            let batchSize = input.shape[0]
-            let channels = input.shape[1]
-            let height = input.shape[2]
-            let width = input.shape[3]
+            let batchSize = input.getShape()[0]
+            let channels = input.getShape()[1]
+            let height = input.getShape()[2]
+            let width = input.getShape()[3]
 
             let poolW = poolSize.0
             let poolH = poolSize.1
@@ -51,11 +53,16 @@ public struct Corgy {
             let outW = Int((1 + Float(width  - poolW) / Float(strideW)).rounded(.up))
 
             let output = Variable(batchSize, channels, outH, outW)
-            submitWork(network, name: "Pool2D", data: input, output, param: nil)
+            let name: String
+            switch poolType {
+            case .Average:  name = "Pool2DAVG"
+            case .Max:      name = "Pool2DMAX"
+            }
+            submitWork(network, name: name, in: input, output)
             return output
         }
     }
-
+/*
     /// return an inplace DropOut layer, it will modify
     /// and return the input
     /// - parameter p: percentage to be dropped out
