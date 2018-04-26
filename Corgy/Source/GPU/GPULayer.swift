@@ -9,19 +9,32 @@
 import Foundation
 import Metal
 
+public class CorgyResource {
+    public let device: MTLDevice!
+    public let library: MTLLibrary!
+    public let commandQueue: MTLCommandQueue!
+    init() {
+        device = MTLCreateSystemDefaultDevice()
+        library = device.makeDefaultLibrary()
+        commandQueue = device.makeCommandQueue()
+    }
+}
+
 /// main struct for Corgy GPU framework
 public struct Corgy {
-    
+    private static let resource = CorgyResource()
     
     /// an inplace ReLU layer, it will modify
     /// and return the input
-    public static func ReLU(network: NeuralNetwork) -> Layer {
-        return { [unowned network] (_ input) in
-            submitWork(network, name: "ReLU", in: input)
+    public static func ReLU() -> Layer {
+        return {(_ input) in
+            submitWork(resource, name: "ReLU", in: input)
             return input
         }
     }
-    public init() { }
+    
+    public init() {
+    }
     
 
     /// return a Pooling layer
@@ -30,14 +43,13 @@ public struct Corgy {
     /// - parameter padding: not supported yet
     /// - require: results of input.width / poolSize.x and
     ///            input.height / poolSize.y must be integer
-    public static func Pool2D(network: NeuralNetwork,
-                              poolSize: (Int, Int),
+    public static func Pool2D(poolSize: (Int, Int),
                               strideStep: (Int, Int) = (-1,-1),
                               poolType: PoolType,
                               dilation: (Int, Int) = (1,1),
                               padding: (Int, Int) = (0,0)
         ) -> Layer {
-        return { [unowned network] (_ input) in
+        return { (_ input) in
             let batchSize = input.getShape()[0]
             let channels = input.getShape()[1]
             let height = input.getShape()[2]
@@ -58,7 +70,7 @@ public struct Corgy {
             case .Average:  name = "Pool2DAVG"
             case .Max:      name = "Pool2DMAX"
             }
-            submitWork(network, name: name, in: input, output)
+            submitWork(resource, name: name, in: input, output)
             return output
         }
     }
@@ -93,16 +105,16 @@ public struct Corgy {
 }
 
 public extension Corgy {
-    public static func Neg(network: NeuralNetwork) -> Layer {
-        return { [unowned network] ( _ input) in
-            submitWork(network, name: "testNeg", in: input)
+    public static func Neg() -> Layer {
+        return { ( _ input) in
+            submitWork(resource, name: "testNeg", in: input)
             return input
         }
     }
     public static func Neg2(network: NeuralNetwork) -> Layer {
-        return { [unowned network] ( _ input) in
+        return { ( _ input) in
             let output = Variable(input.getShape())
-            submitWork(network, name: "testNeg2", in: input, output)
+            submitWork(resource, name: "testNeg2", in: input, output)
             return output
         }
     }

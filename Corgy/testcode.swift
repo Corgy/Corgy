@@ -35,7 +35,7 @@ func testGPU() {
     print(neg2(input))
     print("\n")
     
-    let neg = Corgy.Neg(network: nn)
+    let neg = Corgy.Neg()
     
     print("Inplace Neg: \ninput:\n")
     print(input)
@@ -44,7 +44,7 @@ func testGPU() {
     print(input)
     print("\n")
     
-    let relu = Corgy.ReLU(network: nn)
+    let relu = Corgy.ReLU()
     input = Variable(32,16)
     for i in 0..<input.value.count {
         input.value[i] = Float(i)

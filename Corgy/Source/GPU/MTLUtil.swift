@@ -19,23 +19,23 @@ struct TEMP_PARAM {
 ///
 /// - parameter input: Variables in input will be set to buffer of encoder
 ///             in order(from 1). Last one will be used as output.
-func submitWork(_ network: NeuralNetwork,
+func submitWork(_ resource: CorgyResource,
                        name function: String,
                        in input: Variable...,
                        param: TEMP_PARAM? = nil) {
     let output = input[input.count-1]
     // 坑: must create new command buffer and encoder for each compute task.
-    let commandBuffer = network.commandQueue.makeCommandBuffer()!
-    let f = network.library.makeFunction(name: function)!
+    let commandBuffer = resource.commandQueue.makeCommandBuffer()!
+    let f = resource.library.makeFunction(name: function)!
     let encoder = commandBuffer.makeComputeCommandEncoder()!
-    let pipelineState = try! network.device.makeComputePipelineState(function: f)
+    let pipelineState = try! resource.device.makeComputePipelineState(function: f)
     encoder.setComputePipelineState(pipelineState)
     
     var outputBuffer: MTLBuffer?, outputLength: Int?
     for (i, variable) in input.enumerated() {
         let length = variable.value.count * MemoryLayout<Variable.DataType>.stride
         // TODO: use bytes no copy, which might cause a large amount of refractor
-        let buf = network.device.makeBuffer(bytes: variable.value, length: length, options: [])
+        let buf = resource.device.makeBuffer(bytes: variable.value, length: length, options: [])
         encoder.setBuffer(buf, offset: 0, index: i)
         (outputBuffer, outputLength) = (buf, length)
     }
