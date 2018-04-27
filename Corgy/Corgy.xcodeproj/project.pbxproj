@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E400E472092A95000502D98 /* ParamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E462092A95000502D98 /* ParamType.swift */; };
+		1E400E482092A95900502D98 /* ParamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E462092A95000502D98 /* ParamType.swift */; };
 		1E859A622089A1C500379883 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E859A612089A1C500379883 /* AppDelegate.swift */; };
 		1E859A642089A1C500379883 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E859A632089A1C500379883 /* Assets.xcassets */; };
 		1E859A672089A1C500379883 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E859A652089A1C500379883 /* MainMenu.xib */; };
@@ -83,6 +85,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E400E462092A95000502D98 /* ParamType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamType.swift; sourceTree = "<group>"; };
 		1E859A5F2089A1C400379883 /* CorgyMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorgyMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E859A612089A1C500379883 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E859A632089A1C500379883 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 				1EB2F96D2089945600DDFEEC /* GPULayer.swift */,
 				1E9CCD9C208AFC4C00DA6C55 /* MTLUtil.swift */,
 				1E9CCD9F208BAE6300DA6C55 /* layer.metal */,
+				1E400E462092A95000502D98 /* ParamType.swift */,
 			);
 			path = GPU;
 			sourceTree = "<group>";
@@ -446,6 +450,7 @@
 				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				1EB2F9732089945700DDFEEC /* GPULayer.swift in Sources */,
 				1EB2F9742089945700DDFEEC /* Conv2D.swift in Sources */,
+				1E400E472092A95000502D98 /* ParamType.swift in Sources */,
 				1E9CCD9D208AFC4C00DA6C55 /* MTLUtil.swift in Sources */,
 				1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */,
 				1EB2F9772089945700DDFEEC /* Variable.swift in Sources */,
@@ -462,6 +467,7 @@
 				1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				1EB2F97A2089946700DDFEEC /* GPULayer.swift in Sources */,
 				1EB2F9782089946700DDFEEC /* Conv2D.swift in Sources */,
+				1E400E482092A95900502D98 /* ParamType.swift in Sources */,
 				1E9CCD9E208AFE1500DA6C55 /* MTLUtil.swift in Sources */,
 				B99E87D4208E5FA100E21C10 /* ModelImporter.swift in Sources */,
 				1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */,

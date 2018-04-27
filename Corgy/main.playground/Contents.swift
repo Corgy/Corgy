@@ -1,18 +1,20 @@
 import Cocoa
-import Corgy
 
-var str = "Hello, playground"
-
-let kernelWeight = Variable(1, 2, 2, 2)
-for i in 0..<kernelWeight.value.count {
-    kernelWeight.value[i] = Float(i)
+protocol C {
+    
 }
 
-let conv2d = CPU.Conv2D(inChannels: 1, outChannels: 2, kernelSize: 2, weight: kernelWeight)
-
-let input = Variable(1, 1, 4, 4)
-for i in 0..<input.value.count {
-    input.value[i] = Float(i)
+struct A:C {
+    let a: Int32
 }
-print(conv2d(input))
+struct B:C {
+    let a: Int32
+    let b: Int32
+}
+
+var a: C = A(a: 1)
+var b: C = B(a: 1, b: 2)
+
+print("\(MemoryLayout<A>.stride) \(MemoryLayout<B>.stride) \(MemoryLayout<Float32>.stride)")
+//print("\(MemoryLayout<a>.stride) \(MemoryLayout<b>.stride)")
 

@@ -10,8 +10,9 @@ import Foundation
 
 public typealias Layer = (_: Variable) -> Variable
 
-public enum PoolType {
-    case Average, Max
+public enum PoolType: String {
+    case Average = "AVG"
+    case Max     = "MAX"
 }
 
 public class Variable : CustomStringConvertible {
@@ -124,7 +125,8 @@ extension Variable {
         return v
     }
     
-    static func printOneLayer(_ input: Variable, batch: Int = 0, channel: Int = 0) {
+    public func printOneLayer(batch: Int = 0, channel: Int = 0) {
+        let input = self
         let numRow: Int
         let numCol: Int
         if input.getShape().count == 2 {
