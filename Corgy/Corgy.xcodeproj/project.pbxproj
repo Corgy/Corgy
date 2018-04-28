@@ -13,8 +13,6 @@
 		1E859A642089A1C500379883 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E859A632089A1C500379883 /* Assets.xcassets */; };
 		1E859A672089A1C500379883 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E859A652089A1C500379883 /* MainMenu.xib */; };
 		1E859A6F2089A1D700379883 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F95A208992D600DDFEEC /* Corgy.framework */; };
-		1E9CCD9D208AFC4C00DA6C55 /* MTLUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCD9C208AFC4C00DA6C55 /* MTLUtil.swift */; };
-		1E9CCD9E208AFE1500DA6C55 /* MTLUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCD9C208AFC4C00DA6C55 /* MTLUtil.swift */; };
 		1E9CCDA0208BAE6300DA6C55 /* layer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCD9F208BAE6300DA6C55 /* layer.metal */; };
 		1E9CCDA1208BAE6300DA6C55 /* layer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCD9F208BAE6300DA6C55 /* layer.metal */; };
 		1E9CCDA5208BB85300DA6C55 /* layer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCD9F208BAE6300DA6C55 /* layer.metal */; };
@@ -27,14 +25,14 @@
 		1EB2F9682089931C00DDFEEC /* Info-macOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9642089931200DDFEEC /* Info-macOS.plist */; };
 		1EB2F96A2089940800DDFEEC /* Corgy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB2F9692089940700DDFEEC /* Corgy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1EB2F96B2089941300DDFEEC /* Corgy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB2F9692089940700DDFEEC /* Corgy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EB2F9732089945700DDFEEC /* GPULayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96D2089945600DDFEEC /* GPULayer.swift */; };
-		1EB2F9742089945700DDFEEC /* Conv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96F2089945600DDFEEC /* Conv2D.swift */; };
+		1EB2F9732089945700DDFEEC /* Corgy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96D2089945600DDFEEC /* Corgy.swift */; };
+		1EB2F9742089945700DDFEEC /* CPUConv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */; };
 		1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9702089945600DDFEEC /* CPULayer.swift */; };
 		1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */; };
 		1EB2F9772089945700DDFEEC /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9722089945700DDFEEC /* Variable.swift */; };
-		1EB2F9782089946700DDFEEC /* Conv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96F2089945600DDFEEC /* Conv2D.swift */; };
+		1EB2F9782089946700DDFEEC /* CPUConv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */; };
 		1EB2F9792089946700DDFEEC /* CPULayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9702089945600DDFEEC /* CPULayer.swift */; };
-		1EB2F97A2089946700DDFEEC /* GPULayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96D2089945600DDFEEC /* GPULayer.swift */; };
+		1EB2F97A2089946700DDFEEC /* Corgy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96D2089945600DDFEEC /* Corgy.swift */; };
 		1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */; };
 		1EB2F97C2089946700DDFEEC /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9722089945700DDFEEC /* Variable.swift */; };
 		1EB2F9AA2089991A00DDFEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9A92089991A00DDFEEC /* AppDelegate.swift */; };
@@ -49,9 +47,24 @@
 		B99E87CF208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D0208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D1208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
-		B99E87D3208E5FA100E21C10 /* ModelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* ModelImporter.swift */; };
-		B99E87D4208E5FA100E21C10 /* ModelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* ModelImporter.swift */; };
-		B99E87E22093F58900E21C10 /* GPUConv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E12093F58900E21C10 /* GPUConv2D.swift */; };
+		B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
+		B99E87D4208E5FA100E21C10 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
+		B99E87E52094040400E21C10 /* ReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E42094040400E21C10 /* ReLU.swift */; };
+		B99E87E62094040400E21C10 /* ReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E42094040400E21C10 /* ReLU.swift */; };
+		B99E87E82094041600E21C10 /* Conv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E72094041600E21C10 /* Conv2D.swift */; };
+		B99E87E92094041600E21C10 /* Conv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E72094041600E21C10 /* Conv2D.swift */; };
+		B99E87EB2094042800E21C10 /* Dropout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87EA2094042800E21C10 /* Dropout.swift */; };
+		B99E87EC2094042800E21C10 /* Dropout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87EA2094042800E21C10 /* Dropout.swift */; };
+		B99E87EE2094046A00E21C10 /* Pool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87ED2094046A00E21C10 /* Pool.swift */; };
+		B99E87EF2094046A00E21C10 /* Pool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87ED2094046A00E21C10 /* Pool.swift */; };
+		B99E87F1209404EC00E21C10 /* FullConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87F0209404EC00E21C10 /* FullConnected.swift */; };
+		B99E87F2209404EC00E21C10 /* FullConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87F0209404EC00E21C10 /* FullConnected.swift */; };
+		B99E87F52094053900E21C10 /* SubmitWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87F42094053900E21C10 /* SubmitWork.swift */; };
+		B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87F42094053900E21C10 /* SubmitWork.swift */; };
+		B99E87F82094058400E21C10 /* Miscellaneous.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87F72094058400E21C10 /* Miscellaneous.swift */; };
+		B99E87F92094058400E21C10 /* Miscellaneous.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87F72094058400E21C10 /* Miscellaneous.swift */; };
+		B99E87FB2094063000E21C10 /* CorgyResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87FA2094063000E21C10 /* CorgyResource.swift */; };
+		B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87FA2094063000E21C10 /* CorgyResource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,7 +106,6 @@
 		1E859A662089A1C500379883 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1E859A682089A1C500379883 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E859A692089A1C500379883 /* CorgyMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CorgyMac.entitlements; sourceTree = "<group>"; };
-		1E9CCD9C208AFC4C00DA6C55 /* MTLUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLUtil.swift; sourceTree = "<group>"; };
 		1E9CCD9F208BAE6300DA6C55 /* layer.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = layer.metal; sourceTree = "<group>"; };
 		1E9CCDA7208BCB2500DA6C55 /* testcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testcode.swift; sourceTree = "<group>"; };
 		1EB2F94C208992AD00DDFEEC /* Corgy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Corgy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,8 +113,8 @@
 		1EB2F9632089931200DDFEEC /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		1EB2F9642089931200DDFEEC /* Info-macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		1EB2F9692089940700DDFEEC /* Corgy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Corgy.h; sourceTree = "<group>"; };
-		1EB2F96D2089945600DDFEEC /* GPULayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPULayer.swift; sourceTree = "<group>"; };
-		1EB2F96F2089945600DDFEEC /* Conv2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conv2D.swift; sourceTree = "<group>"; };
+		1EB2F96D2089945600DDFEEC /* Corgy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Corgy.swift; sourceTree = "<group>"; };
+		1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUConv2D.swift; sourceTree = "<group>"; };
 		1EB2F9702089945600DDFEEC /* CPULayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPULayer.swift; sourceTree = "<group>"; };
 		1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNetwork.swift; sourceTree = "<group>"; };
 		1EB2F9722089945700DDFEEC /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
@@ -115,8 +127,15 @@
 		1EB2F9B52089991A00DDFEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
 		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
-		B99E87D2208E5FA100E21C10 /* ModelImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelImporter.swift; sourceTree = "<group>"; };
-		B99E87E12093F58900E21C10 /* GPUConv2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUConv2D.swift; sourceTree = "<group>"; };
+		B99E87D2208E5FA100E21C10 /* MNIST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNIST.swift; sourceTree = "<group>"; };
+		B99E87E42094040400E21C10 /* ReLU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReLU.swift; sourceTree = "<group>"; };
+		B99E87E72094041600E21C10 /* Conv2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conv2D.swift; sourceTree = "<group>"; };
+		B99E87EA2094042800E21C10 /* Dropout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dropout.swift; sourceTree = "<group>"; };
+		B99E87ED2094046A00E21C10 /* Pool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pool.swift; sourceTree = "<group>"; };
+		B99E87F0209404EC00E21C10 /* FullConnected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullConnected.swift; sourceTree = "<group>"; };
+		B99E87F42094053900E21C10 /* SubmitWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitWork.swift; sourceTree = "<group>"; };
+		B99E87F72094058400E21C10 /* Miscellaneous.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Miscellaneous.swift; sourceTree = "<group>"; };
+		B99E87FA2094063000E21C10 /* CorgyResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorgyResource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,12 +213,9 @@
 				1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */,
 				1EB2F96E2089945600DDFEEC /* CPU */,
 				1EB2F96C2089945600DDFEEC /* GPU */,
-				1EB2F9722089945700DDFEEC /* Variable.swift */,
-				1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */,
 				1EB2F9692089940700DDFEEC /* Corgy.h */,
 				1EB2F9632089931200DDFEEC /* Info-iOS.plist */,
 				1EB2F9642089931200DDFEEC /* Info-macOS.plist */,
-				B99E87D2208E5FA100E21C10 /* ModelImporter.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -207,11 +223,12 @@
 		1EB2F96C2089945600DDFEEC /* GPU */ = {
 			isa = PBXGroup;
 			children = (
-				1EB2F96D2089945600DDFEEC /* GPULayer.swift */,
-				1E9CCD9C208AFC4C00DA6C55 /* MTLUtil.swift */,
-				1E9CCD9F208BAE6300DA6C55 /* layer.metal */,
-				B99E87E12093F58900E21C10 /* GPUConv2D.swift */,
-				1E400E462092A95000502D98 /* ParamType.swift */,
+				B99E87FF2094083B00E21C10 /* Importers */,
+				B99E87FE2094080500E21C10 /* Variable */,
+				B99E87FD2094076A00E21C10 /* Kernels */,
+				B99E87F32094051E00E21C10 /* Utils */,
+				B99E87E3209403B100E21C10 /* Layers */,
+				1EB2F96D2089945600DDFEEC /* Corgy.swift */,
 			);
 			path = GPU;
 			sourceTree = "<group>";
@@ -219,7 +236,7 @@
 		1EB2F96E2089945600DDFEEC /* CPU */ = {
 			isa = PBXGroup;
 			children = (
-				1EB2F96F2089945600DDFEEC /* Conv2D.swift */,
+				1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */,
 				1EB2F9702089945600DDFEEC /* CPULayer.swift */,
 			);
 			path = CPU;
@@ -243,6 +260,54 @@
 				1EB2F9B52089991A00DDFEEC /* Info.plist */,
 			);
 			path = CorgyiOS;
+			sourceTree = "<group>";
+		};
+		B99E87E3209403B100E21C10 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				B99E87E42094040400E21C10 /* ReLU.swift */,
+				B99E87E72094041600E21C10 /* Conv2D.swift */,
+				B99E87EA2094042800E21C10 /* Dropout.swift */,
+				B99E87ED2094046A00E21C10 /* Pool.swift */,
+				B99E87F0209404EC00E21C10 /* FullConnected.swift */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		B99E87F32094051E00E21C10 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1E400E462092A95000502D98 /* ParamType.swift */,
+				B99E87F42094053900E21C10 /* SubmitWork.swift */,
+				B99E87F72094058400E21C10 /* Miscellaneous.swift */,
+				B99E87FA2094063000E21C10 /* CorgyResource.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B99E87FD2094076A00E21C10 /* Kernels */ = {
+			isa = PBXGroup;
+			children = (
+				1E9CCD9F208BAE6300DA6C55 /* layer.metal */,
+			);
+			path = Kernels;
+			sourceTree = "<group>";
+		};
+		B99E87FE2094080500E21C10 /* Variable */ = {
+			isa = PBXGroup;
+			children = (
+				1EB2F9722089945700DDFEEC /* Variable.swift */,
+				1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */,
+			);
+			path = Variable;
+			sourceTree = "<group>";
+		};
+		B99E87FF2094083B00E21C10 /* Importers */ = {
+			isa = PBXGroup;
+			children = (
+				B99E87D2208E5FA100E21C10 /* MNIST.swift */,
+			);
+			path = Importers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,14 +516,20 @@
 				1E9CCDA0208BAE6300DA6C55 /* layer.metal in Sources */,
 				1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */,
 				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
-				1EB2F9732089945700DDFEEC /* GPULayer.swift in Sources */,
-				B99E87E22093F58900E21C10 /* GPUConv2D.swift in Sources */,
-				1EB2F9742089945700DDFEEC /* Conv2D.swift in Sources */,
+				B99E87EB2094042800E21C10 /* Dropout.swift in Sources */,
+				B99E87F1209404EC00E21C10 /* FullConnected.swift in Sources */,
+				B99E87F52094053900E21C10 /* SubmitWork.swift in Sources */,
+				1EB2F9732089945700DDFEEC /* Corgy.swift in Sources */,
+				B99E87FB2094063000E21C10 /* CorgyResource.swift in Sources */,
+				B99E87F82094058400E21C10 /* Miscellaneous.swift in Sources */,
+				1EB2F9742089945700DDFEEC /* CPUConv2D.swift in Sources */,
 				1E400E472092A95000502D98 /* ParamType.swift in Sources */,
-				1E9CCD9D208AFC4C00DA6C55 /* MTLUtil.swift in Sources */,
+				B99E87EE2094046A00E21C10 /* Pool.swift in Sources */,
+				B99E87E82094041600E21C10 /* Conv2D.swift in Sources */,
 				1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */,
+				B99E87E52094040400E21C10 /* ReLU.swift in Sources */,
 				1EB2F9772089945700DDFEEC /* Variable.swift in Sources */,
-				B99E87D3208E5FA100E21C10 /* ModelImporter.swift in Sources */,
+				B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,14 +539,21 @@
 			files = (
 				1E9CCDA1208BAE6300DA6C55 /* layer.metal in Sources */,
 				1EB2F9792089946700DDFEEC /* CPULayer.swift in Sources */,
+				B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */,
 				1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
-				1EB2F97A2089946700DDFEEC /* GPULayer.swift in Sources */,
-				1EB2F9782089946700DDFEEC /* Conv2D.swift in Sources */,
+				B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */,
+				B99E87E92094041600E21C10 /* Conv2D.swift in Sources */,
+				1EB2F97A2089946700DDFEEC /* Corgy.swift in Sources */,
+				B99E87EF2094046A00E21C10 /* Pool.swift in Sources */,
+				1EB2F9782089946700DDFEEC /* CPUConv2D.swift in Sources */,
+				B99E87F92094058400E21C10 /* Miscellaneous.swift in Sources */,
 				1E400E482092A95900502D98 /* ParamType.swift in Sources */,
-				1E9CCD9E208AFE1500DA6C55 /* MTLUtil.swift in Sources */,
-				B99E87D4208E5FA100E21C10 /* ModelImporter.swift in Sources */,
+				B99E87F2209404EC00E21C10 /* FullConnected.swift in Sources */,
+				B99E87D4208E5FA100E21C10 /* MNIST.swift in Sources */,
 				1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */,
 				1EB2F97C2089946700DDFEEC /* Variable.swift in Sources */,
+				B99E87E62094040400E21C10 /* ReLU.swift in Sources */,
+				B99E87EC2094042800E21C10 /* Dropout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,7 +647,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -636,7 +714,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
