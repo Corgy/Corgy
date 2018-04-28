@@ -7,8 +7,12 @@
 
 import Foundation
 
-public enum ModelImporter {
-    public static func loadMNISTCNN(_ path: String) -> NeuralNetwork {
+public enum ComputeOn {
+    case CPU, GPU
+}
+
+public class ModelImporter {
+    public static func loadMNISTCNN(_ path: String, computeOn: ComputeOn) -> NeuralNetwork {
         let ret = NeuralNetwork()
         let kernelSize = 5
 
@@ -21,15 +25,29 @@ public enum ModelImporter {
                 layers.append(Variable.fromString(input: contentOfFile))
             }
         }
-
-        ret.add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
-            .add(CPU.ReLU)
-            .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
-            .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
-            .add(CPU.ReLU)
-            .add(CPU.Pool2D(poolSize: (2, 2), poolType: .Max))
-            .add(CPU.flatten)
-            .add(CPU.FullConnected(weight: layers[4], bias: layers[5]))
+        
+        switch computeOn {
+        case .CPU:
+            ret
+                .add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
+                .add(CPU.ReLU)
+                .add(CPU.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
+                .add(CPU.ReLU)
+                .add(CPU.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(CPU.flatten)
+                .add(CPU.FullConnected(weight: layers[4], bias: layers[5]))
+        case .GPU:
+            ret
+                .add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
+                .add(Corgy.ReLU)
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
+                .add(Corgy.ReLU)
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(Corgy.flatten)
+                .add(CPU.FullConnected(weight: layers[4], bias: layers[5]))
+        }
         
         return ret
     }

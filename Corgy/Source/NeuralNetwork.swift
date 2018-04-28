@@ -11,7 +11,6 @@ import Metal
 
 public class NeuralNetwork {
     var layers : [Layer]
-    // TODO: replace ! with Non-optional type and do proper error return
     
     public init() {
         self.layers = []
@@ -20,6 +19,8 @@ public class NeuralNetwork {
     public func forward(_ x: Variable) ->Variable {
         var output = x
         for layer in layers {
+            print("Input: ")
+            output.printOneLayer()
             output = layer(output)
             print("One layer!")
         }
