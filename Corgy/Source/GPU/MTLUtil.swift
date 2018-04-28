@@ -81,9 +81,9 @@ extension Corgy {
     // 如果是这么声明的，又是对的：
     // static func makeBuffer(param: PoolParam, length: Int) -> MTLBuffer
     // 仿佛param的声明类型会影响它的内存布局一样
-    static func makeBuffer<T: LayerParam>(param: T, length: Int) -> MTLBuffer {
+    static func makeBuffer<T: LayerParam>(_ param: T) -> MTLBuffer {
         var param = param
-        return resource.device.makeBuffer(bytes: &param, length: length, options: [])!
+        return resource.device.makeBuffer(bytes: &param, length: MemoryLayout<T>.stride, options: [])!
     }
     
 }

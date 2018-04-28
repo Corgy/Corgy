@@ -9,7 +9,7 @@ import Foundation
 import Corgy
 
 func test () {
-    GPUTest.testPoolAvg()
+    GPUTest.testDropout()
 }
 
 func testCPU() {
@@ -78,6 +78,18 @@ enum GPUTest {
         }
         let poolAve = Corgy.Pool(poolSize: (2, 2), poolType: .Average)
         print("Avg pooling layer: \ninput:\n")
+        input.printOneLayer(batch: 0, channel: 0)
+        print("\noutput: \n")
+        poolAve(input).printOneLayer(batch: 0, channel: 0)
+        print("\n")
+    }
+    static func testDropout() {
+        let input = Variable(1, 1, 32, 16)
+        for i in 0..<input.value.count {
+            input.value[i] = Float(i)
+        }
+        let poolAve = Corgy.Dropout(p: 0.9)
+        print("Dropout layer: \ninput:\n")
         input.printOneLayer(batch: 0, channel: 0)
         print("\noutput: \n")
         poolAve(input).printOneLayer(batch: 0, channel: 0)

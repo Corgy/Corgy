@@ -67,26 +67,37 @@ public enum Corgy {
                                       poolSizeX: poolW,
                                       poolSizeY: poolH)
             
-            let paramBuffer = makeBuffer(param: poolParam, length: MemoryLayout<PoolParam>.stride)
+            let paramBuffer = makeBuffer(poolParam)
             
             submitWork(name: "Pool\(poolType.rawValue)", in: input, output, param: param, parameterBuffer: paramBuffer)
             
             return output
         }
     }
-/*
-    /// return an inplace DropOut layer, it will modify
+    /// return an inplace Dropout layer, it will modify
     /// and return the input
     /// - parameter p: percentage to be dropped out
     /// - parameter seed: optional, random seed
-    public static func DropOut(network: NeuralNetwork, p: Double) -> Layer {
-        return { [unowned network] (_ input) in
+    public static func Dropout(p: Double, seed: UInt32? = nil) -> Layer {
+        return { (_ input) in
             assert(p >= 0 && p <= 1)
-            submitWork(network, name: "DropOut", data: input)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
+            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+            let s: UInt32
+            if seed == nil {
+                s = arc4random()
+            } else {
+                s = seed!
+            }
+            let dropoutParam = DropoutParam(inputParam: input.getParam(), p: p, seed: s)
+            let paramBuffer = makeBuffer(dropoutParam)
+            submitWork(name: "Dropout", in: input, param: param, parameterBuffer: paramBuffer)
             return input
         }
     }
 
+    /*
     /// return an Full Connected layer
     /// - parameter weight: dimension: num output class * input dimension
     /// - parameter bias: dimension: num output class * 1

@@ -6,6 +6,7 @@
 //
 
 #include <metal_stdlib>
+
 using namespace metal;
 
 struct VariableParam {
@@ -24,6 +25,19 @@ struct PoolParam {
     int poolSizeX;
     int poolSizeY;
 };
+
+struct DropoutParam {
+    VariableParam inputParam;
+    float p;
+    unsigned seed;
+};
+
+// Random number generator credit: https://stackoverflow.com/a/47499626/5006324
+thread float rand(int x, int y, int z) {
+    int seed = x + y * 57 + z * 241;
+    seed= (seed<< 13) ^ seed;
+    return (( 1.0 - ( (seed * (seed * seed * 15731 + 789221) + 1376312589) & 2147483647) / 1073741824.0f) + 1.0f) / 2.0f;
+}
 
 kernel void ReLU(device float *input [[ buffer(0) ]],
                  uint id [[thread_position_in_grid]]
@@ -69,6 +83,14 @@ kernel void PoolMAX(const device float *input [[ buffer(0) ]],
     int m = max(input[inputIndex], input[inputIndex+1]);
     int n = max(input[inputIndex+(param->inputParam.width)], input[inputIndex+1+(param->inputParam.width)]);
     output[id] = max(m, n);
+}
+
+kernel void Dropout(device float *input [[ buffer(0) ]],
+                    constant DropoutParam *param [[ buffer(1) ]],
+                    uint id [[thread_position_in_grid]]
+                    ) {
+    float r = rand(param->seed, id, ((int)(size_t)param) + 832910);
+    if (r < param->p) input[id] = 0;
 }
 
 // Example of a kernel that reads an input and writes to an output

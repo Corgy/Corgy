@@ -10,10 +10,6 @@ import Foundation
 // to make makeBuffer easier
 protocol LayerParam { }
 
-enum ParamType {
-    case Pool
-}
-
 struct VariableParam {
     let size: Int32
     let batch: Int32
@@ -55,3 +51,17 @@ struct PoolParam: LayerParam {
         self.poolSizeY = Int32(poolSizeY)
     }
 }
+
+struct DropoutParam: LayerParam {
+    let inputParam: VariableParam
+    let p: Float32
+    let seed: UInt32
+    init(inputParam: VariableParam, p: Double, seed: UInt32) {
+        self.inputParam = inputParam
+        self.p = Float32(p)
+        self.seed = seed
+    }
+}
+
+
+
