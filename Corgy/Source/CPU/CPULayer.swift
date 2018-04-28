@@ -8,8 +8,7 @@
 
 import Foundation
 
-public struct CPU {
-    private init() {}
+public enum CPU {
     
     /// an inplace ReLU layer, it will modify
     /// and return the input
@@ -135,9 +134,5 @@ public struct CPU {
             return out
         }
     }
-}
-
-extension CPU {
-    
 }
 

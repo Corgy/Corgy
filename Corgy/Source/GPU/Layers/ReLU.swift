@@ -22,4 +22,6 @@ extension Corgy {
             return input
         }
     }
+    
+    public static let flatten = CPU.flatten
 }

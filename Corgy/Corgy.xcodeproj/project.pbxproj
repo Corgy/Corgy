@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1E400E472092A95000502D98 /* ParamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E462092A95000502D98 /* ParamType.swift */; };
 		1E400E482092A95900502D98 /* ParamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E462092A95000502D98 /* ParamType.swift */; };
+		1E400E532094FD7E00502D98 /* Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E522094FD7E00502D98 /* Timing.swift */; };
+		1E400E542094FD9600502D98 /* Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E522094FD7E00502D98 /* Timing.swift */; };
 		1E859A622089A1C500379883 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E859A612089A1C500379883 /* AppDelegate.swift */; };
 		1E859A642089A1C500379883 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E859A632089A1C500379883 /* Assets.xcassets */; };
 		1E859A672089A1C500379883 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E859A652089A1C500379883 /* MainMenu.xib */; };
@@ -108,6 +110,7 @@
 
 /* Begin PBXFileReference section */
 		1E400E462092A95000502D98 /* ParamType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamType.swift; sourceTree = "<group>"; };
+		1E400E522094FD7E00502D98 /* Timing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timing.swift; sourceTree = "<group>"; };
 		1E859A5F2089A1C400379883 /* CorgyMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorgyMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E859A612089A1C500379883 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E859A632089A1C500379883 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -185,6 +188,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E400E512094FD6100502D98 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B99E87FF2094083B00E21C10 /* Importers */,
+				1E400E522094FD7E00502D98 /* Timing.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		1E859A602089A1C500379883 /* CorgyMac */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,8 +237,10 @@
 			isa = PBXGroup;
 			children = (
 				1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */,
-				1EB2F96E2089945600DDFEEC /* CPU */,
+				B99E87FE2094080500E21C10 /* Variable */,
 				1EB2F96C2089945600DDFEEC /* GPU */,
+				1EB2F96E2089945600DDFEEC /* CPU */,
+				1E400E512094FD6100502D98 /* Utils */,
 				1EB2F9692089940700DDFEEC /* Corgy.h */,
 				1EB2F9632089931200DDFEEC /* Info-iOS.plist */,
 				1EB2F9642089931200DDFEEC /* Info-macOS.plist */,
@@ -237,12 +251,10 @@
 		1EB2F96C2089945600DDFEEC /* GPU */ = {
 			isa = PBXGroup;
 			children = (
-				B99E87FF2094083B00E21C10 /* Importers */,
-				B99E87FE2094080500E21C10 /* Variable */,
+				1EB2F96D2089945600DDFEEC /* Corgy.swift */,
 				B99E87FD2094076A00E21C10 /* Kernels */,
 				B99E87F32094051E00E21C10 /* Utils */,
 				B99E87E3209403B100E21C10 /* Layers */,
-				1EB2F96D2089945600DDFEEC /* Corgy.swift */,
 			);
 			path = GPU;
 			sourceTree = "<group>";
@@ -553,6 +565,7 @@
 				B99E880120940B3800E21C10 /* PoolKernel.metal in Sources */,
 				B99E880A20940B7200E21C10 /* DropoutKernel.metal in Sources */,
 				B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */,
+				1E400E532094FD7E00502D98 /* Timing.swift in Sources */,
 				B99E880D20940B8200E21C10 /* ReLUKernel.metal in Sources */,
 				B99E881020940BC100E21C10 /* Utils.metal in Sources */,
 			);
@@ -581,6 +594,7 @@
 				B99E880220940B3800E21C10 /* PoolKernel.metal in Sources */,
 				B99E880B20940B7200E21C10 /* DropoutKernel.metal in Sources */,
 				B99E87EC2094042800E21C10 /* Dropout.swift in Sources */,
+				1E400E542094FD9600502D98 /* Timing.swift in Sources */,
 				B99E880E20940B8200E21C10 /* ReLUKernel.metal in Sources */,
 				B99E881120940BC100E21C10 /* Utils.metal in Sources */,
 			);
@@ -675,7 +689,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = P3R3FAJ44Q;
+				DEVELOPMENT_TEAM = Q7D6Q96KMH;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -742,7 +756,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = P3R3FAJ44Q;
+				DEVELOPMENT_TEAM = Q7D6Q96KMH;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

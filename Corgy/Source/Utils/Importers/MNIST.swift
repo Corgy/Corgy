@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ModelImporter {
+public enum ModelImporter {
     public static func loadMNISTCNN(_ path: String) -> NeuralNetwork {
         let ret = NeuralNetwork()
         let kernelSize = 5
