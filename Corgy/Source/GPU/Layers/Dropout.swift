@@ -8,7 +8,7 @@
 import Foundation
 import Metal
 
-extension Corgy {
+public extension Corgy {
     /// return an inplace Dropout layer, it will modify
     /// and return the input
     /// - parameter p: percentage to be dropped out

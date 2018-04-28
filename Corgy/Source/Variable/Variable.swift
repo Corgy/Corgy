@@ -10,11 +10,6 @@ import Foundation
 
 public typealias Layer = (_: Variable) -> Variable
 
-public enum PoolType: String {
-    case Average = "AVG"
-    case Max     = "MAX"
-}
-
 public class Variable : CustomStringConvertible {
     public typealias DataType = Float
     private var shape: [Int]

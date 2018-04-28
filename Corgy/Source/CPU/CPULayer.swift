@@ -8,8 +8,7 @@
 
 import Foundation
 
-public struct CPU {
-    private init() {}
+public enum CPU {
     
     /// an inplace ReLU layer, it will modify
     /// and return the input
@@ -36,11 +35,11 @@ public struct CPU {
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet
     /// - parameter padding: not supported yet
-    public static func Pool2D(poolSize: (Int, Int),
-                              strideStep: (Int, Int) = (-1,-1),
-                              poolType: PoolType,
-                              dilation: (Int, Int) = (1,1),
-                              padding: (Int, Int) = (0,0)
+    public static func Pool(poolSize: (Int, Int),
+                            strideStep: (Int, Int) = (-1,-1),
+                            poolType: PoolType,
+                            dilation: (Int, Int) = (1,1),
+                            padding: (Int, Int) = (0,0)
         ) -> Layer {
         return { (_ input) in
             let varShape = input.getShape()
@@ -135,9 +134,5 @@ public struct CPU {
             return out
         }
     }
-}
-
-extension CPU {
-    
 }
 

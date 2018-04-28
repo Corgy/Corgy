@@ -8,7 +8,12 @@
 import Foundation
 import Metal
 
-extension Corgy {
+public enum PoolType: String {
+    case Average = "AVG"
+    case Max     = "MAX"
+}
+
+public extension Corgy {
     /// return a Pooling layer
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet

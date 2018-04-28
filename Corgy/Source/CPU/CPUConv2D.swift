@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 extension CPU {
   // TODO: support dilation, group and bias
   public static func Conv2D(inChannels: Int,
