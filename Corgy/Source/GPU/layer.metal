@@ -54,3 +54,14 @@ kernel void testNeg(device float *input [[ buffer(0) ]],
     uint id = (tsize.x * tsize.y) * (gsize.x * gid.y + gid.x) + tsize.x * tid.y + tid.x;
     input[id] = -input[id];
 }
+
+kernel void imageToMatrix(const device float *input [[buffer(0)]],
+                          device float *output [[buffer(1)]],
+                          uint2 gsize [[threadgroup_per_gridd]],
+                          uint2 gid[[threadgroup_position_in_grid]],
+                          uint2 tsize[[threads_per_threadgroup]],
+                          uint2 tid[[thread_position_in_threadgroup]]) {
+    uint id = (tsize.x * tsize.y) * (gsize.x * gid.y + gid.x) + tsize.x * tid.y + tid.x;
+    
+    
+}

@@ -134,9 +134,7 @@ public struct Corgy {
             (outputBuffer, outputLength) = (buf, length)
         }
         
-//        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.value.count), 1, 1)
-//        let threadGroups = MTLSizeMake((output.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
-        
+
         let threadsPerThreadGroup = param.threadsPerThreadgroup
         let threadGroups = param.threadGroups
         

@@ -49,6 +49,7 @@
 		B99E87D1208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D3208E5FA100E21C10 /* ModelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* ModelImporter.swift */; };
 		B99E87D4208E5FA100E21C10 /* ModelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* ModelImporter.swift */; };
+		B99E87E22093F58900E21C10 /* GPUConv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E12093F58900E21C10 /* GPUConv2D.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
 		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		B99E87D2208E5FA100E21C10 /* ModelImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelImporter.swift; sourceTree = "<group>"; };
+		B99E87E12093F58900E21C10 /* GPUConv2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUConv2D.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 				1EB2F96D2089945600DDFEEC /* GPULayer.swift */,
 				1E9CCD9C208AFC4C00DA6C55 /* MTLUtil.swift */,
 				1E9CCD9F208BAE6300DA6C55 /* layer.metal */,
+				B99E87E12093F58900E21C10 /* GPUConv2D.swift */,
 			);
 			path = GPU;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */,
 				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				1EB2F9732089945700DDFEEC /* GPULayer.swift in Sources */,
+				B99E87E22093F58900E21C10 /* GPUConv2D.swift in Sources */,
 				1EB2F9742089945700DDFEEC /* Conv2D.swift in Sources */,
 				1E9CCD9D208AFC4C00DA6C55 /* MTLUtil.swift in Sources */,
 				1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */,
