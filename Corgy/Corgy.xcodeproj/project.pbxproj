@@ -27,12 +27,10 @@
 		1EB2F9742089945700DDFEEC /* CPUConv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */; };
 		1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9702089945600DDFEEC /* CPULayer.swift */; };
 		1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */; };
-		1EB2F9772089945700DDFEEC /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9722089945700DDFEEC /* Variable.swift */; };
 		1EB2F9782089946700DDFEEC /* CPUConv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */; };
 		1EB2F9792089946700DDFEEC /* CPULayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9702089945600DDFEEC /* CPULayer.swift */; };
 		1EB2F97A2089946700DDFEEC /* Corgy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F96D2089945600DDFEEC /* Corgy.swift */; };
 		1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */; };
-		1EB2F97C2089946700DDFEEC /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9722089945700DDFEEC /* Variable.swift */; };
 		1EB2F9AA2089991A00DDFEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9A92089991A00DDFEEC /* AppDelegate.swift */; };
 		1EB2F9AC2089991A00DDFEEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2F9AB2089991A00DDFEEC /* ViewController.swift */; };
 		1EB2F9AF2089991A00DDFEEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9AD2089991A00DDFEEC /* Main.storyboard */; };
@@ -41,6 +39,10 @@
 		1EB2F9BE20899CDC00DDFEEC /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
 		1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
+		B903C48620953813000D362B /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C48520953813000D362B /* VariableOperation.swift */; };
+		B903C48720953813000D362B /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C48520953813000D362B /* VariableOperation.swift */; };
+		B903C4892095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
+		B903C48A2095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
 		B99E87CE208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87CF208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D0208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
@@ -75,8 +77,6 @@
 		B99E881120940BC100E21C10 /* Utils.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880F20940BC100E21C10 /* Utils.metal */; };
 		B99E881920940D4100E21C10 /* KernelParamType.h in Headers */ = {isa = PBXBuildFile; fileRef = B99E881820940D4100E21C10 /* KernelParamType.h */; };
 		B99E881A20940D4100E21C10 /* KernelParamType.h in Headers */ = {isa = PBXBuildFile; fileRef = B99E881820940D4100E21C10 /* KernelParamType.h */; };
-		B99E881D2094261C00E21C10 /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E881C2094261C00E21C10 /* VariableOperation.swift */; };
-		B99E881E2094261C00E21C10 /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E881C2094261C00E21C10 /* VariableOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,7 +129,6 @@
 		1EB2F96F2089945600DDFEEC /* CPUConv2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUConv2D.swift; sourceTree = "<group>"; };
 		1EB2F9702089945600DDFEEC /* CPULayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPULayer.swift; sourceTree = "<group>"; };
 		1EB2F9712089945600DDFEEC /* NeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNetwork.swift; sourceTree = "<group>"; };
-		1EB2F9722089945700DDFEEC /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		1EB2F9A72089991A00DDFEEC /* CorgyiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorgyiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EB2F9A92089991A00DDFEEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EB2F9AB2089991A00DDFEEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +137,8 @@
 		1EB2F9B32089991A00DDFEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1EB2F9B52089991A00DDFEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
+		B903C48520953813000D362B /* VariableOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableOperation.swift; sourceTree = "<group>"; };
+		B903C4882095386E000D362B /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		B99E87D2208E5FA100E21C10 /* MNIST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNIST.swift; sourceTree = "<group>"; };
 		B99E87E42094040400E21C10 /* ReLU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReLU.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		B99E880F20940BC100E21C10 /* Utils.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Utils.metal; sourceTree = "<group>"; };
 		B99E881820940D4100E21C10 /* KernelParamType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KernelParamType.h; sourceTree = "<group>"; };
 		B99E881B20940E8100E21C10 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		B99E881C2094261C00E21C10 /* VariableOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,9 +331,9 @@
 		B99E87FE2094080500E21C10 /* Variable */ = {
 			isa = PBXGroup;
 			children = (
-				1EB2F9722089945700DDFEEC /* Variable.swift */,
+				B903C4882095386E000D362B /* Variable.swift */,
 				1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */,
-				B99E881C2094261C00E21C10 /* VariableOperation.swift */,
+				B903C48520953813000D362B /* VariableOperation.swift */,
 			);
 			path = Variable;
 			sourceTree = "<group>";
@@ -559,14 +559,14 @@
 				B99E87FB2094063000E21C10 /* CorgyResource.swift in Sources */,
 				B99E87F82094058400E21C10 /* Miscellaneous.swift in Sources */,
 				1EB2F9742089945700DDFEEC /* CPUConv2D.swift in Sources */,
-				B99E881D2094261C00E21C10 /* VariableOperation.swift in Sources */,
 				1E400E472092A95000502D98 /* ParamType.swift in Sources */,
 				B99E87EE2094046A00E21C10 /* Pool.swift in Sources */,
 				B99E87E82094041600E21C10 /* Conv2D.swift in Sources */,
 				1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */,
 				B99E880720940B6500E21C10 /* Conv2DKernel.metal in Sources */,
+				B903C4892095386E000D362B /* Variable.swift in Sources */,
 				B99E87E52094040400E21C10 /* ReLU.swift in Sources */,
-				1EB2F9772089945700DDFEEC /* Variable.swift in Sources */,
+				B903C48620953813000D362B /* VariableOperation.swift in Sources */,
 				B99E880120940B3800E21C10 /* PoolKernel.metal in Sources */,
 				B99E880A20940B7200E21C10 /* DropoutKernel.metal in Sources */,
 				B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */,
@@ -589,14 +589,14 @@
 				B99E87EF2094046A00E21C10 /* Pool.swift in Sources */,
 				1EB2F9782089946700DDFEEC /* CPUConv2D.swift in Sources */,
 				B99E87F92094058400E21C10 /* Miscellaneous.swift in Sources */,
-				B99E881E2094261C00E21C10 /* VariableOperation.swift in Sources */,
 				1E400E482092A95900502D98 /* ParamType.swift in Sources */,
 				B99E87F2209404EC00E21C10 /* FullConnected.swift in Sources */,
 				B99E87D4208E5FA100E21C10 /* MNIST.swift in Sources */,
 				1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */,
 				B99E880820940B6500E21C10 /* Conv2DKernel.metal in Sources */,
-				1EB2F97C2089946700DDFEEC /* Variable.swift in Sources */,
+				B903C48A2095386E000D362B /* Variable.swift in Sources */,
 				B99E87E62094040400E21C10 /* ReLU.swift in Sources */,
+				B903C48720953813000D362B /* VariableOperation.swift in Sources */,
 				B99E880220940B3800E21C10 /* PoolKernel.metal in Sources */,
 				B99E880B20940B7200E21C10 /* DropoutKernel.metal in Sources */,
 				B99E87EC2094042800E21C10 /* Dropout.swift in Sources */,
@@ -695,7 +695,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -762,7 +762,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
