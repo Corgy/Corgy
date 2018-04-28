@@ -73,6 +73,8 @@
 		B99E881120940BC100E21C10 /* Utils.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880F20940BC100E21C10 /* Utils.metal */; };
 		B99E881920940D4100E21C10 /* KernelParamType.h in Headers */ = {isa = PBXBuildFile; fileRef = B99E881820940D4100E21C10 /* KernelParamType.h */; };
 		B99E881A20940D4100E21C10 /* KernelParamType.h in Headers */ = {isa = PBXBuildFile; fileRef = B99E881820940D4100E21C10 /* KernelParamType.h */; };
+		B99E881D2094261C00E21C10 /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E881C2094261C00E21C10 /* VariableOperation.swift */; };
+		B99E881E2094261C00E21C10 /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E881C2094261C00E21C10 /* VariableOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +152,7 @@
 		B99E880F20940BC100E21C10 /* Utils.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Utils.metal; sourceTree = "<group>"; };
 		B99E881820940D4100E21C10 /* KernelParamType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KernelParamType.h; sourceTree = "<group>"; };
 		B99E881B20940E8100E21C10 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		B99E881C2094261C00E21C10 /* VariableOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +321,7 @@
 			children = (
 				1EB2F9722089945700DDFEEC /* Variable.swift */,
 				1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */,
+				B99E881C2094261C00E21C10 /* VariableOperation.swift */,
 			);
 			path = Variable;
 			sourceTree = "<group>";
@@ -543,6 +547,7 @@
 				B99E87FB2094063000E21C10 /* CorgyResource.swift in Sources */,
 				B99E87F82094058400E21C10 /* Miscellaneous.swift in Sources */,
 				1EB2F9742089945700DDFEEC /* CPUConv2D.swift in Sources */,
+				B99E881D2094261C00E21C10 /* VariableOperation.swift in Sources */,
 				1E400E472092A95000502D98 /* ParamType.swift in Sources */,
 				B99E87EE2094046A00E21C10 /* Pool.swift in Sources */,
 				B99E87E82094041600E21C10 /* Conv2D.swift in Sources */,
@@ -571,6 +576,7 @@
 				B99E87EF2094046A00E21C10 /* Pool.swift in Sources */,
 				1EB2F9782089946700DDFEEC /* CPUConv2D.swift in Sources */,
 				B99E87F92094058400E21C10 /* Miscellaneous.swift in Sources */,
+				B99E881E2094261C00E21C10 /* VariableOperation.swift in Sources */,
 				1E400E482092A95900502D98 /* ParamType.swift in Sources */,
 				B99E87F2209404EC00E21C10 /* FullConnected.swift in Sources */,
 				B99E87D4208E5FA100E21C10 /* MNIST.swift in Sources */,

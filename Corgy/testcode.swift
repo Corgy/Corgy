@@ -8,8 +8,9 @@
 import Foundation
 import Corgy
 
+@available(OSX 10.13, *)
 func test () {
-    GPUTest.testDropout()
+    GPUTest.testConv2D()
 }
 
 func testCPU() {
@@ -20,6 +21,7 @@ func testCPU() {
     print(output)
 }
 
+@available(OSX 10.13, *)
 enum GPUTest {
     static func testReLU() {
         let relu = Corgy.ReLU()
@@ -83,6 +85,7 @@ enum GPUTest {
         poolAve(input).printOneLayer(batch: 0, channel: 0)
         print("\n")
     }
+    
     static func testDropout() {
         let input = Variable(1, 1, 32, 16)
         for i in 0..<input.value.count {
@@ -94,5 +97,46 @@ enum GPUTest {
         print("\noutput: \n")
         poolAve(input).printOneLayer(batch: 0, channel: 0)
         print("\n")
+    }
+    
+    static func testConv2D() {
+        let weight = Variable(1, 2, 2, 2)
+        for i in 0..<weight.value.count {
+            weight.value[i] = Float(i)
+        }
+        
+        let bias   = Variable(2)
+        bias.value = [1, 2]
+        
+        let conv2d = Corgy.Conv2D(inChannels:  1,
+                                  outChannels: 2,
+                                  kernelSize:  2,
+                                  weight: weight,
+                                  bias: bias
+        )
+        
+        let input = Variable(1, 4, 4)
+        for i in 0..<input.value.count {
+            input.value[i] = Float(i)
+        }
+        
+        let output = conv2d(input)
+        
+        print(output)
+    }
+    
+    @available(OSX 10.13, *)
+    static func testMultiply() {
+        let v1 = Variable(4, 4)
+        for i in 0..<v1.value.count {
+            v1.value[i] = Float(i);
+        }
+        
+        let v2 = Variable(4, 4)
+        for i in 0..<v2.value.count {
+            v2.value[i] = Float(i);
+        }
+        
+        print(Corgy.matrixMultiply(v1, v2))
     }
 }
