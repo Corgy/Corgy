@@ -9,20 +9,10 @@
 import Foundation
 import Metal
 
+let THREAD_PER_GROUP = 128
+
 /// main struct for Corgy GPU framework
-public struct Corgy {
-    internal class CorgyResource {
-        let device: MTLDevice!
-        let library: MTLLibrary!
-        let commandQueue: MTLCommandQueue!
-        init() {
-            device = MTLCreateSystemDefaultDevice()
-            library = device.makeDefaultLibrary()
-            commandQueue = device.makeCommandQueue()
-        }
-    }
-    
-    private static let resource = CorgyResource()
+public enum Corgy {
     
     /// an inplace ReLU layer, it will modify
     /// and return the input
@@ -37,10 +27,6 @@ public struct Corgy {
             return input
         }
     }
-    
-    public init() {
-    }
-    
 
     /// return a Pooling layer
     /// - parameter strideStep: default stride is poolSize
@@ -48,11 +34,11 @@ public struct Corgy {
     /// - parameter padding: not supported yet
     /// - require: results of input.width / poolSize.x and
     ///            input.height / poolSize.y must be integer
-    public static func Pool2D(poolSize: (Int, Int),
-                              strideStep: (Int, Int) = (-1,-1),
-                              poolType: PoolType,
-                              dilation: (Int, Int) = (1,1),
-                              padding: (Int, Int) = (0,0)
+    public static func Pool(poolSize: (Int, Int),
+                            strideStep: (Int, Int) = (-1,-1),
+                            poolType: PoolType,
+                            dilation: (Int, Int) = (1,1),
+                            padding: (Int, Int) = (0,0)
         ) -> Layer {
         return { (_ input) in
             let batchSize = input.getShape()[0]
@@ -70,34 +56,48 @@ public struct Corgy {
             let outW = Int((1 + Float(width  - poolW) / Float(strideW)).rounded(.up))
 
             let output = Variable(batchSize, channels, outH, outW)
-            let name: String
-            switch poolType {
-            case .Average:  name = "Pool2DAVG"
-            case .Max:      name = "Pool2DMAX"
-            }
             
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
-            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.value.count), 1, 1)
+            let threadGroups = MTLSizeMake((output.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             
-            submitWork(name: name, in: input, output, param: param)
+            let poolParam = PoolParam(inputParam: input.getParam(),
+                                      outputParam: output.getParam(),
+                                      poolSizeX: poolW,
+                                      poolSizeY: poolH)
+            
+            let paramBuffer = makeBuffer(poolParam)
+            
+            submitWork(name: "Pool\(poolType.rawValue)", in: input, output, param: param, parameterBuffer: paramBuffer)
+            
             return output
         }
     }
-/*
-    /// return an inplace DropOut layer, it will modify
+    /// return an inplace Dropout layer, it will modify
     /// and return the input
     /// - parameter p: percentage to be dropped out
     /// - parameter seed: optional, random seed
-    public static func DropOut(network: NeuralNetwork, p: Double) -> Layer {
-        return { [unowned network] (_ input) in
+    public static func Dropout(p: Double, seed: UInt32? = nil) -> Layer {
+        return { (_ input) in
             assert(p >= 0 && p <= 1)
-            submitWork(network, name: "DropOut", data: input)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
+            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+            let s: UInt32
+            if seed == nil {
+                s = arc4random()
+            } else {
+                s = seed!
+            }
+            let dropoutParam = DropoutParam(inputParam: input.getParam(), p: p, seed: s)
+            let paramBuffer = makeBuffer(dropoutParam)
+            submitWork(name: "Dropout", in: input, param: param, parameterBuffer: paramBuffer)
             return input
         }
     }
 
+    /*
     /// return an Full Connected layer
     /// - parameter weight: dimension: num output class * input dimension
     /// - parameter bias: dimension: num output class * 1
@@ -151,7 +151,7 @@ public struct Corgy {
 }
 
 public extension Corgy {
-    static func getGroupNum (_ eleNum: Int, _ eleNumPerGroup: Int) -> Int {
+    static func getGroupNum(_ eleNum: Int, _ eleNumPerGroup: Int) -> Int {
         return  (eleNum + eleNumPerGroup - 1) / eleNumPerGroup
     }
     
@@ -168,7 +168,7 @@ public extension Corgy {
     }
     
     
-    public static func Neg2(network: NeuralNetwork) -> Layer {
+    public static func Neg2() -> Layer {
         return { ( _ input) in
             let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
             let threadGroups = MTLSizeMake(getGroupNum(input.value.count, THREAD_PER_GROUP), 1, 1)
@@ -181,5 +181,7 @@ public extension Corgy {
         }
     }
 }
+
+
 
 

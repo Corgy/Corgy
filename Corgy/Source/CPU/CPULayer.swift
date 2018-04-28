@@ -97,11 +97,11 @@ public struct CPU {
         }
     }
     
-    /// return an inplace DropOut layer, it will modify
+    /// return an inplace Dropout layer, it will modify
     /// and return the input
     /// - parameter p: percentage to be dropped out
     /// - parameter seed: optional, random seed
-    public static func DropOut(_ p: Double, seed: Int?) -> Layer {
+    public static func Dropout(_ p: Double, seed: Int?) -> Layer {
         return { (_ input) in
             assert(p >= 0 && p <= 1)
             srand48(seed ?? Int(arc4random()))
