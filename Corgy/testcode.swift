@@ -10,7 +10,7 @@ import Corgy
 
 @available(OSX 10.13, *)
 func test () {
-    GPUTest.testVariabel()
+    GPUTest.testConv2D()
 }
 
 enum CPUTest {
@@ -126,7 +126,7 @@ enum GPUTest {
                                   bias: bias
         )
         
-        let input = Variable(1, 4, 4)
+        let input = Variable(1, 1, 4, 4)
         for i in 0..<input.value.count {
             input.value[i] = Float(i)
         }

@@ -92,10 +92,12 @@ public class Variable : CustomStringConvertible {
     }
     
     // Trim leading 1 in the shape
-    private func trimDimension(_ v: Variable) {
+    public static func trimDimension(_ v: Variable, atMost: Int = Int.max) {
         var shape = v.getShape()
-        while shape[0] == 1 && shape.count > 1 {
+        var atMost = atMost
+        while shape[0] == 1 && shape.count > 1 && atMost > 0 {
             shape.remove(at: 0)
+            atMost = atMost - 1
         }
         v.setShape(shape)
     }
@@ -135,7 +137,7 @@ public class Variable : CustomStringConvertible {
             let ret = Variable(lens)
             
             recursiveSet(toSet: ret, indices: indices, sub: [])
-            trimDimension(ret)
+            // Variable.trimDimension(ret)
             return ret
         }
         set {

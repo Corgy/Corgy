@@ -21,11 +21,17 @@ public extension Corgy {
                               bias: Variable = Variable(0)
         ) -> Layer {
         return { (_ input) in
+            var inputShape = input.getShape()
+            //FIXME: Just support one image
+            assert(inputShape.count == 4 && inputShape[0] == 1)
+            Variable.trimDimension(input, atMost: 1)
+            inputShape = input.getShape()
+            
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize)
             let m2 = weightToMatrix(weight: weight, image: input)
             
             let res = Corgy.matrixMultiply(m1, m2)
-            let inputShape = input.getShape()
+            
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
             
