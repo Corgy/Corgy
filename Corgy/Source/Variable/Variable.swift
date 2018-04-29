@@ -91,6 +91,58 @@ public class Variable : CustomStringConvertible {
         }
     }
     
+    // Trim leading 1 in the shape
+    private func trimDimension(_ v: Variable) {
+        var shape = v.getShape()
+        while shape[0] == 1 && shape.count > 1 {
+            shape.remove(at: 0)
+        }
+        v.setShape(shape)
+    }
+    
+    private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: [Int]) {
+        var sub = sub
+        if sub.count == indices.count {
+            let origSub = sub
+            for i in 0..<sub.count {
+                sub[i] -= indices[i].lowerBound
+            }
+            toSet[sub] = self[origSub]
+            return
+        }
+        
+        let currIndex = sub.count
+        print(currIndex)
+        for num in [Int](indices[currIndex].lowerBound...indices[currIndex].upperBound) {
+            sub.append(num)
+            recursiveSet(toSet: toSet, indices: indices, sub: sub)
+            sub.remove(at: sub.count - 1)
+        }
+    }
+    
+    public subscript(indices: [Int]) -> DataType {
+        get {
+            return value[index(indices)]
+        }
+        set {
+            value[index(indices)] = newValue
+        }
+    }
+    
+    public subscript(indices: CountableClosedRange<Int>...) -> Variable {
+        get {
+            let lens = indices.map { $0.count }
+            let ret = Variable(lens)
+            
+            recursiveSet(toSet: ret, indices: indices, sub: [])
+            trimDimension(ret)
+            return ret
+        }
+        set {
+            fatalError()
+        }
+    }
+    
     public var description: String {
         return "Shape: \(shape)\nvalue: \(value)\n\(indexAuxilary)"
     }

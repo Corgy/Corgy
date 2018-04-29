@@ -10,12 +10,7 @@ import Corgy
 
 @available(OSX 10.13, *)
 func test () {
-    GPUTest.testConv2D()
-    GPUTest.testPoolMax()
-//    GPUTest.MNIST()
-//    CPUTest.MNIST()
-    
-    fatalError()
+    GPUTest.testVariabel()
 }
 
 enum CPUTest {
@@ -51,6 +46,7 @@ enum GPUTest {
         print(input)
         print("\n")
     }
+    
     static func testNeg() {
         let input = Variable(32,16)
         for i in 0..<input.value.count {
@@ -73,6 +69,7 @@ enum GPUTest {
         print(input)
         print("\n")
     }
+    
     static func testPoolMax() {
 //        let input = Variable.fromString(input: imageString)
         let input = Variable(1, 1, 32, 16)
@@ -85,12 +82,8 @@ enum GPUTest {
         let output = poolMax(input)
         print("\noutput: \n")
         output.printOneLayer(batch: 0, channel: 0)
-//        print("Max pooling layer(1): \ninput:\n")
-//        input.printOneLayer(batch: 0, channel: 1)
-//        print("\noutput: \n")
-//        output.printOneLayer(batch: 0, channel: 1)
-//        print("\n")
     }
+    
     static func testPoolAvg() {
         let input = Variable(1, 1, 32, 16)
         for i in 0..<input.value.count {
@@ -157,7 +150,18 @@ enum GPUTest {
         
         print(Corgy.matrixMultiply(v1, v2))
     }
-
+    
+    static func testVariabel() {
+        let v = Variable(3, 3, 3)
+        for i in 0..<v.value.count {
+            v.value[i] = Float(i)
+        }
+        
+        let x = v[1...1, 1...2, 1...2]
+        
+        print(x)
+    }
+    
     static func MNIST() {
         testMNIST(computeOn: .GPU)
     }
