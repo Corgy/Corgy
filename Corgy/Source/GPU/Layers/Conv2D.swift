@@ -44,10 +44,27 @@ public extension Corgy {
                 for h in 0..<outputHeight {
                     for w in 0..<outputWidth {
                         output[c, h, w] = res[outputWidth * h + w, c]
+                        
                     }
                 }
             }
-            print(res)
+            
+            if bias.value.count > 0 {
+                for c in 0..<outChannels {
+                    for h in 0..<outputHeight {
+                        for w in 0..<outputWidth {
+                            output[c, h, w] += bias[c]
+                            
+                        }
+                    }
+                }
+            }
+            // print(res)
+            
+            // FIXME: preassume that number of image is 1
+            var outputShape = output.getShape()
+            outputShape.insert(1, at: 0)
+            output.setShape(outputShape)
             
             return output
         }
@@ -89,12 +106,12 @@ public extension Corgy {
         assert(image.getShape().count == 3)
         let shape = image.getShape()
         let weightShape = weight.getShape()
-        let inChannel = shape[0]
+        let inChannel = weightShape[1]
         
         let kernelSize = weightShape[3]
         let kernelSize²  = kernelSize * kernelSize
         
-        let outChannel = weightShape[1]
+        let outChannel = weightShape[0]
         
         let outputWidth = outChannel
         let outputHeight = inChannel * kernelSize²
@@ -103,7 +120,9 @@ public extension Corgy {
         
         for i in 0..<outputHeight {
             for j in 0..<outputWidth {
-                output[i, j] = weight[i / kernelSize², j, i % kernelSize² / kernelSize, i % kernelSize² % kernelSize]
+                let h = i % kernelSize² / kernelSize
+                let w = i % kernelSize² % kernelSize
+                output[i, j] = weight[j, i / kernelSize², h, w]
             }
         }
         

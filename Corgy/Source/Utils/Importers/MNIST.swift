@@ -11,6 +11,7 @@ public enum ComputeOn {
     case CPU, GPU
 }
 
+@available(OSX 10.13, *)
 public class ModelImporter {
     public static func loadMNISTCNN(_ path: String, computeOn: ComputeOn) -> NeuralNetwork {
         let ret = NeuralNetwork()
@@ -39,10 +40,10 @@ public class ModelImporter {
                 .add(CPU.FullConnected(weight: layers[4], bias: layers[5]))
         case .GPU:
             ret
-                .add(CPU.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
+                .add(Corgy.Conv2D(inChannels: 1, outChannels: 16, kernelSize: kernelSize, weight: layers[0], bias: layers[1]))
                 .add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(CPU.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
+                .add(Corgy.Conv2D(inChannels: 16, outChannels: 32, kernelSize: kernelSize, weight: layers[2], bias: layers[3]))
                 .add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
                 .add(Corgy.flatten)

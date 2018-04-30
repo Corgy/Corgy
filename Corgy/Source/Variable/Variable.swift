@@ -84,9 +84,11 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: Int...) -> DataType {
         get {
+            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
+            assert(indices.count == shape.count)
             value[index(indices)] = newValue
         }
     }
@@ -124,6 +126,7 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: [Int]) -> DataType {
         get {
+            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
@@ -133,6 +136,7 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: CountableClosedRange<Int>...) -> Variable {
         get {
+            assert(indices.count == shape.count)
             let lens = indices.map { $0.count }
             let ret = Variable(lens)
             

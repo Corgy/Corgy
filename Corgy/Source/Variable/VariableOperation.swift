@@ -50,8 +50,7 @@ extension Corgy {
         let v2shape = v2.getShape()
         
         assert(v1shape[1] == v2shape[0])
-        print(v1)
-        print(v2)
+
         let v1row = v1shape[0]
         let v1col = v1shape[1]
         let v2col = v2shape[1]

@@ -10,9 +10,12 @@ import Corgy
 
 @available(OSX 10.13, *)
 func test () {
-    GPUTest.testConv2D()
+//    testMNIST()
+        GPUTest.MNIST()
+//    CPUTest.MNIST()
 }
 
+@available(OSX 10.13, *)
 enum CPUTest {
     static func MNIST() {
         testMNIST(computeOn: .CPU)
@@ -20,6 +23,7 @@ enum CPUTest {
 }
 
 
+@available(OSX 10.13, *)
 func testMNIST(computeOn: ComputeOn) {
     let network = ModelImporter.loadMNISTCNN("MNIST_CNN", computeOn: computeOn)
     let image = Image(named: Image.Name("four"))!
