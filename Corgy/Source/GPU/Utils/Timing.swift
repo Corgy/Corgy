@@ -8,7 +8,8 @@
 import Foundation
 import QuartzCore
 
-func timing(_ message: String? = nil, _ block: () -> Void) -> CFTimeInterval {
+@discardableResult
+public func timing(_ message: String? = nil, _ block: () -> Void) -> CFTimeInterval {
     let startTime = CACurrentMediaTime()
     block()
     let interval = CACurrentMediaTime() - startTime

@@ -10,9 +10,12 @@ import Corgy
 
 @available(OSX 10.13, *)
 func test () {
-//    testMNIST()
+    timing("GPU time: ") {
         GPUTest.MNIST()
-//    CPUTest.MNIST()
+    }
+    timing("CPU time: ") {
+        CPUTest.MNIST()
+    }
 }
 
 @available(OSX 10.13, *)

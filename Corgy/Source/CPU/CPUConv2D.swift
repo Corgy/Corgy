@@ -40,52 +40,53 @@ extension CPU {
       let outputWidth = inputWidth - kernelSize + 1
       let outputHeight = inputHeight - kernelSize + 1
       let output = Variable(N, outChannels, outputHeight, outputWidth)
-      
-      for i in 0..<N {
-        for kernelTopLeftRow in 0..<outputHeight {
-          for kernelTopLeftCol in 0..<outputWidth {
-            let kernelButtomRightRow = kernelTopLeftRow + kernelSize
-            let kernelButtomRightCol = kernelTopLeftCol + kernelSize
-            let slicedImages = Variable(inChannels, kernelSize, kernelSize)
-            
-            for ii in 0..<inChannels {
-              for jj in kernelTopLeftRow..<kernelButtomRightRow {
-                for kk in kernelTopLeftCol..<kernelButtomRightCol {
-                  slicedImages[ii, jj - kernelTopLeftRow, kk - kernelTopLeftCol] =
-                    input[i, ii, jj, kk]
-                }
-              }
-            }
-            
-            for outChannelIndex in 0..<outChannels {
-              let kernels = Variable(inChannels, kernelSize, kernelSize)
-              for ii in 0..<inChannels {
-                for jj in 0..<kernelSize {
-                  for kk in 0..<kernelSize {
-                    kernels[ii, jj, kk] =
-                      kernelWeights[outChannelIndex, ii, jj, kk]
+      timing("CPU conv connected: ") {
+          for i in 0..<N {
+            for kernelTopLeftRow in 0..<outputHeight {
+              for kernelTopLeftCol in 0..<outputWidth {
+                let kernelButtomRightRow = kernelTopLeftRow + kernelSize
+                let kernelButtomRightCol = kernelTopLeftCol + kernelSize
+                let slicedImages = Variable(inChannels, kernelSize, kernelSize)
+                
+                for ii in 0..<inChannels {
+                  for jj in kernelTopLeftRow..<kernelButtomRightRow {
+                    for kk in kernelTopLeftCol..<kernelButtomRightCol {
+                      slicedImages[ii, jj - kernelTopLeftRow, kk - kernelTopLeftCol] =
+                        input[i, ii, jj, kk]
+                    }
                   }
                 }
-              }
-              var sum = Float(0.0)
-              for inChannelIndex in 0..<inChannels {
-                for ii in 0..<kernelSize {
-                  for jj in 0..<kernelSize {
-                    let n1 = kernels[inChannelIndex, ii, jj]
-                    let n2 = slicedImages[inChannelIndex, ii, jj]
-                    sum += n1 * n2
+                
+                for outChannelIndex in 0..<outChannels {
+                  let kernels = Variable(inChannels, kernelSize, kernelSize)
+                  for ii in 0..<inChannels {
+                    for jj in 0..<kernelSize {
+                      for kk in 0..<kernelSize {
+                        kernels[ii, jj, kk] =
+                          kernelWeights[outChannelIndex, ii, jj, kk]
+                      }
+                    }
                   }
+                  var sum = Float(0.0)
+                  for inChannelIndex in 0..<inChannels {
+                    for ii in 0..<kernelSize {
+                      for jj in 0..<kernelSize {
+                        let n1 = kernels[inChannelIndex, ii, jj]
+                        let n2 = slicedImages[inChannelIndex, ii, jj]
+                        sum += n1 * n2
+                      }
+                    }
+                  }
+                  
+                  if bias.value.count > 0 {
+                    sum += bias[outChannelIndex]
+                  }
+                  
+                  output[i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol] = sum
                 }
               }
-              
-              if bias.value.count > 0 {
-                sum += bias[outChannelIndex]
-              }
-              
-              output[i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol] = sum
             }
           }
-        }
       }
       return output
     }

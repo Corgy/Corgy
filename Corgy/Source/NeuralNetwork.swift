@@ -19,10 +19,10 @@ public class NeuralNetwork {
     public func forward(_ x: Variable) ->Variable {
         var output = x
         for layer in layers {
-            print("Input: ")
-            output.printOneLayer()
+//            print("Input: ")
+//            output.printOneLayer()
             output = layer(output)
-            print("One layer!")
+//            print("One layer!")
         }
         return output
     }

@@ -39,32 +39,33 @@ public extension Corgy {
             let outputWidth = inputWidth - kernelSize + 1
             
             let output = Variable(outChannels, outputHeight, outputWidth)
-            
-            for c in 0..<outChannels {
-                for h in 0..<outputHeight {
-                    for w in 0..<outputWidth {
-                        output[c, h, w] = res[outputWidth * h + w, c]
-                        
-                    }
-                }
-            }
-            
-            if bias.value.count > 0 {
+            timing("GPU conv connected: ") {
                 for c in 0..<outChannels {
                     for h in 0..<outputHeight {
                         for w in 0..<outputWidth {
-                            output[c, h, w] += bias[c]
+                            output[c, h, w] = res[outputWidth * h + w, c]
                             
                         }
                     }
                 }
+                
+                if bias.value.count > 0 {
+                    for c in 0..<outChannels {
+                        for h in 0..<outputHeight {
+                            for w in 0..<outputWidth {
+                                output[c, h, w] += bias[c]
+                                
+                            }
+                        }
+                    }
+                }
+                // print(res)
+                
+                // FIXME: preassume that number of image is 1
+                var outputShape = output.getShape()
+                outputShape.insert(1, at: 0)
+                output.setShape(outputShape)
             }
-            // print(res)
-            
-            // FIXME: preassume that number of image is 1
-            var outputShape = output.getShape()
-            outputShape.insert(1, at: 0)
-            output.setShape(outputShape)
             
             return output
         }

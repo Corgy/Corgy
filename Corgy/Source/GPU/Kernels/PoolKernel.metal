@@ -44,7 +44,7 @@ kernel void PoolMAX(const device float *input [[ buffer(0) ]],
     int inputIndex = batchID * (param->inputParam.sizePerBatch) +
     channelID * (param->inputParam.sizePerChannel) +
     inputRow * (param->inputParam.width) + inputCol;
-    int m = max(input[inputIndex], input[inputIndex+1]);
-    int n = max(input[inputIndex+(param->inputParam.width)], input[inputIndex+1+(param->inputParam.width)]);
-    output[id] = max(m, n);
+    float m = max(input[inputIndex], input[inputIndex+1]);
+    float n = max(input[inputIndex+(param->inputParam.width)], input[inputIndex+1+(param->inputParam.width)]);
+    output[id] = max(m, n);    
 }

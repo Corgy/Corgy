@@ -125,12 +125,14 @@ public enum CPU {
                 assert(bias?.getShape().count == 1 && bias?.getShape()[0] == weight.getShape()[0])
             }
             let out = Variable(weight.getShape()[0])
-            for i in 0..<weight.getShape()[0] {
-                out[i] = bias?[i] ?? 0
-                for j in 0..<weight.getShape()[1] {
-                    out[i] += input.value[j] * weight[i, j]
+//            timing("Fully connected: ") {
+                for i in 0..<weight.getShape()[0] {
+                    out[i] = bias?[i] ?? 0
+                    for j in 0..<weight.getShape()[1] {
+                        out[i] += input.value[j] * weight[i, j]
+                    }
                 }
-            }
+//            }
             return out
         }
     }
