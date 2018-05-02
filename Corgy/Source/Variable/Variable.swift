@@ -84,24 +84,24 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: Int...) -> DataType {
         get {
-            assert(indices.count == shape.count)
+//            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
-            assert(indices.count == shape.count)
+//            assert(indices.count == shape.count)
             value[index(indices)] = newValue
         }
     }
     
     // Trim leading 1 in the shape
-    public static func trimDimension(_ v: Variable, atMost: Int = Int.max) {
-        var shape = v.getShape()
+    public func trimDimension(atMost: Int = Int.max) {
+        var shape = getShape()
         var atMost = atMost
         while shape[0] == 1 && shape.count > 1 && atMost > 0 {
             shape.remove(at: 0)
             atMost = atMost - 1
         }
-        v.setShape(shape)
+        setShape(shape)
     }
     
     private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: [Int]) {
@@ -126,7 +126,7 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: [Int]) -> DataType {
         get {
-            assert(indices.count == shape.count)
+//            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
@@ -136,7 +136,7 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: CountableClosedRange<Int>...) -> Variable {
         get {
-            assert(indices.count == shape.count)
+//            assert(indices.count == shape.count)
             let lens = indices.map { $0.count }
             let ret = Variable(lens)
             

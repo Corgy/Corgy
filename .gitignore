@@ -2,3 +2,4 @@
 *.xcuserstate
 xcuserdata
 mnist/data/*
+xcshareddata

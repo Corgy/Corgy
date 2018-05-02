@@ -24,7 +24,7 @@ public extension Corgy {
             var inputShape = input.getShape()
             //FIXME: Just support one image
             assert(inputShape.count == 4 && inputShape[0] == 1)
-            Variable.trimDimension(input, atMost: 1)
+            input.trimDimension(atMost: 1)
             inputShape = input.getShape()
             
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize)
@@ -39,7 +39,7 @@ public extension Corgy {
             let outputWidth = inputWidth - kernelSize + 1
             
             let output = Variable(outChannels, outputHeight, outputWidth)
-            timing("GPU conv connected: ") {
+            timing("GPU conv: ") {
                 for c in 0..<outChannels {
                     for h in 0..<outputHeight {
                         for w in 0..<outputWidth {
@@ -105,7 +105,6 @@ public extension Corgy {
     
     fileprivate static func weightToMatrix(weight: Variable, image: Variable) -> Variable {
         assert(image.getShape().count == 3)
-        let shape = image.getShape()
         let weightShape = weight.getShape()
         let inChannel = weightShape[1]
         

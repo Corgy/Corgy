@@ -10,12 +10,8 @@ import Corgy
 
 @available(OSX 10.13, *)
 func test () {
-    timing("GPU time: ") {
-        GPUTest.MNIST()
-    }
-    timing("CPU time: ") {
-        CPUTest.MNIST()
-    }
+    GPUTest.MNIST()
+    CPUTest.MNIST()
 }
 
 @available(OSX 10.13, *)
@@ -28,11 +24,18 @@ enum CPUTest {
 
 @available(OSX 10.13, *)
 func testMNIST(computeOn: ComputeOn) {
-    let network = ModelImporter.loadMNISTCNN("MNIST_CNN", computeOn: computeOn)
-    let image = Image(named: Image.Name("four"))!
-    let input = Variable.of(grayScaleImage: image)
-    let output = network.forward(input)
-    print(output)
+    timing("\(computeOn):") {
+        let network = ModelImporter.loadMNISTCNN("MNIST_CNN", computeOn: computeOn)
+        let image: Image
+        #if os(iOS)
+            image = Image(named: "four")!
+        #elseif os(OSX)
+            image = Image(named: Image.Name("four"))!
+        #endif
+        let input = Variable.of(grayScaleImage: image)
+        let output = network.forward(input)
+        print(output)
+    }
 }
 
 @available(OSX 10.13, *)

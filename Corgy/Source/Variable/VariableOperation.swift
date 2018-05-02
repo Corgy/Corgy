@@ -11,22 +11,26 @@ import MetalPerformanceShaders
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
-extension Corgy {
-    public static func variableToMPSMatrix (_ v: Variable) -> MPSMatrix {
-        let vshape = v.getShape()
+extension Variable {
+    public func toMPSMatrix () -> MPSMatrix {
+        let vshape = self.getShape()
         assert(vshape.count == 2)
         let vrow = vshape[0]
         let vcol = vshape[1]
         
         let vd = MPSMatrixDescriptor(rows: vrow, columns: vcol, rowBytes: MemoryLayout<Float>.size * vcol, dataType: MPSDataType.float32)
         
-        let vbuffer = resource.device.makeBuffer(bytes: &v.value, length: MemoryLayout<Float>.size * v.value.count, options: [])!
+        let vbuffer = Corgy.resource.device.makeBuffer(bytes: &self.value, length: MemoryLayout<Float>.size * self.value.count, options: [])!
         
         let vmatrix = MPSMatrix(buffer: vbuffer, descriptor: vd)
         
         return vmatrix
     }
-    
+}
+
+@available(OSX 10.13, *)
+@available(iOS 10.0, *)
+extension Corgy {
     public static func MPSMatrixToVariable(_ m : MPSMatrix) -> Variable {
         let ncol = m.columns
         let nrow = m.rows
@@ -56,10 +60,10 @@ extension Corgy {
         let v2col = v2shape[1]
         
         var result = Variable(v1row, v2col)
-        let resm = variableToMPSMatrix(result)
+        let resm = result.toMPSMatrix()
         
-        let v1m = variableToMPSMatrix(v1)
-        let v2m = variableToMPSMatrix(v2)
+        let v1m = v1.toMPSMatrix()
+        let v2m = v2.toMPSMatrix()
         
         let mul = MPSMatrixMultiplication(device: Corgy.resource.device,
                                           transposeLeft: false, transposeRight: false,
