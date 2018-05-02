@@ -15,7 +15,11 @@ extension Corgy {
         let commandQueue: MTLCommandQueue!
         init() {
             device = MTLCreateSystemDefaultDevice()
-            library = device.makeDefaultLibrary()
+            let frameworkBundle = Bundle(for: NeuralNetwork.self)
+            guard let defaultLibrary = try? device.makeDefaultLibrary(bundle: frameworkBundle) else {
+                fatalError("Could not load default library from specified bundle")
+            }
+            library = defaultLibrary
             commandQueue = device.makeCommandQueue()
         }
     }
