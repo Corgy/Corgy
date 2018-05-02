@@ -33,8 +33,8 @@
 		1EB2F9B42089991A00DDFEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9B22089991A00DDFEEC /* LaunchScreen.storyboard */; };
 		1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
 		1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
-		796FA8B9209959EC0070BE99 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		796FA8BA209959EC0070BE99 /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		797F0EEA209A0A10009247A9 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		797F0EEB209A0A10009247A9 /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79B4BA90209952400077CB09 /* testcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCDA7208BCB2500DA6C55 /* testcode.swift */; };
 		79BEE70120993B29001381AC /* Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E522094FD7E00502D98 /* Timing.swift */; };
 		79BEE70220993B29001381AC /* Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E522094FD7E00502D98 /* Timing.swift */; };
@@ -42,8 +42,6 @@
 		B903C48720953813000D362B /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C48520953813000D362B /* VariableOperation.swift */; };
 		B903C4892095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
 		B903C48A2095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
-		B99E87CE208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
-		B99E87CF208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D0208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D1208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
@@ -86,7 +84,7 @@
 			remoteGlobalIDString = 1EB2F959208992D600DDFEEC;
 			remoteInfo = "Corgy macOS";
 		};
-		796FA8B02099592C0070BE99 /* PBXContainerItemProxy */ = {
+		797F0EE8209A0A02009247A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1EB2F9412089927900DDFEEC /* Project object */;
 			proxyType = 1;
@@ -96,16 +94,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		796FA8B8209959B00070BE99 /* Embed Frameworks */ = {
+		797F0EEC209A0A10009247A9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				796FA8BA209959EC0070BE99 /* Corgy.framework in Embed Frameworks */,
+				797F0EEB209A0A10009247A9 /* Corgy.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -184,7 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				796FA8B9209959EC0070BE99 /* Corgy.framework in Frameworks */,
+				797F0EEA209A0A10009247A9 /* Corgy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,12 +429,12 @@
 				1EB2F9A32089991A00DDFEEC /* Sources */,
 				1EB2F9A42089991A00DDFEEC /* Frameworks */,
 				1EB2F9A52089991A00DDFEEC /* Resources */,
-				796FA8B8209959B00070BE99 /* Embed Frameworks */,
+				797F0EEC209A0A10009247A9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				796FA8B12099592C0070BE99 /* PBXTargetDependency */,
+				797F0EE9209A0A02009247A9 /* PBXTargetDependency */,
 			);
 			name = CorgyiOS;
 			productName = CorgyiOS;
@@ -507,7 +505,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B99E87CE208E56BD00E21C10 /* Models in Resources */,
 				1EB2F9652089931200DDFEEC /* Info-iOS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,7 +513,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B99E87CF208E56BD00E21C10 /* Models in Resources */,
 				1EB2F9682089931C00DDFEEC /* Info-macOS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,10 +618,10 @@
 			target = 1EB2F959208992D600DDFEEC /* Corgy macOS */;
 			targetProxy = 1E859A6D2089A1D100379883 /* PBXContainerItemProxy */;
 		};
-		796FA8B12099592C0070BE99 /* PBXTargetDependency */ = {
+		797F0EE9209A0A02009247A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1EB2F94B208992AD00DDFEEC /* Corgy iOS */;
-			targetProxy = 796FA8B02099592C0070BE99 /* PBXContainerItemProxy */;
+			targetProxy = 797F0EE8209A0A02009247A9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
