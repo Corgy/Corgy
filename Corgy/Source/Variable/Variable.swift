@@ -18,13 +18,6 @@ public class Variable : CustomStringConvertible {
     public var value: [DataType]
     private var indexAuxilary: [Int]
     
-    private init() {
-        value = []
-        indexAuxilary = []
-        count = 0
-        self.shape = []
-    }
-    
     public func setShape(_ shape:[Int]) {
         self.shape = shape
         indexAuxilary = Array(repeating: 0, count: shape.count)

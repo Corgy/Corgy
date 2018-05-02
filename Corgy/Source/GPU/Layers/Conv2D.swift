@@ -9,6 +9,7 @@ import Foundation
 import Metal
 
 @available(OSX 10.13, *)
+@available(iOS 10.0, *)
 public extension Corgy {
     public static func Conv2D(inChannels: Int,
                               outChannels: Int,
