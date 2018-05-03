@@ -18,11 +18,12 @@ public class NeuralNetwork {
     
     public func forward(_ x: Variable) ->Variable {
         var output = x
-        for layer in layers {
+        for (i, layer) in layers.enumerated() {
 //            print("Input: ")
 //            output.printOneLayer()
-            output = layer(output)
-//            print("One layer!")
+            timing("One Layer") {
+                output = layer(output)
+            }
         }
         return output
     }

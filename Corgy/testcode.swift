@@ -12,35 +12,46 @@ import Corgy
 @available(iOS 10.0, *)
 func test () {
     async {
-        GPUTest.MNIST()
-//        CPUTest.MNIST()
+        let imageName = "four_colored"
+        #if os(iOS)
+        let image = Image(named: imageName)!
+        #elseif os(OSX)
+        let image = Image(named: Image.Name(imageName))!
+        #endif
+        testYolo(image: image, computeOn: .GPU)
     }
 }
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 enum CPUTest {
-    static func MNIST() {
-        testMNIST(computeOn: .CPU)
+    static func MNIST(image: Image) {
+        testMNIST(image: image, computeOn: .CPU)
     }
 }
 
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
-func testMNIST(computeOn: ComputeOn) {
+func testMNIST(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.loadMNISTCNN("MNIST_CNN", computeOn: computeOn)
-    timing("\(computeOn) 500 times:") {
-        #if os(iOS)
-        let image = Image(named: "four")!
-        #elseif os(OSX)
-        let image = Image(named: Image.Name("four"))!
-        #endif
-        for _ in 0...500 {
-            let input = Variable.of(grayScaleImage: image)
-            let _ = network.forward(input)
-        }
+    timing("\(computeOn): 500 times") {
+//        for _ in 0...500 {
+            let input = Variable.of(image: image, to: (28, 28))
+            let output = network.forward(input)
+            print(output)
+//        }
     }
+}
+
+@available(OSX 10.13, *)
+@available(iOS 10.0, *)
+func testYolo(image: Image, computeOn: ComputeOn) {
+    let network = ModelImporter.importYolo(computeOn: computeOn)
+    let input = Variable.of(image: image, to: (416, 416))
+    print("start")
+    let output = network.forward(input)
+    print(output)
 }
 
 @available(OSX 10.13, *)
@@ -50,7 +61,7 @@ enum GPUTest {
         let relu = Corgy.ReLU
         let input = Variable(32,16)
         for i in 0..<input.value.count {
-            input.value[i] = Float(i)
+            input.value[i] = Variable.DataType(i)
             if i % 2 == 0 {
                 input.value[i] = -input.value[i]
             }
@@ -66,7 +77,7 @@ enum GPUTest {
     static func testNeg() {
         let input = Variable(32,16)
         for i in 0..<input.value.count {
-            input.value[i] = Float(i)
+            input.value[i] = Variable.DataType(i)
         }
         
         let neg2 = Corgy.Neg2()
@@ -89,7 +100,7 @@ enum GPUTest {
     static func testPoolMax() {
         let input = Variable(1, 1, 32, 16)
         for i in 0..<input.value.count {
-            input.value[i] = Float(i)
+            input.value[i] = Variable.DataType(i)
         }
         let poolMax = Corgy.Pool(poolSize: (2, 2), poolType: .Max)
         print("Max pooling layer: \ninput:\n")
@@ -102,7 +113,7 @@ enum GPUTest {
     static func testPoolAvg() {
         let input = Variable(1, 1, 32, 16)
         for i in 0..<input.value.count {
-            input.value[i] = Float(i)
+            input.value[i] = Variable.DataType(i)
         }
         let poolAve = Corgy.Pool(poolSize: (2, 2), poolType: .Average)
         print("Avg pooling layer: \ninput:\n")
@@ -115,7 +126,7 @@ enum GPUTest {
     static func testDropout() {
         let input = Variable(1, 1, 32, 16)
         for i in 0..<input.value.count {
-            input.value[i] = Float(i)
+            input.value[i] = Variable.DataType(i)
         }
         let poolAve = Corgy.Dropout(p: 0.9)
         print("Dropout layer: \ninput:\n")
@@ -128,7 +139,7 @@ enum GPUTest {
     static func testConv2D() {
         let weight = Variable(1, 2, 2, 2)
         for i in 0..<weight.value.count {
-            weight.value[i] = Float(i)
+            weight.value[i] = Variable.DataType(i)
         }
         
         let bias   = Variable(2)
@@ -143,7 +154,7 @@ enum GPUTest {
         
         let input = Variable(1, 1, 4, 4)
         for i in 0..<input.value.count {
-            input.value[i] = Float(i)
+            input.value[i] = Variable.DataType(i)
         }
         
         let output = conv2d(input)
@@ -156,12 +167,12 @@ enum GPUTest {
     static func testMultiply() {
         let v1 = Variable(4, 4)
         for i in 0..<v1.value.count {
-            v1.value[i] = Float(i);
+            v1.value[i] = Variable.DataType(i);
         }
         
         let v2 = Variable(4, 4)
         for i in 0..<v2.value.count {
-            v2.value[i] = Float(i);
+            v2.value[i] = Variable.DataType(i);
         }
         
         print(Corgy.matrixMultiply(v1, v2))
@@ -170,7 +181,7 @@ enum GPUTest {
     static func testVariabel() {
         let v = Variable(3, 3, 3)
         for i in 0..<v.value.count {
-            v.value[i] = Float(i)
+            v.value[i] = Variable.DataType(i)
         }
         
         let x = v[1...1, 1...2, 1...2]
@@ -178,7 +189,7 @@ enum GPUTest {
         print(x)
     }
     
-    static func MNIST() {
-        testMNIST(computeOn: .GPU)
+    static func MNIST(image: Image) {
+        testMNIST(image: image, computeOn: .GPU)
     }
 }

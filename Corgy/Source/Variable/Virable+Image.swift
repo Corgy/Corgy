@@ -23,35 +23,54 @@ fileprivate func cgImageOf(image: Image) -> CGImage {
         return image.cgImage(forProposedRect: &rect, context: nil, hints: nil)!
     #endif
 }
+//fileprivate func resize(image: Image, to size: CGSize) -> CGImage {
+//
+//}
 
 public extension Variable {
-    public static func of(image: Image) -> Variable {
-        fatalError()
-    }
-    public static func of(grayScaleImage image: Image) -> Variable {
+    
+    /// create a (1, 3, height, width) Variable out of an image
+    /// - parameter size: if provided, image will be resized to size.width and size.height
+    public static func of(image: Image, to size: (Int, Int)? = nil) -> Variable {
         let cgImage = cgImageOf(image: image)
-        let width = cgImage.width
-        let height = cgImage.height
+        let (width, height) = size ?? (cgImage.width, cgImage.height)
+        let bitsPerComponent = cgImage.bitsPerComponent
+        let bytesPerRow = cgImage.bytesPerRow
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        var pixels = [UInt8](repeating: 0, count: height * width * 4)
+        let contexRef = CGContext(data: &pixels, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        contexRef!.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        let v = Variable(1, 3, height, width)
+        let channelSize = height * width
+        for i in 0..<(pixels.count/4) {
+            // ith pixel
+            v.value[i] = (1 - DataType(pixels[i * 4]) / 255)
+            v.value[channelSize + i] = (1 - DataType(pixels[i * 4 + 1]) / 255)
+            v.value[channelSize * 2 + i] = (1 - DataType(pixels[i * 4 + 2]) / 255)
+        }
+        return v
+    }
+    /// create a (1, 1, height, width) Variable out of an grayscale image
+    /// - parameter image: a grayscale image. it must be a grayscale. we didn't add code
+    ///                   to convert a colored image to a grayscale image.
+    /// - parameter size: if provided, image will be resized to size.width and size.height
+    public static func of(grayScaleImage image: Image, to size: (Int, Int)? = nil) -> Variable {
+        let cgImage = cgImageOf(image: image)
+        
+        let (width, height) = size ?? (cgImage.width, cgImage.height)
         let bitsPerComponent = cgImage.bitsPerComponent
         let bytesPerRow = cgImage.bytesPerRow
         
         let colorSpace = CGColorSpaceCreateDeviceGray()
         var pixelValues = [UInt8](repeating: 0, count: height * width)
-        
+        let v = Variable(1, 1, height, width)
         let contextRef = CGContext(data: &pixelValues, width: width, height: height, bitsPerComponent: bitsPerComponent,
                                    bytesPerRow: bytesPerRow / 2, space: colorSpace, bitmapInfo: 0)
-        contextRef?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
-        
-        let v = Variable(1, 1, height, width)
-        v.value = pixelValues.map { 1 - Float($0) / 255 }
-        
-//        for i in 0..<28 {
-//            for j in 0..<28 {
-//                print(String(format: " %.4f", v.value[i*28+j]), terminator: "")
-//            }
-//            print("")
-//        }
-        
+        contextRef!.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+        v.value = pixelValues.map { 1 - DataType($0) / 255 }
         return v
     }
 }
+

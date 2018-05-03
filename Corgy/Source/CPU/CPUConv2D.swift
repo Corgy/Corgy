@@ -40,7 +40,7 @@ extension CPU {
       let outputWidth = inputWidth - kernelSize + 1
       let outputHeight = inputHeight - kernelSize + 1
       let output = Variable(N, outChannels, outputHeight, outputWidth)
-      timing("CPU conv: ") {
+//      timing("CPU conv: ") {
           for i in 0..<N {
             for kernelTopLeftRow in 0..<outputHeight {
               for kernelTopLeftCol in 0..<outputWidth {
@@ -87,7 +87,7 @@ extension CPU {
               }
             }
           }
-      }
+//      }
       return output
     }
   }

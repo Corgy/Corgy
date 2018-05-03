@@ -18,9 +18,9 @@ extension Variable {
         let vrow = vshape[0]
         let vcol = vshape[1]
         
-        let vd = MPSMatrixDescriptor(rows: vrow, columns: vcol, rowBytes: MemoryLayout<Float>.size * vcol, dataType: MPSDataType.float32)
+        let vd = MPSMatrixDescriptor(rows: vrow, columns: vcol, rowBytes: MemoryLayout<DataType>.size * vcol, dataType: MPSDataType.float32)
         
-        let vbuffer = Corgy.resource.device.makeBuffer(bytes: &self.value, length: MemoryLayout<Float>.size * self.value.count, options: [])!
+        let vbuffer = Corgy.resource.device.makeBuffer(bytes: &self.value, length: MemoryLayout<DataType>.size * self.value.count, options: [])!
         
         let vmatrix = MPSMatrix(buffer: vbuffer, descriptor: vd)
         
@@ -38,7 +38,7 @@ extension Corgy {
         
         let rawPointer = m.data.contents()
         let opaque = OpaquePointer(rawPointer)
-        let pointer = UnsafeMutablePointer<Float>(opaque)
+        let pointer = UnsafeMutablePointer<Variable.DataType>(opaque)
         
         for i in 0..<nrow {
             for j in 0..<ncol {

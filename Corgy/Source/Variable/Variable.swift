@@ -11,7 +11,7 @@ import Foundation
 public typealias Layer = (_: Variable) -> Variable
 
 public class Variable : CustomStringConvertible {
-    public typealias DataType = Float
+    public typealias DataType = Float32
     private var shape: [Int]
     
     private var count: Int
@@ -167,7 +167,7 @@ extension Variable {
         let v = Variable(shape)
         let tail = lines[1]
         v.value = tail.replacingOccurrences(of: "\n", with: " ").split(separator: " ")
-        .map { Float($0)! }
+        .map { DataType($0)! }
         return v
     }
     

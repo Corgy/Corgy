@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import QuartzCore
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
@@ -28,10 +29,14 @@ public extension Corgy {
             input.trimDimension(atMost: 1)
             inputShape = input.getShape()
             
+            let t1 = CACurrentMediaTime()
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize)
+            let t2 = CACurrentMediaTime()
             let m2 = weightToMatrix(weight: weight, image: input)
-            
+            let t3 = CACurrentMediaTime()
             let res = Corgy.matrixMultiply(m1, m2)
+            let intvl = CACurrentMediaTime() - t3;
+            print("\tConv matrix op: \(t2-t1), \(t3-t2), \(intvl) seconds")
             
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
@@ -40,7 +45,7 @@ public extension Corgy {
             let outputWidth = inputWidth - kernelSize + 1
             
             let output = Variable(outChannels, outputHeight, outputWidth)
-            timing("GPU conv: ") {
+            timing("\tGPU conv: ") {
                 for c in 0..<outChannels {
                     for h in 0..<outputHeight {
                         for w in 0..<outputWidth {
@@ -67,7 +72,7 @@ public extension Corgy {
                 outputShape.insert(1, at: 0)
                 output.setShape(outputShape)
             }
-            
+        
             return output
         }
     }

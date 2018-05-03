@@ -16,7 +16,25 @@
                     <view key="view" contentMode="scaleToFill" id="1pK-KO-i72">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpP-49-Vx1">
+                                <rect key="frame" x="90" y="319.5" width="194" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <size key="titleShadowOffset" width="3" height="6"/>
+                                <state key="normal" title="Do Not Press!!!">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.8012205958366394" green="0.073901258409023285" blue="0.16153854131698608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vMJ-S2-1mf"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bpP-49-Vx1" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="GJd-wX-vAj"/>
+                            <constraint firstItem="bpP-49-Vx1" firstAttribute="centerY" secondItem="fTC-e1-bOX" secondAttribute="centerY" id="nN1-nD-xLA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fTC-e1-bOX"/>
                     </view>
                 </viewController>
