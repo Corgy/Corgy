@@ -119,7 +119,7 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: [Int]) -> DataType {
         get {
-//            assert(indices.count == shape.count)
+            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
