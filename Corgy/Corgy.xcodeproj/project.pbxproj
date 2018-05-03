@@ -35,6 +35,8 @@
 		1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
 		797F0EEA209A0A10009247A9 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		797F0EEB209A0A10009247A9 /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		797F0EEE209A2BAA009247A9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EED209A2BAA009247A9 /* Async.swift */; };
+		797F0EEF209A2BAA009247A9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EED209A2BAA009247A9 /* Async.swift */; };
 		79B4BA90209952400077CB09 /* testcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9CCDA7208BCB2500DA6C55 /* testcode.swift */; };
 		79BEE70120993B29001381AC /* Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E522094FD7E00502D98 /* Timing.swift */; };
 		79BEE70220993B29001381AC /* Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E400E522094FD7E00502D98 /* Timing.swift */; };
@@ -134,6 +136,7 @@
 		1EB2F9B32089991A00DDFEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1EB2F9B52089991A00DDFEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
+		797F0EED209A2BAA009247A9 /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		B903C48520953813000D362B /* VariableOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableOperation.swift; sourceTree = "<group>"; };
 		B903C4882095386E000D362B /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
@@ -308,6 +311,7 @@
 				B99E87F72094058400E21C10 /* Miscellaneous.swift */,
 				B99E87FA2094063000E21C10 /* CorgyResource.swift */,
 				1E400E522094FD7E00502D98 /* Timing.swift */,
+				797F0EED209A2BAA009247A9 /* Async.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -548,6 +552,7 @@
 				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				B99E87EB2094042800E21C10 /* Dropout.swift in Sources */,
 				B99E87F1209404EC00E21C10 /* FullConnected.swift in Sources */,
+				797F0EEE209A2BAA009247A9 /* Async.swift in Sources */,
 				B99E87F52094053900E21C10 /* SubmitWork.swift in Sources */,
 				1EB2F9732089945700DDFEEC /* Corgy.swift in Sources */,
 				B99E87FB2094063000E21C10 /* CorgyResource.swift in Sources */,
@@ -578,6 +583,7 @@
 				B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */,
 				1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */,
+				797F0EEF209A2BAA009247A9 /* Async.swift in Sources */,
 				B99E87E92094041600E21C10 /* Conv2D.swift in Sources */,
 				1EB2F97A2089946700DDFEEC /* Corgy.swift in Sources */,
 				B99E87EF2094046A00E21C10 /* Pool.swift in Sources */,
