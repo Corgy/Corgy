@@ -7,6 +7,7 @@
 
 import Foundation
 import Corgy
+import QuartzCore
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
@@ -19,6 +20,10 @@ func test () {
         let image = Image(named: Image.Name(imageName))!
         #endif
         testYolo(image: image, computeOn: .GPU)
+    }
+    timing("GPU time: ") {
+//        GPUTest.testLeakyReLU()
+        GPUTest.testConv2D()
     }
 }
 
@@ -137,28 +142,29 @@ enum GPUTest {
     }
     
     static func testConv2D() {
-        let weight = Variable(1, 2, 2, 2)
+        let weight = Variable(2, 1, 3, 3)
         for i in 0..<weight.value.count {
             weight.value[i] = Variable.DataType(i)
         }
-        
+    
         let bias   = Variable(2)
         bias.value = [1, 2]
-        
+
         let conv2d = Corgy.Conv2D(inChannels:  1,
                                   outChannels: 2,
-                                  kernelSize:  2,
+                                  kernelSize:  3,
+                                  padding: 1,
                                   weight: weight,
                                   bias: bias
         )
-        
+
         let input = Variable(1, 1, 4, 4)
         for i in 0..<input.value.count {
             input.value[i] = Variable.DataType(i)
         }
-        
+
         let output = conv2d(input)
-        
+
         print(output)
     }
     
@@ -191,5 +197,21 @@ enum GPUTest {
     
     static func MNIST(image: Image) {
         testMNIST(image: image, computeOn: .GPU)
+    }
+    
+    static func testLeakyReLU() {
+        let leakyReLU = Corgy.LeakyReLU()
+        let input = Variable(1,1,1,5)
+        
+        for i in 0..<5 {
+            if i % 2 == 0 {
+                input.value[i] = Float(-i)
+            } else {
+                input.value[i] = Float(i)
+            }
+        }
+        
+        let output = leakyReLU(input)
+        print(output)
     }
 }

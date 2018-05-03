@@ -12,6 +12,27 @@ import QuartzCore
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 public extension Corgy {
+    // Padding a variable with shape of (c, h, w)
+    public static func padding(_ input: Variable, paddingWith: Int) -> Variable {
+        let inputShape = input.getShape()
+        assert(inputShape.count == 3)
+        let c = inputShape[0]
+        let h = inputShape[1]
+        let w = inputShape[2]
+        
+        let output = Variable(c, h + 2 * paddingWith, w + 2 * paddingWith)
+        
+        for i in 0..<c {
+            for j in 0..<h {
+                for k in 0..<w {
+                    output[i, j + paddingWith, k + paddingWith] = input[i, j, k]
+                }
+            }
+        }
+        
+        return output
+    }
+    
     public static func Conv2D(inChannels: Int,
                               outChannels: Int,
                               kernelSize: Int,
@@ -24,11 +45,17 @@ public extension Corgy {
         ) -> Layer {
         return { (_ input) in
             var inputShape = input.getShape()
+            var input = input
+            
             //FIXME: Just support one image
             assert(inputShape.count == 4 && inputShape[0] == 1)
             input.trimDimension(atMost: 1)
+            
+            input = Corgy.padding(input, paddingWith: padding)
+            
             inputShape = input.getShape()
             
+            // FIXME: Serialized conversion, one performance bottleneck
             let t1 = CACurrentMediaTime()
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize)
             let t2 = CACurrentMediaTime()
@@ -54,25 +81,25 @@ public extension Corgy {
                         }
                     }
                 }
-                
-                if bias.value.count > 0 {
-                    for c in 0..<outChannels {
-                        for h in 0..<outputHeight {
-                            for w in 0..<outputWidth {
-                                output[c, h, w] += bias[c]
-                                
+                timing ("Conv2D out") {
+                    if bias.value.count > 0 {
+                        for c in 0..<outChannels {
+                            for h in 0..<outputHeight {
+                                for w in 0..<outputWidth {
+                                    output[c, h, w] += bias[c]
+                                    
+                                }
                             }
                         }
                     }
                 }
-                // print(res)
                 
                 // FIXME: preassume that number of image is 1
                 var outputShape = output.getShape()
                 outputShape.insert(1, at: 0)
                 output.setShape(outputShape)
             }
-        
+            
             return output
         }
     }
