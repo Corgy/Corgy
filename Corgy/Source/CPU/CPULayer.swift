@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import QuartzCore
 public enum CPU {
     
     /// an inplace ReLU layer, it will modify
@@ -118,6 +118,7 @@ public enum CPU {
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
         return { (_ input) in
+            let t1 = CACurrentMediaTime()
             let weightShape = weight.getShape()
             assert(weightShape.count == 2 && weightShape[1] == input.value.count)
             
@@ -133,6 +134,8 @@ public enum CPU {
                     }
                 }
 //            }
+            let t2 = CACurrentMediaTime()
+            print("CPU FC: \((t2 - t1) * 1000.0)")
             return out
         }
     }

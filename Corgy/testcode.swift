@@ -7,15 +7,16 @@
 
 import Foundation
 import Corgy
+import QuartzCore
 
 @available(OSX 10.13, *)
 func test () {
     timing("GPU time: ") {
-        GPUTest.MNIST()
+        GPUTest.testLeakyReLU()
     }
-    timing("CPU time: ") {
-        CPUTest.MNIST()
-    }
+//    timing("CPU time: ") {
+//        CPUTest.MNIST()
+//    }
 }
 
 @available(OSX 10.13, *)
@@ -28,8 +29,13 @@ enum CPUTest {
 
 @available(OSX 10.13, *)
 func testMNIST(computeOn: ComputeOn) {
+    let t1 = CACurrentMediaTime()
     let network = ModelImporter.loadMNISTCNN("MNIST_CNN", computeOn: computeOn)
     let image = Image(named: Image.Name("four"))!
+    let t2 = CACurrentMediaTime()
+    
+    print("Load \((t2 - t1) * 1000) miliseconds")
+    
     let input = Variable.of(grayScaleImage: image)
     let output = network.forward(input)
     print(output)
@@ -171,6 +177,22 @@ enum GPUTest {
     
     static func MNIST() {
         testMNIST(computeOn: .GPU)
+    }
+    
+    static func testLeakyReLU() {
+        let leakyReLU = Corgy.LeakyReLU()
+        let input = Variable(1,1,1,5)
+        
+        for i in 0..<5 {
+            if i % 2 == 0 {
+                input.value[i] = Float(-i)
+            } else {
+                input.value[i] = Float(i)
+            }
+        }
+        
+        let output = leakyReLU(input)
+        print(output)
     }
 }
 

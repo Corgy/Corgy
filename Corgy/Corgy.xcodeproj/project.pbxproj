@@ -43,6 +43,10 @@
 		B903C48720953813000D362B /* VariableOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C48520953813000D362B /* VariableOperation.swift */; };
 		B903C4892095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
 		B903C48A2095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
+		B997AA13209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */; };
+		B997AA14209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */; };
+		B997AA16209AB14900185CA3 /* LeakyReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B997AA15209AB14900185CA3 /* LeakyReLU.swift */; };
+		B997AA17209AB14900185CA3 /* LeakyReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B997AA15209AB14900185CA3 /* LeakyReLU.swift */; };
 		B99E87CE208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87CF208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D0208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
@@ -139,6 +143,8 @@
 		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
 		B903C48520953813000D362B /* VariableOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableOperation.swift; sourceTree = "<group>"; };
 		B903C4882095386E000D362B /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = LeakyReLUKernel.metal; sourceTree = "<group>"; };
+		B997AA15209AB14900185CA3 /* LeakyReLU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeakyReLU.swift; sourceTree = "<group>"; };
 		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		B99E87D2208E5FA100E21C10 /* MNIST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNIST.swift; sourceTree = "<group>"; };
 		B99E87E42094040400E21C10 /* ReLU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReLU.swift; sourceTree = "<group>"; };
@@ -298,6 +304,7 @@
 				B99E87EA2094042800E21C10 /* Dropout.swift */,
 				B99E87ED2094046A00E21C10 /* Pool.swift */,
 				B99E87F0209404EC00E21C10 /* FullConnected.swift */,
+				B997AA15209AB14900185CA3 /* LeakyReLU.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -324,6 +331,7 @@
 				B99E880F20940BC100E21C10 /* Utils.metal */,
 				B99E881B20940E8100E21C10 /* Utils.h */,
 				B99E881820940D4100E21C10 /* KernelParamType.h */,
+				B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */,
 			);
 			path = Kernels;
 			sourceTree = "<group>";
@@ -553,6 +561,7 @@
 				1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */,
 				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				B99E87EB2094042800E21C10 /* Dropout.swift in Sources */,
+				B997AA16209AB14900185CA3 /* LeakyReLU.swift in Sources */,
 				B99E87F1209404EC00E21C10 /* FullConnected.swift in Sources */,
 				B99E87F52094053900E21C10 /* SubmitWork.swift in Sources */,
 				1EB2F9732089945700DDFEEC /* Corgy.swift in Sources */,
@@ -572,6 +581,7 @@
 				79BEE70120993B29001381AC /* Timing.swift in Sources */,
 				B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */,
 				B99E880D20940B8200E21C10 /* ReLUKernel.metal in Sources */,
+				B997AA13209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */,
 				B99E881020940BC100E21C10 /* Utils.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,6 +593,7 @@
 				1EB2F9792089946700DDFEEC /* CPULayer.swift in Sources */,
 				B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */,
 				1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
+				B997AA17209AB14900185CA3 /* LeakyReLU.swift in Sources */,
 				B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */,
 				B99E87E92094041600E21C10 /* Conv2D.swift in Sources */,
 				1EB2F97A2089946700DDFEEC /* Corgy.swift in Sources */,
@@ -602,6 +613,7 @@
 				79BEE70220993B29001381AC /* Timing.swift in Sources */,
 				B99E87EC2094042800E21C10 /* Dropout.swift in Sources */,
 				B99E880E20940B8200E21C10 /* ReLUKernel.metal in Sources */,
+				B997AA14209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */,
 				B99E881120940BC100E21C10 /* Utils.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -695,7 +707,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -762,7 +774,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = Q7D6Q96KMH;
+				DEVELOPMENT_TEAM = P3R3FAJ44Q;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import QuartzCore
 
 public enum PoolType: String {
     case Average = "AVG"
@@ -27,6 +28,7 @@ public extension Corgy {
                             padding: (Int, Int) = (0,0)
         ) -> Layer {
         return { (_ input) in
+            let t1 = CACurrentMediaTime()
             let batchSize = input.getShape()[0]
             let channels = input.getShape()[1]
             let height = input.getShape()[2]
@@ -56,7 +58,9 @@ public extension Corgy {
             let paramBuffer = makeBuffer(poolParam)
             
             submitWork(name: "Pool\(poolType.rawValue)", in: input, output, param: param, parameterBuffer: paramBuffer)
-            
+
+            let t2 = CACurrentMediaTime()
+            print("Pool \((t2 - t1) * 1000.0)")
             return output
         }
     }

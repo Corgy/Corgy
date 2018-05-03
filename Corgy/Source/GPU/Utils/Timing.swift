@@ -14,7 +14,7 @@ public func timing(_ message: String? = nil, _ block: () -> Void) -> CFTimeInter
     block()
     let interval = CACurrentMediaTime() - startTime
     if message != nil {
-        print("\(message!) used \(interval) seconds.")
+        print("\(message!) used \(interval * 1000) miliseconds.")
     }
     return interval
 }

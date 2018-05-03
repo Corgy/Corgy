@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import QuartzCore
 
 extension CPU {
   // TODO: support dilation, group and bias

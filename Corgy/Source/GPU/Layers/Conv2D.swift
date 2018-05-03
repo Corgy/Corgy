@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import QuartzCore
 
 @available(OSX 10.13, *)
 public extension Corgy {
@@ -27,8 +28,12 @@ public extension Corgy {
             Variable.trimDimension(input, atMost: 1)
             inputShape = input.getShape()
             
+            // FIXME: Serialized conversion, one performance bottleneck
+            let t1 = CACurrentMediaTime()
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize)
             let m2 = weightToMatrix(weight: weight, image: input)
+            let t2 = CACurrentMediaTime()
+            print("Convolution conversion \((t2 - t1) * 1000)")
             
             let res = Corgy.matrixMultiply(m1, m2)
             
@@ -48,7 +53,7 @@ public extension Corgy {
                         }
                     }
                 }
-                
+timing ("Conv2D out") {
                 if bias.value.count > 0 {
                     for c in 0..<outChannels {
                         for h in 0..<outputHeight {
@@ -59,6 +64,8 @@ public extension Corgy {
                         }
                     }
                 }
+}
+                
                 // print(res)
                 
                 // FIXME: preassume that number of image is 1
@@ -105,7 +112,7 @@ public extension Corgy {
     
     fileprivate static func weightToMatrix(weight: Variable, image: Variable) -> Variable {
         assert(image.getShape().count == 3)
-        let shape = image.getShape()
+        // let shape = image.getShape()
         let weightShape = weight.getShape()
         let inChannel = weightShape[1]
         
