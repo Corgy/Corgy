@@ -65,11 +65,11 @@ struct DropoutParam: LayerParam {
 
 struct LeakyReLUParam: LayerParam {
     let inputParam: VariableParam
-    let negativeScope: Float
+    let negativeScope: Float32
     
     init(inputParam: VariableParam, negativeScope: Float) {
         self.inputParam = inputParam
-        self.negativeScope = negativeScope
+        self.negativeScope = Float32(negativeScope)
     }
 }
 

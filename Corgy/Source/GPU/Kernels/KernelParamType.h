@@ -27,7 +27,7 @@ struct PoolParam {
 
 struct LeakyReLUParam {
     VariableParam inputParam;
-    int negativeScope;
+    float negativeScope;
 };
 
 struct DropoutParam {
