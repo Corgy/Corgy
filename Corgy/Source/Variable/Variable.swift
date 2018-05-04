@@ -64,6 +64,7 @@ public class Variable : CustomStringConvertible {
         return true
     }
     
+    @inline(__always)
     func index(_ indices: [Int]) -> Int {
         var ret = 0
         for i in 0..<shape.count {
@@ -80,6 +81,7 @@ public class Variable : CustomStringConvertible {
             value[index(indices)] = newValue
         }
     }
+    
     
     // Trim leading 1 in the shape
     @discardableResult

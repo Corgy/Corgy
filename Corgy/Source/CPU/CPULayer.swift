@@ -43,14 +43,14 @@ public enum CPU {
     }
     
     /// return a Pooling layer
-    /// - parameter strideStep: default stride is poolSize
+    /// - parameter strideStep: default stride is poolSize, implemented
     /// - parameter dilation: not supported yet
-    /// - parameter padding: not supported yet
+    /// - parameter padding: implemented
     public static func Pool(poolSize: (Int, Int),
-                            strideStep: (Int, Int) = (-1,-1),
+                            stride strideStep: (Int, Int)? = nil,
                             poolType: PoolType,
-                            dilation: (Int, Int) = (1,1),
-                            padding: (Int, Int) = (0,0)
+                            dilation: (Int, Int) = (1, 1),
+                            padding: (Int, Int) = (0, 0)
         ) -> Layer {
         return { (_ input) in
             let varShape = input.shape
@@ -59,11 +59,10 @@ public enum CPU {
             let height = varShape[2]
             let width = varShape[3]
             
-            let poolW = poolSize.0
-            let poolH = poolSize.1
+            let (poolW, poolH) = poolSize
             
-            let strideW = strideStep.0 > 0 ? strideStep.0 : poolW
-            let strideH = strideStep.1 > 0 ? strideStep.1 : poolH
+            let (strideW, strideH) = strideStep ?? (poolW, poolH)
+            let (padW, padH) = padding
             
             let outH = Int((1 + Float(height - poolH) / Float(strideH)).rounded(.up))
             let outW = Int((1 + Float(width  - poolW) / Float(strideW)).rounded(.up))
@@ -72,8 +71,12 @@ public enum CPU {
             
             for batch in 0..<batchSize {
                 for channel in 0..<channels {
-                    for row in stride(from: 0, to: height, by: strideH) {
-                        for col in stride(from: 0, to: width, by: strideW) {
+                    /**
+                     * If padding is 1, then the coordinate system in
+                     * top left: (-1, -1), bottom right: (inW+1, inH+1)
+                     */
+                    for row in stride(from: -padH, through: height+padH-poolH, by: strideH) {
+                        for col in stride(from: -padW, through: width+padW-poolW, by: strideW) {
                             var result: Variable.DataType
                             switch poolType {
                             case .Average:
@@ -81,7 +84,10 @@ public enum CPU {
                                 var numElements = Float(0)
                                 for y in 0..<poolH {
                                     for x in 0..<poolW {
-                                        if y + row < height && x + col < width {
+                                        // currentRow = row + y
+                                        // currentCol = col + x
+                                        if y + row < height && y + row >= 0 &&
+                                           x + col < width && x + col >= 0 {
                                             result += input[batch, channel, row+y, col+x]
                                             numElements += 1
                                         }
@@ -92,7 +98,8 @@ public enum CPU {
                                 result = -Float.infinity
                                 for y in 0..<poolH {
                                     for x in 0..<poolW {
-                                        if y + row < height && x + col < width {
+                                        if y + row < height && y + row >= 0 &&
+                                            x + col < width && x + col >= 0 {
                                             result = max(result, input[batch, channel, row+y, col+x])
                                         }
                                     }
@@ -106,6 +113,7 @@ public enum CPU {
             return output
         }
     }
+    
     
     /// return an inplace Dropout layer, it will modify
     /// and return the input
@@ -151,4 +159,3 @@ public enum CPU {
         }
     }
 }
-

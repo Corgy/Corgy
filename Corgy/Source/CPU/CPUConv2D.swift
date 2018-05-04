@@ -16,7 +16,7 @@ extension CPU {
                             kernelSize: Int,
                             stride: Int = 1,
                             padding: Int = 0,
-                            dilation: Int = 0,
+                            dilation: Int = 1,
                             groups: Int = 1,
                             weight: Variable,
                             bias: Variable = Variable(0)

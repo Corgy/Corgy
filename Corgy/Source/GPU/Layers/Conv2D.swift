@@ -37,7 +37,7 @@ public extension Corgy {
                               kernelSize: Int,
                               stride: Int = 1,
                               padding: Int = 0,
-                              dilation: Int = 0,
+                              dilation: Int = 1,
                               groups: Int = 1,
                               weight: Variable,
                               bias: Variable? = nil
@@ -50,6 +50,7 @@ public extension Corgy {
             assert(inputShape.count == 4 && inputShape[0] == 1)
             input.trimDimension(atMost: 1)
             
+            // TODO: use soft padding(don't create a new Variable)
             input = Corgy.padding(input, paddingWith: padding)
             
             inputShape = input.shape

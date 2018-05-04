@@ -61,14 +61,22 @@ extension Variable {
 struct PoolParam: LayerParam {
     let inputParam: VariableParam
     let outputParam: VariableParam
-    let poolSizeX: Int32
-    let poolSizeY: Int32
+    let poolSizeW: Int32
+    let poolSizeH: Int32
+    let strideW: Int32
+    let strideH: Int32
+    let padW: Int32
+    let padH: Int32
     // TODO: stride, dilation, padding to be supported
-    init(inputParam: VariableParam, outputParam: VariableParam, poolSizeX: Int, poolSizeY: Int) {
+    init(inputParam: VariableParam, outputParam: VariableParam, poolSizeW: Int, poolSizeH: Int, strideW: Int, strideH: Int, padW: Int, padH: Int) {
         self.inputParam = inputParam
         self.outputParam = outputParam
-        self.poolSizeX = Int32(poolSizeX)
-        self.poolSizeY = Int32(poolSizeY)
+        self.poolSizeW = Int32(poolSizeW)
+        self.poolSizeH = Int32(poolSizeH)
+        self.strideW = Int32(strideW)
+        self.strideH = Int32(strideH)
+        self.padW = Int32(padW)
+        self.padH = Int32(padH)
     }
 }
 

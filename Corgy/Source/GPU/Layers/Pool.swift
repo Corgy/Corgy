@@ -16,16 +16,17 @@ public enum PoolType: String {
 
 public extension Corgy {
     /// return a Pooling layer
+    /// TODO: add full support for stride, dilation and padding
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet
-    /// - parameter padding: not supported yet
+    /// - parameter padding: (padH, padW)
     /// - require: results of input.width / poolSize.x and
     ///            input.height / poolSize.y must be integer
     public static func Pool(poolSize: (Int, Int),
-                            strideStep: (Int, Int) = (-1,-1),
+                            stride strideStep: (Int, Int)? = nil,
                             poolType: PoolType,
-                            dilation: (Int, Int) = (1,1),
-                            padding: (Int, Int) = (0,0)
+                            dilation: (Int, Int) = (1, 1),
+                            padding: (Int, Int) = (0, 0)
         ) -> Layer {
         return { (_ input) in
             let t1 = CACurrentMediaTime()
@@ -34,14 +35,12 @@ public extension Corgy {
             let height = input.shape[2]
             let width = input.shape[3]
             
-            let poolW = poolSize.0
-            let poolH = poolSize.1
+            let (poolW, poolH) = poolSize
             
-            let strideW = strideStep.0 > 0 ? strideStep.0 : poolW
-            let strideH = strideStep.1 > 0 ? strideStep.1 : poolH
+            let (strideW, strideH) = strideStep ?? (poolW, poolH)
             
-            let outH = Int((1 + Float(height - poolH) / Float(strideH)).rounded(.up))
-            let outW = Int((1 + Float(width  - poolW) / Float(strideW)).rounded(.up))
+            let outH = Int((Float(height + 2 * padding.1 - poolH) / Float(strideH) + 1).rounded(.down))
+            let outW = Int((Float(width + 2 * padding.0 - poolW) / Float(strideW) + 1).rounded(.down))
             
             let output = Variable(batchSize, channels, outH, outW)
             
@@ -52,15 +51,19 @@ public extension Corgy {
             
             let poolParam = PoolParam(inputParam: input.param,
                                       outputParam: output.param,
-                                      poolSizeX: poolW,
-                                      poolSizeY: poolH)
+                                      poolSizeW: poolW,
+                                      poolSizeH: poolH,
+                                      strideW: strideW,
+                                      strideH: strideH,
+                                      padW: padding.0,
+                                      padH: padding.1)
             
             let paramBuffer = makeBuffer(poolParam)
             
             submitWork(name: "Pool\(poolType.rawValue)", in: input, output, param: param, parameterBuffer: paramBuffer)
 
             let t2 = CACurrentMediaTime()
-            print("Pool \((t2 - t1) * 1000.0)")
+//            print("Pool \((t2 - t1) * 1000.0)")
             return output
         }
     }

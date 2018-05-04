@@ -13,8 +13,9 @@ import QuartzCore
 @available(iOS 10.0, *)
 func test () {
     async {
+//        let imageName = "four"
+        let imageName = "four_colored"
 //        let imageName = "dog"
-        let imageName = "dog"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)

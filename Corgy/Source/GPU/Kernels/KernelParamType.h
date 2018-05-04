@@ -21,8 +21,12 @@ struct VariableParam {
 struct PoolParam {
     VariableParam inputParam;
     VariableParam outputParam;
-    int poolSizeX;
-    int poolSizeY;
+    int poolSizeW;
+    int poolSizeH;
+    int strideW;
+    int strideH;
+    int padW;
+    int padH;
 };
 
 struct LeakyReLUParam {
