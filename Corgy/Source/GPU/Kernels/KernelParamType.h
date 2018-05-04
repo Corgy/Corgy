@@ -50,4 +50,15 @@ struct WeightToMatParam {
     VariableParam outputParam;
 };
 
+struct MatToVariableWithBias {
+    VariableParam inputParam;
+    VariableParam biasParam;
+    VariableParam outputParam;
+};
+
+struct MatToVariableWithoutBias {
+    VariableParam inputParam;
+    VariableParam outputParam;
+};
+
 #endif /* KernelParamType_h */

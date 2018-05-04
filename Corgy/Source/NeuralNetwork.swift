@@ -18,12 +18,14 @@ public class NeuralNetwork {
     
     public func forward(_ x: Variable) ->Variable {
         var output = x
+        var totalTime: CFTimeInterval = 0
         for (i, layer) in layers.enumerated() {
 //            print("Input: ")
 //            output.printOneLayer()
-            timing("One Layer") {
+            totalTime += timing("One Layer") {
                 output = layer(output)
             }
+            print("Current total: \(totalTime) seconds")
         }
         return output
     }

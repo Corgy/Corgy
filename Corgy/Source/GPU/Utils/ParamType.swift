@@ -46,6 +46,11 @@ extension Variable {
                                  channel: 1,
                                  width: Int32(self.shape[1]),
                                  height: Int32(self.shape[0]))
+        } else if shape.count == 1 {
+            return VariableParam(batch: 1,
+                                 channel: 1,
+                                 width: Int32(self.shape[0]),
+                                 height: 1)
         } else {
             // TODO: handle this
             fatalError()
@@ -113,3 +118,14 @@ struct WeightToMatParam: LayerParam {
     let outputParam: VariableParam
 }
 
+/// convert the result of big matrix multiply and bias to original multi-channel Variable
+struct MatToVariableWithBias: LayerParam {
+    let inputParam: VariableParam
+    let biasParam: VariableParam
+    let outputParam: VariableParam
+}
+/// convert the result of big matrix multiply to original multi-channel Variable
+struct MatToVariableWithoutBias: LayerParam {
+    let inputParam: VariableParam
+    let outputParam: VariableParam
+}

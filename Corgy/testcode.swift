@@ -176,7 +176,7 @@ enum GPUTest {
             v2.value[i] = Variable.DataType(i);
         }
         
-        print(Corgy.matrixMultiply(v1, v2))
+        print(v1 × v2)
     }
     
     static func testVariabel() {

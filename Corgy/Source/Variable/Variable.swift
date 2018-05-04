@@ -65,7 +65,6 @@ public class Variable : CustomStringConvertible {
     }
     
     func index(_ indices: [Int]) -> Int {
-//        assert(validIndex(indices))
         var ret = 0
         for i in 0..<shape.count {
             ret += indices[i] * indexAuxilary[i]
@@ -91,8 +90,8 @@ public class Variable : CustomStringConvertible {
         }
     }
     
-    private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: [Int]) {
-        var sub = sub
+    private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: inout [Int]) {
+//        var sub = sub
         if sub.count == indices.count {
             let origSub = sub
             for i in 0..<sub.count {
@@ -106,14 +105,13 @@ public class Variable : CustomStringConvertible {
         print(currIndex)
         for num in [Int](indices[currIndex].lowerBound...indices[currIndex].upperBound) {
             sub.append(num)
-            recursiveSet(toSet: toSet, indices: indices, sub: sub)
+            recursiveSet(toSet: toSet, indices: indices, sub: &sub)
             sub.remove(at: sub.count - 1)
         }
     }
     
     public subscript(indices: [Int]) -> DataType {
         get {
-            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
@@ -123,11 +121,10 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: CountableClosedRange<Int>...) -> Variable {
         get {
-//            assert(indices.count == shape.count)
             let lens = indices.map { $0.count }
             let ret = Variable(lens)
-            
-            recursiveSet(toSet: ret, indices: indices, sub: [])
+            var sub: [Int] = []
+            recursiveSet(toSet: ret, indices: indices, sub: &sub)
             // Variable.trimDimension(ret)
             return ret
         }

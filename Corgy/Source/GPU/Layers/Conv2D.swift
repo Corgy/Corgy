@@ -40,7 +40,7 @@ public extension Corgy {
                               dilation: Int = 0,
                               groups: Int = 1,
                               weight: Variable,
-                              bias: Variable = Variable(0)
+                              bias: Variable? = nil
         ) -> Layer {
         return { (_ input) in
             var inputShape = input.shape
@@ -60,7 +60,7 @@ public extension Corgy {
             let t2 = timing()
             let m2 = weightToMatrix(weight: weight)
             let t3 = timing()
-            let res = matrixMultiply(m1, m2)
+            let res = m1 × m2
             let intvl = timing() - t3;
             print("\tConv matrix op: \(t2-t1), \(t3-t2), \(intvl) milliseconds")
             
@@ -71,26 +71,11 @@ public extension Corgy {
             let outputWidth = inputWidth - kernelSize + 1
             
             let output = Variable(outChannels, outputHeight, outputWidth)
-            timing("\tGPU conv: ") {
-                for c in 0..<outChannels {
-                    for h in 0..<outputHeight {
-                        for w in 0..<outputWidth {
-                            output[c, h, w] = res[outputWidth * h + w, c]
-                            
-                        }
-                    }
-                }
-                if bias.size > 0 {
-                    for c in 0..<outChannels {
-                        for h in 0..<outputHeight {
-                            for w in 0..<outputWidth {
-                                output[c, h, w] += bias[c]
-                                
-                            }
-                        }
-                    }
-                }
+            
+            timing("\tresult to variable: ") {
                 
+                resultToVariable(input: res, output: output, bias: bias)
+
                 // FIXME: preassume that number of image is 1
                 var outputShape = output.shape
                 outputShape.insert(1, at: 0)
@@ -99,6 +84,30 @@ public extension Corgy {
             
             return output
         }
+    }
+    
+    /// - parameter input: input Variable, result of previous matrix multiply
+    /// - parameter bias: bias
+    /// - parameter output: output Variable
+    fileprivate static func resultToVariable(input: Variable, output: Variable, bias: Variable? = nil) {
+        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
+        let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+        
+        let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+        
+        if bias == nil {
+            let mat2varParam = MatToVariableWithoutBias(inputParam: input.param, outputParam: output.param)
+            let mat2varParamBuffer = makeBuffer(mat2varParam)
+            
+            submitWork(name: "Mat2VarWithoutBias", in: input, output, param: param, parameterBuffer: mat2varParamBuffer)
+            return
+        } else {
+            let mat2varParam = MatToVariableWithBias(inputParam: input.param, biasParam: bias!.param, outputParam: output.param)
+            let mat2varParamBuffer = makeBuffer(mat2varParam)
+            submitWork(name: "Mat2VarWithBias", in: input, bias!, output, param: param, parameterBuffer: mat2varParamBuffer)
+            return
+        }
+        
     }
     
     fileprivate static func imageToMatrix(image: Variable, kernelSize: Int) -> Variable {
