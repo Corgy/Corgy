@@ -7,7 +7,6 @@
 
 import Foundation
 import Metal
-import QuartzCore
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
@@ -56,14 +55,14 @@ public extension Corgy {
             inputShape = input.getShape()
             
             // FIXME: Serialized conversion, one performance bottleneck
-            let t1 = CACurrentMediaTime()
+            let t1 = timing()
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize)
-            let t2 = CACurrentMediaTime()
-            let m2 = weightToMatrix(weight: weight, image: input)
-            let t3 = CACurrentMediaTime()
-            let res = Corgy.matrixMultiply(m1, m2)
-            let intvl = CACurrentMediaTime() - t3;
-            print("\tConv matrix op: \(t2-t1), \(t3-t2), \(intvl) seconds")
+            let t2 = timing()
+            let m2 = weightToMatrix(weight: weight)
+            let t3 = timing()
+            let res = matrixMultiply(m1, m2)
+            let intvl = timing() - t3;
+            print("\tConv matrix op: \(t2-t1), \(t3-t2), \(intvl) milliseconds")
             
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
@@ -81,7 +80,7 @@ public extension Corgy {
                         }
                     }
                 }
-                timing ("Conv2D out") {
+                timing ("\t\tConv2D out") {
                     if bias.value.count > 0 {
                         for c in 0..<outChannels {
                             for h in 0..<outputHeight {
@@ -108,10 +107,9 @@ public extension Corgy {
         assert(image.getShape().count == 3)
         let shape = image.getShape()
         let numChannel = shape[0]
-        let width = shape[1]
-        let height = shape[2]
+        let width = shape[2]
+        let height = shape[1]
         
-        let kernelSize²  = kernelSize * kernelSize
         let kernelPerRow = width - kernelSize + 1
         let kernelPerCol = height - kernelSize + 1
         let sliceNumPerImage = kernelPerRow * kernelPerCol
@@ -120,24 +118,20 @@ public extension Corgy {
         let outputHeight = sliceNumPerImage
         let output = Variable(outputHeight, outputWidth)
         
-        // TODO: Launch Kernel for make these giant squares
-        for i in 0..<outputHeight {
-            for j in 0..<outputWidth {
-                let channel = j / kernelSize²
-                
-                let num = j % kernelSize²
-                let row = i / kernelPerRow + num / kernelSize
-                let col = i % kernelPerRow + num % kernelSize
-                
-                output[i, j] = image[channel, row, col]
-            }
-        }
+        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
+        let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+        
+        let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+        
+        let img2matParam = ImageToMatParam(inputParam: image.param, outputParam: output.param, kernelSize: kernelSize)
+        let img2matParamBuffer = makeBuffer(img2matParam)
+        
+        submitWork(name: "ImageToMatrix", in: image, output, param: param, parameterBuffer: img2matParamBuffer)
         
         return output
     }
     
-    fileprivate static func weightToMatrix(weight: Variable, image: Variable) -> Variable {
-        assert(image.getShape().count == 3)
+    fileprivate static func weightToMatrix(weight: Variable) -> Variable {
         let weightShape = weight.getShape()
         let inChannel = weightShape[1]
         
@@ -151,14 +145,27 @@ public extension Corgy {
         
         let output = Variable(outputHeight, outputWidth)
         
-        for i in 0..<outputHeight {
-            for j in 0..<outputWidth {
-                let h = i % kernelSize² / kernelSize
-                let w = i % kernelSize² % kernelSize
-                output[i, j] = weight[j, i / kernelSize², h, w]
+        if output.size > 1000 {
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
+            let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+
+            let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
+
+            let w2matParam = WeightToMatParam(inputParam: weight.param, outputParam: output.param)
+            let w2matParamBuffer = makeBuffer(w2matParam)
+
+            submitWork(name: "WeightToMatrix", in: weight, output, param: param, parameterBuffer: w2matParamBuffer)
+        } else {
+            for i in 0..<outputHeight {
+                for j in 0..<outputWidth {
+                    let h = i % kernelSize² / kernelSize
+                    let w = i % kernelSize² % kernelSize
+                    output[i, j] = weight[j, i / kernelSize², h, w]
+                }
             }
         }
-        
+    
         return output
     }
+    
 }

@@ -15,6 +15,9 @@ public class Variable : CustomStringConvertible {
     private var shape: [Int]
     
     private var count: Int
+    public var size: Int {
+        return count
+    }
     public var value: [DataType]
     private var indexAuxilary: [Int]
     

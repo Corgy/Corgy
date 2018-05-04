@@ -36,4 +36,18 @@ struct DropoutParam {
     unsigned seed;
 };
 
+struct ImageToMatParam {
+    VariableParam inputParam;
+    VariableParam outputParam;
+    int kernelSize;
+    int kernelSizeSquared;
+    int kernelPerRow;
+    int kernelPerCol;
+};
+
+struct WeightToMatParam {
+    VariableParam inputParam;
+    VariableParam outputParam;
+};
+
 #endif /* KernelParamType_h */

@@ -30,11 +30,26 @@ struct VariableParam {
 }
 
 extension Variable {
-    func getParam() -> VariableParam {
-        return VariableParam(batch: Int32(self.getShape()[0]),
-                             channel: Int32(self.getShape()[1]),
-                             width: Int32(self.getShape()[3]),
-                             height: Int32(self.getShape()[2]))
+    var param: VariableParam {
+        if getShape().count == 4 {
+            return VariableParam(batch: Int32(self.getShape()[0]),
+                                 channel: Int32(self.getShape()[1]),
+                                 width: Int32(self.getShape()[3]),
+                                 height: Int32(self.getShape()[2]))
+        } else if getShape().count == 3 {
+            return VariableParam(batch: 1,
+                                 channel: Int32(self.getShape()[0]),
+                                 width: Int32(self.getShape()[2]),
+                                 height: Int32(self.getShape()[1]))
+        } else if getShape().count == 2 {
+            return VariableParam(batch: 1,
+                                 channel: 1,
+                                 width: Int32(self.getShape()[1]),
+                                 height: Int32(self.getShape()[0]))
+        } else {
+            // TODO: handle this
+            fatalError()
+        }
     }
 }
 
@@ -71,5 +86,30 @@ struct LeakyReLUParam: LayerParam {
         self.inputParam = inputParam
         self.negativeScope = Float32(negativeScope)
     }
+}
+
+struct ImageToMatParam: LayerParam {
+    let inputParam: VariableParam
+    let outputParam: VariableParam
+    let kernelSize: Int32
+    let kernelSizeSquared: Int32
+    
+    let kernelPerRow: Int32
+    let kernelPerCol: Int32
+    /// - parameter inputParam: must be of 3 dimension
+    /// - parameter outputParam: must be of 2 dimension
+    init(inputParam: VariableParam, outputParam: VariableParam, kernelSize: Int) {
+        self.inputParam = inputParam
+        self.outputParam = outputParam
+        self.kernelSize = Int32(kernelSize)
+        self.kernelSizeSquared = self.kernelSize * self.kernelSize
+        self.kernelPerRow = inputParam.width - Int32(kernelSize) + 1
+        self.kernelPerCol = inputParam.height - Int32(kernelSize) + 1
+    }
+}
+
+struct WeightToMatParam: LayerParam {
+    let inputParam: VariableParam
+    let outputParam: VariableParam
 }
 

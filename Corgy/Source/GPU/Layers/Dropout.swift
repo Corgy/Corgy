@@ -26,7 +26,7 @@ public extension Corgy {
             } else {
                 s = seed!
             }
-            let dropoutParam = DropoutParam(inputParam: input.getParam(), p: p, seed: s)
+            let dropoutParam = DropoutParam(inputParam: input.param, p: p, seed: s)
             let paramBuffer = makeBuffer(dropoutParam)
             submitWork(name: "Dropout", in: input, param: param, parameterBuffer: paramBuffer)
             }

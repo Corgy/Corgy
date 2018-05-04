@@ -17,7 +17,7 @@ public extension Corgy {
             let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
-            let leakyReLUParam = LeakyReLUParam(inputParam: input.getParam(), negativeScope: negativeScope)
+            let leakyReLUParam = LeakyReLUParam(inputParam: input.param, negativeScope: negativeScope)
             let paramBuffer = makeBuffer(leakyReLUParam)
             
             submitWork(name: "LeakyReLU", in: input, param: param, parameterBuffer: paramBuffer)

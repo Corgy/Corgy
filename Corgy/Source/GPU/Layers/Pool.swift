@@ -50,8 +50,8 @@ public extension Corgy {
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             
-            let poolParam = PoolParam(inputParam: input.getParam(),
-                                      outputParam: output.getParam(),
+            let poolParam = PoolParam(inputParam: input.param,
+                                      outputParam: output.param,
                                       poolSizeX: poolW,
                                       poolSizeY: poolH)
             

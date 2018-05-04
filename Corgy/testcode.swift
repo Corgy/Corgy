@@ -13,17 +13,15 @@ import QuartzCore
 @available(iOS 10.0, *)
 func test () {
     async {
+//        let imageName = "four"
         let imageName = "four_colored"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
         let image = Image(named: Image.Name(imageName))!
         #endif
+//        GPUTest.MNIST(image: image)
         testYolo(image: image, computeOn: .GPU)
-    }
-    timing("GPU time: ") {
-//        GPUTest.testLeakyReLU()
-        GPUTest.testConv2D()
     }
 }
 
@@ -40,12 +38,10 @@ enum CPUTest {
 @available(iOS 10.0, *)
 func testMNIST(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.loadMNISTCNN("MNIST_CNN", computeOn: computeOn)
-    timing("\(computeOn): 500 times") {
-//        for _ in 0...500 {
-            let input = Variable.of(image: image, to: (28, 28))
-            let output = network.forward(input)
-            print(output)
-//        }
+    timing("\(computeOn)") {
+        let input = Variable.of(grayScaleImage: image)//), to: (28, 28))
+        let output = network.forward(input)
+        print(output)
     }
 }
 
@@ -54,7 +50,6 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
-    print("start")
     let output = network.forward(input)
     print(output)
 }
