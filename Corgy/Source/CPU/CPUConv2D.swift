@@ -33,7 +33,6 @@ extension CPU {
       input = Corgy.padding(input, paddingWith: padding)
       var inputShape = input.shape
       inputShape.insert(1, at:0)
-      print(inputShape)
       input.shape = inputShape
         
       let dimNum = input.shape.count
@@ -42,7 +41,6 @@ extension CPU {
         return Variable(0)
       }
       
-      inputShape = input.shape
       let N = inputShape[0]
       let inputHeight = inputShape[2]
       let inputWidth = inputShape[3]

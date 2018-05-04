@@ -21,6 +21,17 @@ public enum CPU {
         return input
     }
     
+    public static func LeakyReLU(negativeScope: Float = 0.01) -> Layer {
+        return {(_ input) in
+            for i in 0..<input.size {
+                if input.value[i] < 0 {
+                    input.value[i] = negativeScope * input.value[i]
+                }
+            }
+            return input
+        }
+    }
+    
     public static let flatten = { (_ input: Variable) -> Variable in
         var size = 1
         for num in input.shape {

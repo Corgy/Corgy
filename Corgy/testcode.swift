@@ -12,18 +12,18 @@ import QuartzCore
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func test () {
-//    async {
-////        let imageName = "dog"
+    async {
 //        let imageName = "dog"
-//        #if os(iOS)
-//        let image = Image(named: imageName)!
-//        #elseif os(OSX)
-//        let image = Image(named: Image.Name(imageName))!
-//        #endif
-////        GPUTest.MNIST(image: image)
-//        testYolo(image: image, computeOn: .GPU)
-//    }
-    CPUTest.testConv2D()
+        let imageName = "dog"
+        #if os(iOS)
+        let image = Image(named: imageName)!
+        #elseif os(OSX)
+        let image = Image(named: Image.Name(imageName))!
+        #endif
+//        GPUTest.MNIST(image: image)
+        testYolo(image: image, computeOn: .GPU)
+    }
+//    CPUTest.testConv2D()
 }
 
 @available(OSX 10.13, *)

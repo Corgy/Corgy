@@ -62,7 +62,7 @@ public extension Corgy {
             let t3 = timing()
             let res = m1 × m2
             let intvl = timing() - t3;
-            print("\tConv matrix op: \(t2-t1), \(t3-t2), \(intvl) milliseconds")
+//            print("\tConv matrix op: \(t2-t1), \(t3-t2), \(intvl) milliseconds")
             
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
@@ -72,15 +72,15 @@ public extension Corgy {
             
             let output = Variable(outChannels, outputHeight, outputWidth)
             
-            timing("\tresult to variable: ") {
-                
+//            timing("\tresult to variable: ") {
+            
                 resultToVariable(input: res, output: output, bias: bias)
 
                 // FIXME: preassume that number of image is 1
                 var outputShape = output.shape
                 outputShape.insert(1, at: 0)
                 output.shape = outputShape
-            }
+//            }
             
             return output
         }
