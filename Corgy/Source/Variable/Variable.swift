@@ -27,7 +27,7 @@ public class Variable : CustomStringConvertible {
         return count
     }
     public var value: [DataType]
-    private var indexAuxilary: [Int]
+    var indexAuxilary: [Int]
     
     /// dimension(shape): (batchSize, channels, height, width)
     public convenience init(_ dimensions: Int...) {
