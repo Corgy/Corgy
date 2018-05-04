@@ -58,8 +58,16 @@ extension CPU {
                 for ii in 0..<inChannels {
                   for jj in kernelTopLeftRow..<kernelButtomRightRow {
                     for kk in kernelTopLeftCol..<kernelButtomRightCol {
-                      slicedImages[ii, jj - kernelTopLeftRow, kk - kernelTopLeftCol] =
-                        input[i, ii, jj, kk]
+                        let index1 = ii * slicedImages.indexAuxilary[0]
+                            + (jj - kernelTopLeftRow) * slicedImages.indexAuxilary[1]
+                            + (kk - kernelTopLeftCol) * slicedImages.indexAuxilary[2]
+                        
+                        let index2 = i * input.indexAuxilary[0]
+                            + ii * input.indexAuxilary[1]
+                            + jj * input.indexAuxilary[2]
+                            + kk * input.indexAuxilary[3]
+                        
+                        slicedImages.value[index1] = input.value[index2]
                     }
                   }
                 }
@@ -69,17 +77,34 @@ extension CPU {
                   for ii in 0..<inChannels {
                     for jj in 0..<kernelSize {
                       for kk in 0..<kernelSize {
-                        kernels[ii, jj, kk] =
-                          kernelWeights[outChannelIndex, ii, jj, kk]
+                        let index1 = ii * kernels.indexAuxilary[0]
+                        + jj * kernels.indexAuxilary[1]
+                        + kk * kernels.indexAuxilary[2]
+                        
+                        let index2 = outChannelIndex * kernelWeights.indexAuxilary[0]
+                            + ii * kernelWeights.indexAuxilary[1]
+                            + jj * kernelWeights.indexAuxilary[2]
+                            + kk * kernelWeights.indexAuxilary[3]
+                        
+                        kernels.value[index1] = kernelWeights.value[index2]
                       }
                     }
                   }
+                    
                   var sum = Float(0.0)
                   for inChannelIndex in 0..<inChannels {
                     for ii in 0..<kernelSize {
                       for jj in 0..<kernelSize {
-                        let n1 = kernels[inChannelIndex, ii, jj]
-                        let n2 = slicedImages[inChannelIndex, ii, jj]
+                        let index1  = inChannelIndex * kernels.indexAuxilary[0]
+                                    + ii * kernels.indexAuxilary[1]
+                                    + jj * kernels.indexAuxilary[2]
+                        
+                        let index2  = inChannelIndex * slicedImages.indexAuxilary[0]
+                            + ii * slicedImages.indexAuxilary[1]
+                            + jj * slicedImages.indexAuxilary[2]
+                        
+                        let n1 = kernels.value[index1]
+                        let n2 = slicedImages.value[index2]
                         sum += n1 * n2
                       }
                     }
@@ -88,8 +113,12 @@ extension CPU {
                   if bias.size > 0 {
                     sum += bias[outChannelIndex]
                   }
-                  
-                  output[i, outChannelIndex, kernelTopLeftRow, kernelTopLeftCol] = sum
+                  let index = i * output.indexAuxilary[0]
+                             + outChannelIndex * output.indexAuxilary[1]
+                             + kernelTopLeftRow * output.indexAuxilary[2]
+                             + kernelTopLeftCol * output.indexAuxilary[3]
+                    
+                  output.value[index] = sum
                 }
               }
             }
