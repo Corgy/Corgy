@@ -12,17 +12,18 @@ import QuartzCore
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func test () {
-    async {
-//        let imageName = "four"
-        let imageName = "four_colored"
-        #if os(iOS)
-        let image = Image(named: imageName)!
-        #elseif os(OSX)
-        let image = Image(named: Image.Name(imageName))!
-        #endif
-//        GPUTest.MNIST(image: image)
-        testYolo(image: image, computeOn: .GPU)
-    }
+//    async {
+////        let imageName = "dog"
+//        let imageName = "dog"
+//        #if os(iOS)
+//        let image = Image(named: imageName)!
+//        #elseif os(OSX)
+//        let image = Image(named: Image.Name(imageName))!
+//        #endif
+////        GPUTest.MNIST(image: image)
+//        testYolo(image: image, computeOn: .GPU)
+//    }
+    CPUTest.testConv2D()
 }
 
 @available(OSX 10.13, *)
@@ -30,6 +31,33 @@ func test () {
 enum CPUTest {
     static func MNIST(image: Image) {
         testMNIST(image: image, computeOn: .CPU)
+    }
+    
+    static func testConv2D() {
+        let weight = Variable(2, 1, 3, 3)
+        for i in 0..<weight.size {
+            weight.value[i] = Variable.DataType(i)
+        }
+        
+        let bias   = Variable(2)
+        bias.value = [1, 2]
+        
+        let conv2d = CPU.Conv2D(inChannels:  1,
+                                  outChannels: 2,
+                                  kernelSize:  3,
+                                  padding: 1,
+                                  weight: weight,
+                                  bias: bias
+        )
+        
+        let input = Variable(1, 1, 4, 4)
+        for i in 0..<input.size {
+            input.value[i] = Variable.DataType(i)
+        }
+        
+        let output = conv2d(input)
+        
+        print(output)
     }
 }
 
