@@ -29,30 +29,33 @@ public extension ModelImporter {
                 .add(convLayer(7, computeOn: .CPU)).add(CPU.ReLU)
                 .add(convLayer(8, computeOn: .CPU)).add(CPU.ReLU)
                 .add(convLayer(9, computeOn: .CPU, kernelSize: 1))
-        default:
+        case .GPU:
             ret
-                .add(convLayer(1)).add(Corgy.ReLU)
+                .add(convLayer(1, padding: 1)).add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(2)).add(Corgy.ReLU)
+                .add(convLayer(2, padding: 1)).add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(3)).add(Corgy.ReLU)
+                .add(convLayer(3, padding: 1)).add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(4)).add(Corgy.ReLU)
+                .add(convLayer(4, padding: 1)).add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(5)).add(Corgy.ReLU)
+                .add(convLayer(5, padding: 1)).add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(6)).add(Corgy.ReLU)
+                .add(convLayer(6, padding: 1)).add(Corgy.ReLU)
                 .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(7)).add(Corgy.ReLU)
-                .add(convLayer(8)).add(Corgy.ReLU)
-                .add(convLayer(9, kernelSize: 1))
+                .add(convLayer(7, padding: 1)).add(Corgy.ReLU)
+                .add(convLayer(8, padding: 1)).add(Corgy.ReLU)
+                .add(convLayer(9, kernelSize: 1, padding: 1))
         }
         
         return ret
     }
     
     fileprivate static let ConvLayerFileNamePrefix = "Corgy_conv"
-    fileprivate static func convLayer(_ n: Int, computeOn: ComputeOn = .GPU, kernelSize: Int = 3) -> Layer {
+    fileprivate static func convLayer(_ n: Int,
+                                      computeOn: ComputeOn = .GPU,
+                                      kernelSize: Int = 3,
+                                      padding: Int = 0) -> Layer {
         let weightFileName = "\(ConvLayerFileNamePrefix)\(n)_W"
         let weightShapeFileName = "\(ConvLayerFileNamePrefix)\(n)_W_shape"
         let biasFileName = "\(ConvLayerFileNamePrefix)\(n)_b"
@@ -63,9 +66,19 @@ public extension ModelImporter {
         let bias = Variable.of(binaryFile: biasPath)
         switch computeOn {
         case .CPU:
-            return CPU.Conv2D(inChannels: weight.shape[1], outChannels: weight.shape[0], kernelSize: 3, weight: weight, bias: bias)
-        default:
-            return Corgy.Conv2D(inChannels: weight.shape[1], outChannels: weight.shape[0], kernelSize: 3, weight: weight, bias: bias)
+            return CPU.Conv2D(inChannels: weight.shape[1],
+                              outChannels: weight.shape[0],
+                              kernelSize: kernelSize,
+                              padding: padding,
+                              weight: weight,
+                              bias: bias)
+        case .GPU:
+            return Corgy.Conv2D(inChannels: weight.shape[1],
+                                outChannels: weight.shape[0],
+                                kernelSize: kernelSize,
+                                padding: padding,
+                                weight: weight,
+                                bias: bias)
         }
     }
 }

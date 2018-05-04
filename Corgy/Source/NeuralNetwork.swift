@@ -20,12 +20,11 @@ public class NeuralNetwork {
         var output = x
         var totalTime: CFTimeInterval = 0
         for (i, layer) in layers.enumerated() {
-//            print("Input: ")
-//            output.printOneLayer()
-            totalTime += timing("One Layer") {
+//            totalTime += timing("One Layer") {
                 output = layer(output)
-            }
-            print("Current total: \(totalTime) seconds")
+//            }
+            print(output.shape)
+//            print("Current total: \(totalTime) seconds")
         }
         return output
     }

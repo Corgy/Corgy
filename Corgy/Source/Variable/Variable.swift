@@ -82,12 +82,14 @@ public class Variable : CustomStringConvertible {
     }
     
     // Trim leading 1 in the shape
-    public func trimDimension(atMost: Int = Int.max) {
+    @discardableResult
+    public func trimDimension(atMost: Int = Int.max) -> Variable {
         var atMost = atMost
         while shape[0] == 1 && shape.count > 1 && atMost > 0 {
             shape.remove(at: 0)
             atMost = atMost - 1
         }
+        return self
     }
     
     private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: inout [Int]) {

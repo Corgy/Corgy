@@ -29,6 +29,7 @@ extension CPU {
       // input is inChannels * width * height
       // output is ouputChannels * (width - (kernelSize - 1) * 2) * (height - (kernelSize - 1) * 2)
       let dimNum = input.shape.count
+      let input = Corgy.padding(input.trimDimension(), paddingWith: padding)
         
       if dimNum == 0 {
         return Variable(0)
@@ -36,8 +37,8 @@ extension CPU {
       
       let inputShape = input.shape
       let N = inputShape[0]
-      let inputHeight = inputShape[2]
-      let inputWidth = inputShape[3]
+      let inputHeight = inputShape[1]
+      let inputWidth = inputShape[2]
       let outputWidth = inputWidth - kernelSize + 1
       let outputHeight = inputHeight - kernelSize + 1
       let output = Variable(N, outChannels, outputHeight, outputWidth)
