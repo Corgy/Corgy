@@ -31,21 +31,21 @@ struct VariableParam {
 
 extension Variable {
     var param: VariableParam {
-        if getShape().count == 4 {
-            return VariableParam(batch: Int32(self.getShape()[0]),
-                                 channel: Int32(self.getShape()[1]),
-                                 width: Int32(self.getShape()[3]),
-                                 height: Int32(self.getShape()[2]))
-        } else if getShape().count == 3 {
+        if shape.count == 4 {
+            return VariableParam(batch: Int32(self.shape[0]),
+                                 channel: Int32(self.shape[1]),
+                                 width: Int32(self.shape[3]),
+                                 height: Int32(self.shape[2]))
+        } else if shape.count == 3 {
             return VariableParam(batch: 1,
-                                 channel: Int32(self.getShape()[0]),
-                                 width: Int32(self.getShape()[2]),
-                                 height: Int32(self.getShape()[1]))
-        } else if getShape().count == 2 {
+                                 channel: Int32(self.shape[0]),
+                                 width: Int32(self.shape[2]),
+                                 height: Int32(self.shape[1]))
+        } else if shape.count == 2 {
             return VariableParam(batch: 1,
                                  channel: 1,
-                                 width: Int32(self.getShape()[1]),
-                                 height: Int32(self.getShape()[0]))
+                                 width: Int32(self.shape[1]),
+                                 height: Int32(self.shape[0]))
         } else {
             // TODO: handle this
             fatalError()

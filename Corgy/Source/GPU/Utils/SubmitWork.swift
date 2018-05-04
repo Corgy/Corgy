@@ -46,7 +46,7 @@ extension Corgy {
         
         var outputBuffer: MTLBuffer?, outputLength: Int?
         for (i, variable) in input.enumerated() {
-            let length = variable.value.count * MemoryLayout<Variable.DataType>.stride
+            let length = variable.size * MemoryLayout<Variable.DataType>.stride
             // TODO: use bytes no copy, which might cause a large amount of refractor
             let buf = resource.device.makeBuffer(bytes: variable.value, length: length, options: [])
             encoder.setBuffer(buf, offset: 0, index: i)

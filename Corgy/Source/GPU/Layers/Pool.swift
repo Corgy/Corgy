@@ -29,10 +29,10 @@ public extension Corgy {
         ) -> Layer {
         return { (_ input) in
             let t1 = CACurrentMediaTime()
-            let batchSize = input.getShape()[0]
-            let channels = input.getShape()[1]
-            let height = input.getShape()[2]
-            let width = input.getShape()[3]
+            let batchSize = input.shape[0]
+            let channels = input.shape[1]
+            let height = input.shape[2]
+            let width = input.shape[3]
             
             let poolW = poolSize.0
             let poolH = poolSize.1
@@ -45,8 +45,8 @@ public extension Corgy {
             
             let output = Variable(batchSize, channels, outH, outW)
             
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.value.count), 1, 1)
-            let threadGroups = MTLSizeMake((output.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
+            let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             

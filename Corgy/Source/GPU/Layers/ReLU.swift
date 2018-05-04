@@ -13,8 +13,8 @@ public extension Corgy {
     /// and return the input
     public static let ReLU: Layer = { (_ input) in
         timing("ReLU") {
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
-            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.size), 1, 1)
+            let threadGroups = MTLSizeMake((input.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             

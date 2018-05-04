@@ -13,7 +13,7 @@ public enum CPU {
     /// an inplace ReLU layer, it will modify
     /// and return the input
     public static let ReLU = { (_ input: Variable) -> Variable in
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             if input.value[i] < 0 {
                 input.value[i] = 0
             }
@@ -23,11 +23,11 @@ public enum CPU {
     
     public static let flatten = { (_ input: Variable) -> Variable in
         var size = 1
-        for num in input.getShape() {
+        for num in input.shape {
             size = size * num
         }
         
-        input.setShape([1, size])
+        input.shape = [1, size]
         return input
     }
     
@@ -42,7 +42,7 @@ public enum CPU {
                             padding: (Int, Int) = (0,0)
         ) -> Layer {
         return { (_ input) in
-            let varShape = input.getShape()
+            let varShape = input.shape
             let batchSize = varShape[0]
             let channels = varShape[1]
             let height = varShape[2]
@@ -104,7 +104,7 @@ public enum CPU {
         return { (_ input) in
             assert(p >= 0 && p <= 1)
             srand48(seed ?? Int(arc4random()))
-            for i in 0..<input.value.count {
+            for i in 0..<input.size {
                 if input.value[i] < 0 {
                     input.value[i] = drand48() > p ? input.value[i] : 0
                 }
@@ -119,17 +119,17 @@ public enum CPU {
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
         return { (_ input) in
             let t1 = CACurrentMediaTime()
-            let weightShape = weight.getShape()
-            assert(weightShape.count == 2 && weightShape[1] == input.value.count)
+            let weightShape = weight.shape
+            assert(weightShape.count == 2 && weightShape[1] == input.size)
             
             if bias != nil {
-                assert(bias?.getShape().count == 1 && bias?.getShape()[0] == weight.getShape()[0])
+                assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
             }
-            let out = Variable(weight.getShape()[0])
+            let out = Variable(weight.shape[0])
 //            timing("Fully connected: ") {
-                for i in 0..<weight.getShape()[0] {
+                for i in 0..<weight.shape[0] {
                     out[i] = bias?[i] ?? 0
-                    for j in 0..<weight.getShape()[1] {
+                    for j in 0..<weight.shape[1] {
                         out[i] += input.value[j] * weight[i, j]
                     }
                 }

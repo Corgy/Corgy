@@ -21,20 +21,20 @@ extension CPU {
                             weight: Variable,
                             bias: Variable = Variable(0)
     ) -> Layer {
-    var weightShape = weight.getShape()
+    var weightShape = weight.shape
     assert(weightShape.count == 4 && weightShape[2] == weightShape[3] && weightShape[2] == kernelSize)
     let kernelWeights = weight
     
     return { (_ input) in
       // input is inChannels * width * height
       // output is ouputChannels * (width - (kernelSize - 1) * 2) * (height - (kernelSize - 1) * 2)
-      let dimNum = input.getShape().count
+      let dimNum = input.shape.count
         
       if dimNum == 0 {
         return Variable(0)
       }
       
-      let inputShape = input.getShape()
+      let inputShape = input.shape
       let N = inputShape[0]
       let inputHeight = inputShape[2]
       let inputWidth = inputShape[3]
@@ -79,7 +79,7 @@ extension CPU {
                     }
                   }
                   
-                  if bias.value.count > 0 {
+                  if bias.size > 0 {
                     sum += bias[outChannelIndex]
                   }
                   

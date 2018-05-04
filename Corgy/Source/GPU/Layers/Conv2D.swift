@@ -13,7 +13,7 @@ import Metal
 public extension Corgy {
     // Padding a variable with shape of (c, h, w)
     public static func padding(_ input: Variable, paddingWith: Int) -> Variable {
-        let inputShape = input.getShape()
+        let inputShape = input.shape
         assert(inputShape.count == 3)
         let c = inputShape[0]
         let h = inputShape[1]
@@ -43,7 +43,7 @@ public extension Corgy {
                               bias: Variable = Variable(0)
         ) -> Layer {
         return { (_ input) in
-            var inputShape = input.getShape()
+            var inputShape = input.shape
             var input = input
             
             //FIXME: Just support one image
@@ -52,7 +52,7 @@ public extension Corgy {
             
             input = Corgy.padding(input, paddingWith: padding)
             
-            inputShape = input.getShape()
+            inputShape = input.shape
             
             // FIXME: Serialized conversion, one performance bottleneck
             let t1 = timing()
@@ -80,23 +80,21 @@ public extension Corgy {
                         }
                     }
                 }
-                timing ("\t\tConv2D out") {
-                    if bias.value.count > 0 {
-                        for c in 0..<outChannels {
-                            for h in 0..<outputHeight {
-                                for w in 0..<outputWidth {
-                                    output[c, h, w] += bias[c]
-                                    
-                                }
+                if bias.size > 0 {
+                    for c in 0..<outChannels {
+                        for h in 0..<outputHeight {
+                            for w in 0..<outputWidth {
+                                output[c, h, w] += bias[c]
+                                
                             }
                         }
                     }
                 }
                 
                 // FIXME: preassume that number of image is 1
-                var outputShape = output.getShape()
+                var outputShape = output.shape
                 outputShape.insert(1, at: 0)
-                output.setShape(outputShape)
+                output.shape = outputShape
             }
             
             return output
@@ -104,8 +102,8 @@ public extension Corgy {
     }
     
     fileprivate static func imageToMatrix(image: Variable, kernelSize: Int) -> Variable {
-        assert(image.getShape().count == 3)
-        let shape = image.getShape()
+        assert(image.shape.count == 3)
+        let shape = image.shape
         let numChannel = shape[0]
         let width = shape[2]
         let height = shape[1]
@@ -132,7 +130,7 @@ public extension Corgy {
     }
     
     fileprivate static func weightToMatrix(weight: Variable) -> Variable {
-        let weightShape = weight.getShape()
+        let weightShape = weight.shape
         let inChannel = weightShape[1]
         
         let kernelSize = weightShape[3]

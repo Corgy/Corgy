@@ -13,14 +13,14 @@ import MetalPerformanceShaders
 @available(iOS 10.0, *)
 extension Variable {
     public func toMPSMatrix () -> MPSMatrix {
-        let vshape = self.getShape()
+        let vshape = self.shape
         assert(vshape.count == 2)
         let vrow = vshape[0]
         let vcol = vshape[1]
         
         let vd = MPSMatrixDescriptor(rows: vrow, columns: vcol, rowBytes: MemoryLayout<DataType>.size * vcol, dataType: MPSDataType.float32)
         
-        let vbuffer = Corgy.resource.device.makeBuffer(bytes: &self.value, length: MemoryLayout<DataType>.size * self.value.count, options: [])!
+        let vbuffer = Corgy.resource.device.makeBuffer(bytes: &self.value, length: MemoryLayout<DataType>.size * self.size, options: [])!
         
         let vmatrix = MPSMatrix(buffer: vbuffer, descriptor: vd)
         
@@ -50,8 +50,8 @@ extension Corgy {
     }
     
     public static func matrixMultiply(_ v1: Variable, _ v2: Variable) -> Variable {
-        let v1shape = v1.getShape()
-        let v2shape = v2.getShape()
+        let v1shape = v1.shape
+        let v2shape = v2.shape
         
         assert(v1shape[1] == v2shape[0])
 
@@ -69,7 +69,7 @@ extension Corgy {
                                           transposeLeft: false, transposeRight: false,
                                           resultRows: v1row, resultColumns: v2col,
                                           interiorColumns: v1col, alpha: 1, beta: 0)
-        let commandBuffer = Corgy.resource.device.makeCommandQueue()!.makeCommandBuffer()
+        let commandBuffer = Corgy.resource.commandQueue.makeCommandBuffer()
         
         mul.encode(commandBuffer: commandBuffer!, leftMatrix: v1m, rightMatrix: v2m, resultMatrix: resm)
         

@@ -17,8 +17,8 @@ public extension Corgy {
         return { (_ input) in
             timing("Dropout") {
             assert(p >= 0 && p <= 1)
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.value.count), 1, 1)
-            let threadGroups = MTLSizeMake((input.value.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.size), 1, 1)
+            let threadGroups = MTLSizeMake((input.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             let s: UInt32
             if seed == nil {

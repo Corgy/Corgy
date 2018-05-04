@@ -60,7 +60,7 @@ enum GPUTest {
     static func testReLU() {
         let relu = Corgy.ReLU
         let input = Variable(32,16)
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             input.value[i] = Variable.DataType(i)
             if i % 2 == 0 {
                 input.value[i] = -input.value[i]
@@ -76,7 +76,7 @@ enum GPUTest {
     
     static func testNeg() {
         let input = Variable(32,16)
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             input.value[i] = Variable.DataType(i)
         }
         
@@ -99,7 +99,7 @@ enum GPUTest {
     
     static func testPoolMax() {
         let input = Variable(1, 1, 32, 16)
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             input.value[i] = Variable.DataType(i)
         }
         let poolMax = Corgy.Pool(poolSize: (2, 2), poolType: .Max)
@@ -112,7 +112,7 @@ enum GPUTest {
     
     static func testPoolAvg() {
         let input = Variable(1, 1, 32, 16)
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             input.value[i] = Variable.DataType(i)
         }
         let poolAve = Corgy.Pool(poolSize: (2, 2), poolType: .Average)
@@ -125,7 +125,7 @@ enum GPUTest {
     
     static func testDropout() {
         let input = Variable(1, 1, 32, 16)
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             input.value[i] = Variable.DataType(i)
         }
         let poolAve = Corgy.Dropout(p: 0.9)
@@ -138,7 +138,7 @@ enum GPUTest {
     
     static func testConv2D() {
         let weight = Variable(2, 1, 3, 3)
-        for i in 0..<weight.value.count {
+        for i in 0..<weight.size {
             weight.value[i] = Variable.DataType(i)
         }
     
@@ -154,7 +154,7 @@ enum GPUTest {
         )
 
         let input = Variable(1, 1, 4, 4)
-        for i in 0..<input.value.count {
+        for i in 0..<input.size {
             input.value[i] = Variable.DataType(i)
         }
 
@@ -167,12 +167,12 @@ enum GPUTest {
     @available(iOS 10.0, *)
     static func testMultiply() {
         let v1 = Variable(4, 4)
-        for i in 0..<v1.value.count {
+        for i in 0..<v1.size {
             v1.value[i] = Variable.DataType(i);
         }
         
         let v2 = Variable(4, 4)
-        for i in 0..<v2.value.count {
+        for i in 0..<v2.size {
             v2.value[i] = Variable.DataType(i);
         }
         
@@ -181,7 +181,7 @@ enum GPUTest {
     
     static func testVariabel() {
         let v = Variable(3, 3, 3)
-        for i in 0..<v.value.count {
+        for i in 0..<v.size {
             v.value[i] = Variable.DataType(i)
         }
         

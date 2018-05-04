@@ -63,9 +63,9 @@ public extension ModelImporter {
         let bias = Variable.of(binaryFile: biasPath)
         switch computeOn {
         case .CPU:
-            return CPU.Conv2D(inChannels: weight.getShape()[1], outChannels: weight.getShape()[0], kernelSize: 3, weight: weight, bias: bias)
+            return CPU.Conv2D(inChannels: weight.shape[1], outChannels: weight.shape[0], kernelSize: 3, weight: weight, bias: bias)
         default:
-            return Corgy.Conv2D(inChannels: weight.getShape()[1], outChannels: weight.getShape()[0], kernelSize: 3, weight: weight, bias: bias)
+            return Corgy.Conv2D(inChannels: weight.shape[1], outChannels: weight.shape[0], kernelSize: 3, weight: weight, bias: bias)
         }
     }
 }

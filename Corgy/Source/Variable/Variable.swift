@@ -12,7 +12,15 @@ public typealias Layer = (_: Variable) -> Variable
 
 public class Variable : CustomStringConvertible {
     public typealias DataType = Float32
-    private var shape: [Int]
+    var shape: [Int] {
+        didSet {
+            indexAuxilary = Array(repeating: 0, count: shape.count)
+            indexAuxilary[shape.count - 1] = 1
+            for i in (0..<shape.count-1).reversed() {
+                indexAuxilary[i] = indexAuxilary[i + 1] * shape[i + 1]
+            }
+        }
+    }
     
     private var count: Int
     public var size: Int {
@@ -20,19 +28,6 @@ public class Variable : CustomStringConvertible {
     }
     public var value: [DataType]
     private var indexAuxilary: [Int]
-    
-    public func setShape(_ shape:[Int]) {
-        self.shape = shape
-        indexAuxilary = Array(repeating: 0, count: shape.count)
-        indexAuxilary[shape.count - 1] = 1
-        for i in (0..<shape.count-1).reversed() {
-            indexAuxilary[i] = indexAuxilary[i + 1] * shape[i + 1]
-        }
-    }
-    
-    public func getShape() -> [Int]{
-        return self.shape
-    }
     
     /// dimension(shape): (batchSize, channels, height, width)
     public convenience init(_ dimensions: Int...) {
@@ -80,24 +75,20 @@ public class Variable : CustomStringConvertible {
     
     public subscript(indices: Int...) -> DataType {
         get {
-//            assert(indices.count == shape.count)
             return value[index(indices)]
         }
         set {
-//            assert(indices.count == shape.count)
             value[index(indices)] = newValue
         }
     }
     
     // Trim leading 1 in the shape
     public func trimDimension(atMost: Int = Int.max) {
-        var shape = getShape()
         var atMost = atMost
         while shape[0] == 1 && shape.count > 1 && atMost > 0 {
             shape.remove(at: 0)
             atMost = atMost - 1
         }
-        setShape(shape)
     }
     
     private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: [Int]) {
@@ -178,18 +169,18 @@ extension Variable {
         let input = self
         let numRow: Int
         let numCol: Int
-        if input.getShape().count == 2 {
-            numRow = input.getShape()[0]
-            numCol = input.getShape()[1]
+        if input.shape.count == 2 {
+            numRow = input.shape[0]
+            numCol = input.shape[1]
         } else {
-            numRow = input.getShape()[2]
-            numCol = input.getShape()[3]
+            numRow = input.shape[2]
+            numCol = input.shape[3]
         }
         
         for i in 0..<numRow {
             for j in 0..<numCol {
                 let data: DataType
-                if input.getShape().count == 2 {
+                if input.shape.count == 2 {
                     data = input[i,j]
                 } else {
                     data = input[batch,channel,i,j]
