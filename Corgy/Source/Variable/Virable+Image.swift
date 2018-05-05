@@ -46,10 +46,11 @@ public extension Variable {
         let channelSize = height * width
         for i in 0..<(pixels.count/4) {
             // ith pixel
-            v.value[i] = (1 - DataType(pixels[i * 4]) / 255)
-            v.value[channelSize + i] = (1 - DataType(pixels[i * 4 + 1]) / 255)
-            v.value[channelSize * 2 + i] = (1 - DataType(pixels[i * 4 + 2]) / 255)
+            v.value[i] = DataType(pixels[i * 4 + 2])
+            v.value[channelSize + i] = DataType(pixels[i * 4 + 1])
+            v.value[channelSize * 2 + i] = DataType(pixels[i * 4])
         }
+        print(v)
         return v
     }
     /// create a (1, 1, height, width) Variable out of an grayscale image
