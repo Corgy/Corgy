@@ -24,7 +24,7 @@ public class NeuralNetwork {
             let t = timing() {
                 output = layer(output)
             }
-//            print("output: \(output.shape)", terminator: t < 0.2 ? "\n" : "\ttime: \(t) seconds\n")
+//            print("output: \(output.shape)\ttime: \(t*1000) ms")
             totalTime += t
         }
         print("Total time: \(totalTime)")

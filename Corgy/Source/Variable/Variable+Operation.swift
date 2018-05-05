@@ -65,9 +65,9 @@ extension Variable {
 }
 infix operator ×
 public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
-    let start = currentMillsecond()
-    
-    var t1, t2: CFTimeInterval
+//    let start = currentMillsecond()
+//
+//    var t1, t2: CFTimeInterval
     
     let v1shape = v1.shape
     let v2shape = v2.shape
@@ -78,24 +78,24 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     let v1col = v1shape[1]
     let v2col = v2shape[1]
     
-    t1 = currentMillsecond()
+//    t1 = currentMillsecond()
     
     var result = Variable(v1row, v2col)
     
-    t2 = currentMillsecond()
-    print("New Variable: \(t2-t1)ms", terminator: ", ")
+//    t2 = currentMillsecond()
+//    print("New Variable: \(t2-t1)ms", terminator: ", ")
     
-    t1 = currentMillsecond()
+//    t1 = currentMillsecond()
     
     let resm = result.toMPSMatrix()
     
     let v1m = v1.toMPSMatrix()
     let v2m = v2.toMPSMatrix()
     
-    t2 = currentMillsecond()
-    print("To MPS Mat: \(t2-t1)ms", terminator: ", ")
+//    t2 = currentMillsecond()
+//    print("To MPS Mat: \(t2-t1)ms", terminator: ", ")
     
-    t1 = currentMillsecond()
+//    t1 = currentMillsecond()
     let mul = MPSMatrixMultiplication(device: Corgy.resource.device,
                                       transposeLeft: false, transposeRight: false,
                                       resultRows: v1row, resultColumns: v2col,
@@ -107,18 +107,18 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     commandBuffer!.commit()
     commandBuffer!.waitUntilCompleted()
     
-    t2 = currentMillsecond()
-    print("MPS Mat mul: \(t2-t1)ms", terminator: ", ")
+//    t2 = currentMillsecond()
+//    print("MPS Mat mul: \(t2-t1)ms", terminator: ", ")
     
     
-    t1 = currentMillsecond()
+//    t1 = currentMillsecond()
     
     result = Variable.of(resm)
     
-    t2 = currentMillsecond()
-    print("MPS to Variable: \(t2-t1)ms", terminator: ", ")
-    
-    let end = currentMillsecond()
-    print("Total time: \(end-start) ms.")
+//    t2 = currentMillsecond()
+//    print("MPS to Variable: \(t2-t1)ms", terminator: ", ")
+//
+//    let end = currentMillsecond()
+//    print("Total time: \(end-start) ms.")
     return result
 }
