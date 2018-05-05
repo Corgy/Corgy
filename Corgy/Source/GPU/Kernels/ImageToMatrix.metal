@@ -44,6 +44,6 @@ kernel void WeightToMatrix(const device float *input [[ buffer(0) ]],
     int h = tmp / kernelSize;
     int w = tmp % kernelSize;
     output[id] =
-        input[j * param->inputParam.sizePerBatch + i / kernelSizeSquared * param->inputParam.sizePerChannel + tmp + w];
+        input[j * param->inputParam.sizePerBatch + i / kernelSizeSquared * param->inputParam.sizePerChannel + h * kernelSize + w];
 }
 

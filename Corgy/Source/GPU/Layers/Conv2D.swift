@@ -90,7 +90,7 @@ public extension Corgy {
         let outputHeight = sliceNumPerImage
         let output = Variable(outputHeight, outputWidth)
         
-        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size)/2, 1, 1)
+        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
         let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
         
         let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
