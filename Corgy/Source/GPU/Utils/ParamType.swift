@@ -109,15 +109,17 @@ struct ImageToMatParam: LayerParam {
     
     let kernelPerRow: Int32
     let kernelPerCol: Int32
+    let padding: Int32
     /// - parameter inputParam: must be of 3 dimension
     /// - parameter outputParam: must be of 2 dimension
-    init(inputParam: VariableParam, outputParam: VariableParam, kernelSize: Int) {
+    init(inputParam: VariableParam, outputParam: VariableParam, kernelSize: Int, padding: Int) {
         self.inputParam = inputParam
         self.outputParam = outputParam
         self.kernelSize = Int32(kernelSize)
         self.kernelSizeSquared = self.kernelSize * self.kernelSize
         self.kernelPerRow = inputParam.width - Int32(kernelSize) + 1
         self.kernelPerCol = inputParam.height - Int32(kernelSize) + 1
+        self.padding = Int32(padding)
     }
 }
 

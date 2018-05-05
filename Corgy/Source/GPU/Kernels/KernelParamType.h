@@ -47,6 +47,7 @@ struct ImageToMatParam {
     int kernelSizeSquared;
     int kernelPerRow;
     int kernelPerCol;
+    int padding;
 };
 
 struct WeightToMatParam {
