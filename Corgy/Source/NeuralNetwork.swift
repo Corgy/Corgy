@@ -24,8 +24,8 @@ public class NeuralNetwork {
             totalTime += timing() {
                 output = layer(output)
             }
-            print("output: \(output.shape)")
-            print("÷Current total: \(totalTime) seconds")
+//            print("output: \(output.shape)")
+//            print("Current total: \(totalTime) seconds")
         }
         return output
     }

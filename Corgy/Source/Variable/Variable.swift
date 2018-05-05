@@ -12,7 +12,7 @@ public typealias Layer = (_: Variable) -> Variable
 
 public class Variable : CustomStringConvertible {
     public typealias DataType = Float32
-    var shape: [Int] {
+    internal(set) public var shape: [Int] {
         didSet {
             indexAuxilary = Array(repeating: 0, count: shape.count)
             indexAuxilary[shape.count - 1] = 1

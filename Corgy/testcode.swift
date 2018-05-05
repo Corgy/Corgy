@@ -14,8 +14,8 @@ import QuartzCore
 func test () {
     async {
 //        let imageName = "four"
-        let imageName = "four_colored"
-//        let imageName = "dog"
+//        let imageName = "four_colored"
+        let imageName = "dog"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
@@ -80,7 +80,8 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
-    print(output)
+    print(output.shape)
+    output.printOneLayer()
 }
 
 @available(OSX 10.13, *)

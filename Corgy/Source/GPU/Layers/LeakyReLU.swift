@@ -11,7 +11,7 @@ import Metal
 public extension Corgy {
     /// an inplace ReLU layer, it will modify
     /// and return the input
-    public static func LeakyReLU(negativeScope: Float = 0.01) -> Layer  {
+    public static func LeakyReLU(negativeScope: Float = 0.1) -> Layer  {
         return {(_ input) in
             let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.size), 1, 1)
             let threadGroups = MTLSizeMake((input.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)

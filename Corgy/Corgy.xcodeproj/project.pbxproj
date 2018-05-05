@@ -33,6 +33,8 @@
 		1EB2F9B42089991A00DDFEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9B22089991A00DDFEEC /* LaunchScreen.storyboard */; };
 		1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
 		1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
+		7921FCF7209D5BD4002425AE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921FCF6209D5BD4002425AE /* Math.swift */; };
+		7921FCF8209D5BD4002425AE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921FCF6209D5BD4002425AE /* Math.swift */; };
 		797F0EEA209A0A10009247A9 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		797F0EEB209A0A10009247A9 /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		797F0EEE209A2BAA009247A9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EED209A2BAA009247A9 /* Async.swift */; };
@@ -148,6 +150,7 @@
 		1EB2F9B32089991A00DDFEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1EB2F9B52089991A00DDFEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
+		7921FCF6209D5BD4002425AE /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		797F0EED209A2BAA009247A9 /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		797F0EF6209A97D4009247A9 /* Variable+File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Variable+File.swift"; sourceTree = "<group>"; };
 		797F0EF9209A9804009247A9 /* TinyYolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinyYolo.swift; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				B99E87FF2094083B00E21C10 /* Importers */,
+				B99E87F72094058400E21C10 /* Miscellaneous.swift */,
+				7921FCF6209D5BD4002425AE /* Math.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -327,7 +332,6 @@
 			children = (
 				1E400E462092A95000502D98 /* ParamType.swift */,
 				B99E87F42094053900E21C10 /* SubmitWork.swift */,
-				B99E87F72094058400E21C10 /* Miscellaneous.swift */,
 				B99E87FA2094063000E21C10 /* CorgyResource.swift */,
 				1E400E522094FD7E00502D98 /* Timing.swift */,
 				797F0EED209A2BAA009247A9 /* Async.swift */,
@@ -573,6 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */,
+				7921FCF7209D5BD4002425AE /* Math.swift in Sources */,
 				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
 				797F0EFA209A9804009247A9 /* TinyYolo.swift in Sources */,
 				B99E87EB2094042800E21C10 /* Dropout.swift in Sources */,
@@ -610,6 +615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EB2F9792089946700DDFEEC /* CPULayer.swift in Sources */,
+				7921FCF8209D5BD4002425AE /* Math.swift in Sources */,
 				B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */,
 				797F0EFB209A9804009247A9 /* TinyYolo.swift in Sources */,
 				1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
