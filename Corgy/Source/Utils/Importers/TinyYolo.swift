@@ -8,6 +8,11 @@
 import Foundation
 
 public extension ModelImporter {
+    struct Box {
+        let x, y, w, h, score: Variable.DataType
+        let klassIndex: Int
+    }
+    
     public static func importYolo(computeOn: ComputeOn) -> NeuralNetwork {
         let ret = NeuralNetwork()
         
@@ -87,7 +92,7 @@ public extension ModelImporter {
     fileprivate static let confidenceThreshold: Float = 0.3
     
     /// input is the output of YOLO network, must be of shape [1, 125, 13, 13}
-    fileprivate static let getResult: Layer = { (_ input: Variable) in
+    public static func getResult(input: Variable) -> [Box] {
         assert(input.size == 125*13*13)
         
         let numCellX = 13
@@ -95,28 +100,41 @@ public extension ModelImporter {
         let numBox = 5
         let numClasses = 20
         
-        struct Box {
-            let x, y, w, h, score: Variable.DataType
-            let klassIndex: Int
-        }
-        
         /// get box info at box b at cell (cx, cy)
         /// b must be between 0 and 4
         /// cx and cy must be between 0 and 12
         func get(cx: Int, cy: Int, b: Int) -> Box {
+            let oy = Math.sigmoid(input[0, b * 25, cy, cx])
+            let ox = Math.sigmoid(input[0, b * 25 + 1, cy, cx])
+            let ow = input[0, b * 25 + 2, cy, cx]
+            let oh = input[0, b * 25 + 3, cy, cx]
+            
             var klasses: [Variable.DataType] = Array(repeating: 0, count: numClasses)
             for i in 0..<20 {
-                klasses[i] = input[0, b * 5 + 5 + i, cy, cx]
+                klasses[i] = input[0, b * 25 + 5 + i, cy, cx]
             }
             klasses = Math.softMax(klasses)
             let (klassIndex, klass) = klasses.argmax()
-            return Box(x: input[0, b * 5, cy, cx],          // TODO
-                       y: input[0, b * 5 + 1, cy, cx],
-                       w: input[0, b * 5 + 2, cy, cx],
-                       h: input[0, b * 5 + 3, cy, cx],
-                       score: klass * Math.sigmoid(input[0, b * 5 + 4, cy, cx]),
+            
+            let inputWidth  = 416
+            
+            let cellSize = Float(inputWidth) / Float(numCellY)
+            
+            // the real pixel of the center of infenrenced box
+            let realy = (Float(cy) + oy) * cellSize
+            let realx = (Float(cx) + ox) * cellSize
+            
+            let realW = exp(ow) * anchors[2 * b] * cellSize
+            let realH = exp(oh) * anchors[2 * b + 1] * cellSize
+            
+            return Box(x: realx,
+                       y: realy,
+                       w: realW,
+                       h: realH,
+                       score: klass * Math.sigmoid(input[0, b * 25 + 4, cy, cx]),
                        klassIndex: klassIndex)
         }
+        
         var boxes: [Box] = []
         for cy in 0..<numCellY {
             for cx in 0..<numCellX {
@@ -129,5 +147,6 @@ public extension ModelImporter {
             }
         }
         
+        return boxes
     }
 }
