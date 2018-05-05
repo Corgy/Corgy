@@ -128,6 +128,6 @@ public extension ModelImporter {
                 }
             }
         }
-        
+        return input
     }
 }

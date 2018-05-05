@@ -30,7 +30,7 @@ extension CPU {
       // output is ouputChannels * (width - (kernelSize - 1) * 2) * (height - (kernelSize - 1) * 2)
       var input = input
       input.trimDimension(atMost: 1)
-      input = Corgy.padding(input, paddingWith: padding)
+      input = input.padding(paddingWith: padding)
       var inputShape = input.shape
       inputShape.insert(1, at:0)
       input.shape = inputShape

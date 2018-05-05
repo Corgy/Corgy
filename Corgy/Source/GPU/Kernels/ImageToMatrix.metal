@@ -19,10 +19,17 @@ kernel void ImageToMatrix(const device float *input [[ buffer(0) ]],
     
     int channel = j / param->kernelSizeSquared;
     int num = j % param->kernelSizeSquared;
-    int row = i / param->kernelPerRow + num / param->kernelSize;
-    int col = i % param->kernelPerRow + num % param->kernelSize;
+    // row and col are coordinate in padded input
+    // real row and col should be row - padding or col - padding
+    int padding = param->padding;
+    int row = i / param->kernelPerRow + num / param->kernelSize - padding;
+    int col = i % param->kernelPerRow + num % param->kernelSize - padding;
     
-    output[i * param->outputParam.width + j] = input[channel * param->inputParam.sizePerChannel + row * param->inputParam.width + col];
+    if (row < 0 || row >= param->inputParam.height || col < 0 || col >= param->inputParam.width) {
+        output[id] = 0;
+    } else {
+        output[id] = input[channel * param->inputParam.sizePerChannel + row * param->inputParam.width + col];
+    }
 }
 
 kernel void WeightToMatrix(const device float *input [[ buffer(0) ]],

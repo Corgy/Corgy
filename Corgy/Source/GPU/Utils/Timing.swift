@@ -20,6 +20,6 @@ public func timing(_ message: String? = nil, _ block: () -> Void) -> CFTimeInter
 }
 
 /// return CACurrentMediaTime() * 1000, which means in milliseconds
-public func timing() -> CFTimeInterval {
+public func currentMillsecond() -> CFTimeInterval {
     return CACurrentMediaTime() * 1000
 }

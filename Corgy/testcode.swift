@@ -81,7 +81,7 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
     print(output.shape)
-    output.printOneLayer()
+//    output.printOneLayer()
 }
 
 @available(OSX 10.13, *)
