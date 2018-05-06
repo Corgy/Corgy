@@ -13,10 +13,20 @@ public enum Math {
     }
     
     public static func softMax(_ x: [Float]) -> [Float] {
-        let sum = x.reduce(0, +)
-        return x.map { $0 / sum}
+        let xx = x.map { exp($0) }
+        let sum = xx.reduce(0, +)
+        let ret = x.map { exp($0) / sum}
+        
+        return ret
     }
     
+    public static func gamma(_ linear : Float) -> Float {
+        if(linear <= 0.03928) {
+            return linear / 12.92
+        } else {
+           return pow((linear+0.055)/1.055, 2.4)
+        }
+    }
 }
 
 public extension Array where Element: Comparable {

@@ -37,20 +37,20 @@ public extension ModelImporter {
         case .GPU:
             ret
                 .add(convLayer(1, padding: 1)).add(Corgy.LeakyReLU())
-                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(2, padding: 1)).add(Corgy.LeakyReLU())
-                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(3, padding: 1)).add(Corgy.LeakyReLU())
-                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(4, padding: 1)).add(Corgy.LeakyReLU())
-                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(5, padding: 1)).add(Corgy.LeakyReLU())
-                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-                .add(convLayer(6, padding: 1)).add(Corgy.LeakyReLU())
-                .add(Corgy.Pool(poolSize: (1, 1), stride: (1, 1), poolType: .Max))
-                .add(convLayer(7, padding: 1)).add(Corgy.LeakyReLU())
-                .add(convLayer(8, padding: 1)).add(Corgy.LeakyReLU())
-                .add(convLayer(9, kernelSize: 1)).add(Corgy.ReLU)
+//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+//                .add(convLayer(2, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+//                .add(convLayer(3, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+//                .add(convLayer(4, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+//                .add(convLayer(5, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+//                .add(convLayer(6, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(Corgy.Pool(poolSize: (1, 1), stride: (1, 1), poolType: .Max))
+//                .add(convLayer(7, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(convLayer(8, padding: 1)).add(Corgy.LeakyReLU())
+//                .add(convLayer(9, kernelSize: 1))//.add(Corgy.ReLU)
         }
         
         return ret
@@ -89,11 +89,11 @@ public extension ModelImporter {
     }
     
     fileprivate static let anchors: [Float] = [1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52]
-    fileprivate static let confidenceThreshold: Float = 0.3
+    fileprivate static let confidenceThreshold: Float = 0.01
     
     /// input is the output of YOLO network, must be of shape [1, 125, 13, 13}
     public static func getResult(input: Variable) -> [Box] {
-        assert(input.count == 125*13*13)
+//        assert(input.count == 125*13*13)
         
         let numCellX = 13
         let numCellY = 13
@@ -115,7 +115,6 @@ public extension ModelImporter {
             }
             klasses = Math.softMax(klasses)
             let (klassIndex, klass) = klasses.argmax()
-            
             let inputWidth  = 416
             
             let cellSize = Float(inputWidth) / Float(numCellY)

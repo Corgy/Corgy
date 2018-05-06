@@ -22,7 +22,7 @@ func test () {
         #elseif os(OSX)
         let image = Image(named: Image.Name(imageName))!
         #endif
-//        GPUTest.MNIST(image: image)
+        // GPUTest.MNIST(image: image)
         testYolo(image: image, computeOn: .GPU)
     }
 }
@@ -80,11 +80,17 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
-//    input.printOneLayer()
+//    input[0, 1, 0, 0] = 1.0
+//    input.printTransposed()
+//     input.printOneLayer()
 //    print(input.shape)
     let output = network.forward(input)
-//    output.printOneLayer()
-    print(output.shape)
+//    print(output.shape)
+    output.printOneLayer(channel: 0)
+    output.printTransposed()
+//    let boxes = ModelImporter.getResult(input: output)
+//    print(boxes)
+//    print(output.shape)
 }
 
 @available(OSX 10.13, *)

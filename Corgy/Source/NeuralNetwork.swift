@@ -23,10 +23,10 @@ public class NeuralNetwork {
             let t = timing() {
                 output = layer(output)
             }
-            print(String(format: "\(i)th layer: shape:\t\(output.shape)  \ttime: %.4f ms", t*1000))
+//            print(String(format: "\(i)th layer: shape:\t\(output.shape)  \ttime: %.4f ms", t*1000))
             totalTime += t
         }
-        print("Total time: \(totalTime)")
+//        print("Total time: \(totalTime)")
         return output
     }
     

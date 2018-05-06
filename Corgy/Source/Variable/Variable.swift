@@ -225,6 +225,43 @@ extension Variable {
             print("")
         }
     }
+    
+    public func printTransposed() {
+        let input = self
+        let numRow: Int
+        let numCol: Int
+        if input.shape.count == 2 {
+            numRow = input.shape[0]
+            numCol = input.shape[1]
+        } else {
+            numRow = input.shape[2]
+            numCol = input.shape[3]
+        }
+        var cnt = 0
+        for j in 0..<numCol {
+            for i in 0..<numRow {
+                for k in 0..<input.shape[1] {
+                    cnt += 1
+                    
+                    if cnt > 1000{ break }
+                    let data: DataType
+                    if input.shape.count == 2 {
+                        data = input[j,i]
+                    } else {
+                        data = input[0,k,j,i]
+                    }
+                    
+//                    if data >= 0 {
+//                        print(" ", terminator: "")
+//                    }
+                    print(String(format: " %.4f", data))
+                    if (cnt % 16 == 0) {
+                        print("")
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension Variable: Equatable {
