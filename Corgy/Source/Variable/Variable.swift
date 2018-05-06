@@ -8,8 +8,6 @@
 
 import Foundation
 
-public typealias Layer = (_: Variable) -> Variable
-
 public class Variable : CustomStringConvertible {
     public typealias DataType = Float32
     internal(set) public var shape: [Int] {
@@ -22,11 +20,36 @@ public class Variable : CustomStringConvertible {
         }
     }
     
-    private var count: Int
-    public var size: Int {
-        return count
-    }
-    public var value: [DataType]
+    /// count: number of elements this variable should be able to hold.
+    ///
+    /// `count == shape.reduce(1, *)` should be true
+    private(set) public var count: Int
+    
+    /// number of elements underlying data structure can hold.
+    /// because in order to use makeBuffer(bytesNoCopy:) methods in Metal,
+    /// the pointer must be aligned with memory page, and the memory size
+    /// must be divisible by pagesize, else makeBuffer(bytesNoCopy:) will
+    /// return nil.
+    ///
+    /// Example:
+    ///
+    /// if pageSize is 2048 bytes, then the underlying memory size must be
+    /// some integer times 2048 bytes. So if one element is of 4 bytes, then
+    /// actualCount will be integer multiple of 512.
+    ///
+    /// when passing size of memory to makeBuffer(bytesNoCopy:) function,
+    /// pass `actualCount * MemoryLayout<Variable.Datatype>.stride`
+    /// rather than `count * MemoryLayout<Variable.Datatype>.stride`
+    let actualCount: Int
+    
+    // TODO: make this internal
+    public var value: UnsafeMutableBufferPointer<DataType>
+    /// poiner and value always point at same place...
+    /// because UnsafeMutableBufferPointer can be used easier
+    /// as a collection, but many Metal and MPS function requires RawPointer...
+    /// so both are provided as instance member.
+    var pointer: UnsafeMutableRawPointer
+    
     var indexAuxilary: [Int]
     
     /// dimension(shape): (batchSize, channels, height, width)
@@ -37,7 +60,6 @@ public class Variable : CustomStringConvertible {
     public init(_ dimensions: [Int]) {
         indexAuxilary = []
         count = 1
-        value = []
         shape = []
         
         for dimension in dimensions {
@@ -49,7 +71,16 @@ public class Variable : CustomStringConvertible {
         for i in (0..<shape.count-1).reversed() {
             indexAuxilary[i] = indexAuxilary[i + 1] * shape[i + 1]
         }
-        value = [DataType](repeating: 0, count: count)
+        
+        let pageSize = Int(getpagesize())
+        let dataSize = count * MemoryLayout<DataType>.stride
+        let pageCount = (dataSize + pageSize - 1) / pageSize
+        actualCount = pageSize * pageCount / MemoryLayout<DataType>.stride
+        
+        var xvector: UnsafeMutableRawPointer? = nil
+        posix_memalign(&xvector, pageSize, pageSize * pageCount)
+        pointer = xvector!
+        value = UnsafeMutableBufferPointer(start: xvector?.assumingMemoryBound(to: DataType.self), count: count)
     }
     
     func validIndex(_ indices: [Int]) -> Bool {
@@ -95,7 +126,6 @@ public class Variable : CustomStringConvertible {
     }
     
     private func recursiveSet(toSet: Variable, indices: [CountableClosedRange<Int>], sub: inout [Int]) {
-//        var sub = sub
         if sub.count == indices.count {
             let origSub = sub
             for i in 0..<sub.count {
@@ -138,7 +168,7 @@ public class Variable : CustomStringConvertible {
     }
     
     public var description: String {
-        return "Shape: \(shape)\nvalue: \(value)\n\(indexAuxilary)"
+        return toString()
     }
 }
 
@@ -160,9 +190,10 @@ extension Variable {
         let head = lines[0]
         let shape = head.split(separator: " ").map { Int($0)! }
         let v = Variable(shape)
-        let tail = lines[1]
-        v.value = tail.replacingOccurrences(of: "\n", with: " ").split(separator: " ")
-        .map { DataType($0)! }
+        let tail = lines[1].replacingOccurrences(of: "\n", with: " ").split(separator: " ")
+        for (i, e) in tail.enumerated() {
+            v.value[i] = DataType(e)!
+        }
         return v
     }
     
@@ -198,9 +229,16 @@ extension Variable {
 
 extension Variable: Equatable {
     public static func ==(lhs: Variable, rhs: Variable) -> Bool {
-        return lhs.count == rhs.count &&
-                lhs.shape == rhs.shape &&
-                lhs.indexAuxilary == rhs.indexAuxilary &&
-                lhs.value == rhs.value
+        if !(lhs.count == rhs.count &&
+            lhs.shape == rhs.shape &&
+            lhs.indexAuxilary == rhs.indexAuxilary) {
+            return false
+        }
+        for i in 0..<lhs.count {
+            if lhs.value[i] != rhs.value[i] {
+                return false
+            }
+        }
+        return true
     }
 }

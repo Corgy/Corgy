@@ -13,8 +13,8 @@ public extension Corgy {
     /// and return the input
     public static func LeakyReLU(negativeScope: Float = 0.1) -> Layer  {
         return {(_ input) in
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.size), 1, 1)
-            let threadGroups = MTLSizeMake((input.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, input.count), 1, 1)
+            let threadGroups = MTLSizeMake((input.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             let leakyReLUParam = LeakyReLUParam(inputParam: input.param, negativeScope: negativeScope)

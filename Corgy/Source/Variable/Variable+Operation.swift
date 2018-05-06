@@ -12,18 +12,20 @@ import MetalPerformanceShaders
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 extension Variable {
+    
+    func makeBufferNoCopy() -> MTLBuffer {
+        return Corgy.resource.device.makeBuffer(bytesNoCopy: pointer, length: MemoryLayout<DataType>.stride * actualCount, options: [], deallocator: nil)!
+    }
+    
     public func toMPSMatrix () -> MPSMatrix {
         let vshape = self.shape
         assert(vshape.count == 2)
         let vrow = vshape[0]
         let vcol = vshape[1]
         
-        let vd = MPSMatrixDescriptor(rows: vrow, columns: vcol, rowBytes: MemoryLayout<DataType>.size * vcol, dataType: MPSDataType.float32)
+        let vd = MPSMatrixDescriptor(rows: vrow, columns: vcol, rowBytes: MemoryLayout<DataType>.stride * vcol, dataType: MPSDataType.float32)
         
-        // TODO: use bytes no copy
-        let vbuffer = Corgy.resource.device.makeBuffer(bytes: &self.value, length: MemoryLayout<DataType>.size * self.size, options: [])!
-        
-        let vmatrix = MPSMatrix(buffer: vbuffer, descriptor: vd)
+        let vmatrix = MPSMatrix(buffer: makeBufferNoCopy(), descriptor: vd)
         
         return vmatrix
     }
@@ -35,12 +37,12 @@ extension Variable {
         
         let rawPointer = mpsMatrix.data.contents()
         
-        memcpy(&ret.value, rawPointer, nrow * ncol * MemoryLayout<Variable.DataType>.stride)
+        memcpy(ret.pointer, rawPointer, nrow * ncol * MemoryLayout<Variable.DataType>.stride)
         
         return ret
     }
     
-    // Padding a variable with shape of (c, h, w)
+    /// Padding a variable with shape of (c, h, w)
     func padding(paddingWith: Int) -> Variable {
         let input = self
         let inputShape = input.shape
@@ -65,10 +67,7 @@ extension Variable {
 }
 infix operator ×
 public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
-//    let start = currentMillsecond()
-//
-//    var t1, t2: CFTimeInterval
-    
+
     let v1shape = v1.shape
     let v2shape = v2.shape
     
@@ -78,24 +77,13 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     let v1col = v1shape[1]
     let v2col = v2shape[1]
     
-//    t1 = currentMillsecond()
-    
     var result = Variable(v1row, v2col)
-    
-//    t2 = currentMillsecond()
-//    print("New Variable: \(t2-t1)ms", terminator: ", ")
-    
-//    t1 = currentMillsecond()
     
     let resm = result.toMPSMatrix()
     
     let v1m = v1.toMPSMatrix()
     let v2m = v2.toMPSMatrix()
     
-//    t2 = currentMillsecond()
-//    print("To MPS Mat: \(t2-t1)ms", terminator: ", ")
-    
-//    t1 = currentMillsecond()
     let mul = MPSMatrixMultiplication(device: Corgy.resource.device,
                                       transposeLeft: false, transposeRight: false,
                                       resultRows: v1row, resultColumns: v2col,
@@ -107,18 +95,6 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     commandBuffer!.commit()
     commandBuffer!.waitUntilCompleted()
     
-//    t2 = currentMillsecond()
-//    print("MPS Mat mul: \(t2-t1)ms", terminator: ", ")
-    
-    
-//    t1 = currentMillsecond()
-    
     result = Variable.of(resm)
-    
-//    t2 = currentMillsecond()
-//    print("MPS to Variable: \(t2-t1)ms", terminator: ", ")
-//
-//    let end = currentMillsecond()
-//    print("Total time: \(end-start) ms.")
     return result
 }

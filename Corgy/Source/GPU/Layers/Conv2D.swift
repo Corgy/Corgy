@@ -23,31 +23,18 @@ public extension Corgy {
                               bias: Variable? = nil
         ) -> Layer {
         return { (_ input) in
-            let start = currentMillsecond()
-            
-            var t1, t2: CFTimeInterval
-            
             var inputShape = input.shape
             
-            //FIXME: Just support one image
+            // FIXME: Just support one image
             assert(inputShape.count == 4 && inputShape[0] == 1)
             input.trimDimension(atMost: 1)
             
             inputShape = input.shape
             
-            t1 = currentMillsecond()
             // FIXME: Serialized conversion, one performance bottleneck
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize, padding: padding)
-            t2 = currentMillsecond()
-            print("img(\(input.size)) to mat(\(m1.size)): \(t2-t1)ms", terminator: ", ")
-            t1 = currentMillsecond()
             let m2 = weightToMatrix(weight: weight)
-            t2 = currentMillsecond()
-            print("wgt(\(weight.size)) to mat: \(t2-t1)ms", terminator: ", ")
-            t1 = currentMillsecond()
             let res = m1 × m2
-            t2 = currentMillsecond()
-            print("mat mul: \(t2-t1)ms", terminator: ", ")
             
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
@@ -57,17 +44,13 @@ public extension Corgy {
             
             let output = Variable(outChannels, outputHeight, outputWidth)
             
-            t1 = currentMillsecond()
             resultToVariable(input: res, output: output, bias: bias)
-            t2 = currentMillsecond()
-            print("mat to var: \(t2-t1)ms", terminator: ", ")
-
+            
             // FIXME: preassume that number of image is 1
             var outputShape = output.shape
             outputShape.insert(1, at: 0)
             output.shape = outputShape
             
-            print("Total time: \(currentMillsecond()-start)ms.")
             return output
         }
     }
@@ -90,8 +73,8 @@ public extension Corgy {
         let outputHeight = sliceNumPerImage
         let output = Variable(outputHeight, outputWidth)
         
-        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
-        let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.count), 1, 1)
+        let threadGroups = MTLSizeMake((output.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
         
         let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
         
@@ -117,15 +100,14 @@ public extension Corgy {
         
         let output = Variable(outputHeight, outputWidth)
         
-        if output.size > 1000 {
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
-            let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+        if output.count > 1000 {
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.count), 1, 1)
+            let threadGroups = MTLSizeMake((output.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
 
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
 
             let w2matParam = WeightToMatParam(inputParam: weight.param, outputParam: output.param)
             let w2matParamBuffer = makeBuffer(w2matParam)
-
             submitWork(name: "WeightToMatrix", in: weight, output, param: param, parameterBuffer: w2matParamBuffer)
         } else {
             for i in 0..<outputHeight {
@@ -143,8 +125,8 @@ public extension Corgy {
     /// - parameter bias: bias
     /// - parameter output: output Variable
     fileprivate static func resultToVariable(input: Variable, output: Variable, bias: Variable? = nil) {
-        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
-        let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+        let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.count), 1, 1)
+        let threadGroups = MTLSizeMake((output.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
         
         let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
         

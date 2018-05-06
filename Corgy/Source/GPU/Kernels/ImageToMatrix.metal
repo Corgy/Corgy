@@ -19,8 +19,8 @@ kernel void ImageToMatrix(const device float *input [[ buffer(0) ]],
     
     int channel = j / param->kernelSizeSquared;
     int num = j % param->kernelSizeSquared;
-    // row and col are coordinate in padded input
-    // real row and col should be row - padding or col - padding
+    // directly computed row and col are coordinate in padded input
+    // so real row and col should be row - padding or col - padding
     int padding = param->padding;
     int row = i / param->kernelPerRow + num / param->kernelSize - padding;
     int col = i % param->kernelPerRow + num % param->kernelSize - padding;

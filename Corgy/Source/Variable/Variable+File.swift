@@ -9,6 +9,7 @@ import Foundation
 
 public extension Variable {
     fileprivate static let ToBeReplaced: [Character] = ["(", ")", ","]
+    // TODO: how to directly read file into Variable's pointer
     /// return a Variable stored in binary file, shape of return Variable is described in shapeFile
     /// contents of shapeFile should be a string, format is space separated dimension.
     /// order: outChannel inChannel height width
@@ -22,12 +23,11 @@ public extension Variable {
             // TODO: add throws to this method
             fatalError()
         }
-        data.getBytes(&v.value, length: data.length)
+        data.getBytes(v.pointer, length: data.length)
         return v
     }
     
-    // TODO: array in Swift is of value semantic, consider how to
-    // get better performance by avoid frequently array creation and copy
+    // TODO: how to directly read file into Variable's pointer
     /// return a 1D Variable stored in binary file
     /// - parameter binaryFile: a path to binary file
     public static func of(binaryFile: String) -> Variable {
@@ -36,7 +36,7 @@ public extension Variable {
             fatalError()
         }
         let v = Variable(data.length / MemoryLayout<Variable.DataType>.stride)
-        data.getBytes(&v.value, length: data.length)
+        data.getBytes(v.pointer, length: data.length)
         return v
     }
 }

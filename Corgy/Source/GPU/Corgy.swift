@@ -11,6 +11,7 @@ import Metal
 
 let THREAD_PER_GROUP = 128
 
+public typealias Layer = (_: Variable) -> Variable
 
 /// main struct for Corgy GPU framework
 public enum Corgy {

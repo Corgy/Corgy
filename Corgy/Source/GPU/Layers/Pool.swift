@@ -16,7 +16,7 @@ public enum PoolType: String {
 
 public extension Corgy {
     /// return a Pooling layer
-    /// TODO: add full support for stride, dilation and padding
+    /// TODO: add full support for dilation
     /// - parameter strideStep: default stride is poolSize
     /// - parameter dilation: not supported yet
     /// - parameter padding: (padH, padW)
@@ -29,7 +29,6 @@ public extension Corgy {
                             padding: (Int, Int) = (0, 0)
         ) -> Layer {
         return { (_ input) in
-            let t1 = CACurrentMediaTime()
             let batchSize = input.shape[0]
             let channels = input.shape[1]
             let height = input.shape[2]
@@ -44,8 +43,8 @@ public extension Corgy {
             
             let output = Variable(batchSize, channels, outH, outW)
             
-            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.size), 1, 1)
-            let threadGroups = MTLSizeMake((output.size + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
+            let threadsPerThreadGroup = MTLSizeMake(min(THREAD_PER_GROUP, output.count), 1, 1)
+            let threadGroups = MTLSizeMake((output.count + THREAD_PER_GROUP - 1) / THREAD_PER_GROUP, 1, 1)
             
             let param = WorkParams(threadGroups: threadGroups, threadsPerThreadgroup: threadsPerThreadGroup)
             
@@ -62,8 +61,6 @@ public extension Corgy {
             
             submitWork(name: "Pool\(poolType.rawValue)", in: input, output, param: param, parameterBuffer: paramBuffer)
 
-            let t2 = CACurrentMediaTime()
-//            print("Pool \((t2 - t1) * 1000.0)")
             return output
         }
     }

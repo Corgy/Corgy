@@ -13,7 +13,7 @@ public enum CPU {
     /// an inplace ReLU layer, it will modify
     /// and return the input
     public static let ReLU = { (_ input: Variable) -> Variable in
-        for i in 0..<input.size {
+        for i in 0..<input.count {
             if input.value[i] < 0 {
                 input.value[i] = 0
             }
@@ -23,7 +23,7 @@ public enum CPU {
     
     public static func LeakyReLU(negativeScope: Float = 0.01) -> Layer {
         return {(_ input) in
-            for i in 0..<input.size {
+            for i in 0..<input.count {
                 if input.value[i] < 0 {
                     input.value[i] = negativeScope * input.value[i]
                 }
@@ -123,7 +123,7 @@ public enum CPU {
         return { (_ input) in
             assert(p >= 0 && p <= 1)
             srand48(seed ?? Int(arc4random()))
-            for i in 0..<input.size {
+            for i in 0..<input.count {
                 if input.value[i] < 0 {
                     input.value[i] = drand48() > p ? input.value[i] : 0
                 }
@@ -137,24 +137,19 @@ public enum CPU {
     /// - parameter bias: dimension: num output class * 1
     public static func FullConnected(weight: Variable, bias: Variable?) -> Layer {
         return { (_ input) in
-            let t1 = CACurrentMediaTime()
             let weightShape = weight.shape
-            assert(weightShape.count == 2 && weightShape[1] == input.size)
+            assert(weightShape.count == 2 && weightShape[1] == input.count)
             
             if bias != nil {
                 assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
             }
             let out = Variable(weight.shape[0])
-//            timing("Fully connected: ") {
-                for i in 0..<weight.shape[0] {
-                    out[i] = bias?[i] ?? 0
-                    for j in 0..<weight.shape[1] {
-                        out[i] += input.value[j] * weight[i, j]
-                    }
+            for i in 0..<weight.shape[0] {
+                out[i] = bias?[i] ?? 0
+                for j in 0..<weight.shape[1] {
+                    out[i] += input.value[j] * weight[i, j]
                 }
-//            }
-            let t2 = CACurrentMediaTime()
-            print("CPU FC: \((t2 - t1) * 1000.0)")
+            }
             return out
         }
     }

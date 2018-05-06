@@ -110,7 +110,7 @@ extension CPU {
                     }
                   }
                   
-                  if bias.size > 0 {
+                  if bias.count > 0 {
                     sum += bias[outChannelIndex]
                   }
                   let index = i * output.indexAuxilary[0]

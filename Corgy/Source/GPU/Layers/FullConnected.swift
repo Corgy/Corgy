@@ -15,7 +15,7 @@ extension Corgy {
      /// - parameter bias: dimension: num output class * 1
      public static func FullConnected(network: NeuralNetwork, weight: Variable, bias: Variable?) -> Layer {
      return { [unowned network] (_ input) in
-     assert(weight.shape.count == 2 && weight.shape[1] == input.size)
+     assert(weight.shape.count == 2 && weight.shape[1] == input.count)
      if bias != nil {
      assert(bias?.shape.count == 1 && bias?.shape[0] == weight.shape[0])
      }

@@ -23,9 +23,6 @@ fileprivate func cgImageOf(image: Image) -> CGImage {
         return image.cgImage(forProposedRect: &rect, context: nil, hints: nil)!
     #endif
 }
-//fileprivate func resize(image: Image, to size: CGSize) -> CGImage {
-//
-//}
 
 public extension Variable {
     
@@ -46,11 +43,10 @@ public extension Variable {
         let channelSize = height * width
         for i in 0..<(pixels.count/4) {
             // ith pixel
-            v.value[i] = DataType(pixels[i * 4 + 2])
-            v.value[channelSize + i] = DataType(pixels[i * 4 + 1])
-            v.value[channelSize * 2 + i] = DataType(pixels[i * 4])
+            v.value[i] =  DataType(pixels[i * 4]) / 255.0
+            v.value[channelSize + i] = DataType(pixels[i * 4 + 1]) / 255.0
+            v.value[channelSize * 2 + i] =  DataType(pixels[i * 4 + 2]) / 255.0
         }
-        print(v)
         return v
     }
     /// create a (1, 1, height, width) Variable out of an grayscale image
@@ -70,7 +66,9 @@ public extension Variable {
         let contextRef = CGContext(data: &pixelValues, width: width, height: height, bitsPerComponent: bitsPerComponent,
                                    bytesPerRow: bytesPerRow / 2, space: colorSpace, bitmapInfo: 0)
         contextRef!.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
-        v.value = pixelValues.map { 1 - DataType($0) / 255 }
+        for (i, p) in pixelValues.enumerated() {
+            v.value[i] = 1 - DataType(p) / 255
+        }
         return v
     }
 }

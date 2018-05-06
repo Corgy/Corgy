@@ -53,17 +53,6 @@ kernel void PoolAVG(const device float *input [[ buffer(0) ]],
         }
     }
     output[id] = result / numEl;
-    
-    
-//    // TODO: this is simple situation in a default size 2 pooling layer
-//    int inputRow = 2 * outputRow;
-//    int inputCol = 2 * outputCol;
-//    int inputIndex = batchID * (param->inputParam.sizePerBatch) +
-//    channelID * (param->inputParam.sizePerChannel) +
-//    inputRow * (param->inputParam.width) + inputCol;
-//    float m = input[inputIndex] + input[inputIndex+1] +
-//    input[inputIndex+(param->inputParam.width)] + input[inputIndex+1+(param->inputParam.width)];
-//    output[id] = m / 4;
 }
 
 kernel void PoolMAX(const device float *input [[ buffer(0) ]],

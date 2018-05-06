@@ -13,18 +13,18 @@ import QuartzCore
 @available(iOS 10.0, *)
 func test () {
     async {
-        let imageName = "four"
+        
+//        let imageName = "four"
 //        let imageName = "four_colored"
-//        let imageName = "dog"
+        let imageName = "dog"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
         let image = Image(named: Image.Name(imageName))!
         #endif
-        GPUTest.MNIST(image: image)
-//        testYolo(image: image, computeOn: .GPU)
+//        GPUTest.MNIST(image: image)
+        testYolo(image: image, computeOn: .GPU)
     }
-//    CPUTest.testConv2D()
 }
 
 @available(OSX 10.13, *)
@@ -36,12 +36,13 @@ enum CPUTest {
     
     static func testConv2D() {
         let weight = Variable(2, 1, 3, 3)
-        for i in 0..<weight.size {
+        for i in 0..<weight.count {
             weight.value[i] = Variable.DataType(i)
         }
         
         let bias   = Variable(2)
-        bias.value = [1, 2]
+        bias.value[0] = Float(1)
+        bias.value[1] = Float(2)
         
         let conv2d = CPU.Conv2D(inChannels:  1,
                                   outChannels: 2,
@@ -52,7 +53,7 @@ enum CPUTest {
         )
         
         let input = Variable(1, 1, 4, 4)
-        for i in 0..<input.size {
+        for i in 0..<input.count {
             input.value[i] = Variable.DataType(i)
         }
         
@@ -79,9 +80,11 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
+//    input.printOneLayer()
+//    print(input.shape)
     let output = network.forward(input)
-    print(output.shape)
 //    output.printOneLayer()
+    print(output.shape)
 }
 
 @available(OSX 10.13, *)
@@ -89,8 +92,8 @@ func testYolo(image: Image, computeOn: ComputeOn) {
 enum GPUTest {
     static func testReLU() {
         let relu = Corgy.ReLU
-        let input = Variable(32,16)
-        for i in 0..<input.size {
+        let input = Variable(32,33)
+        for i in 0..<input.count {
             input.value[i] = Variable.DataType(i)
             if i % 2 == 0 {
                 input.value[i] = -input.value[i]
@@ -104,32 +107,9 @@ enum GPUTest {
         print("\n")
     }
     
-    static func testNeg() {
-        let input = Variable(32,16)
-        for i in 0..<input.size {
-            input.value[i] = Variable.DataType(i)
-        }
-        
-        let neg2 = Corgy.Neg2()
-        print("Neg Not inplace: \ninput:\n")
-        print(input)
-        print("\noutput:\n")
-        print(neg2(input))
-        print("\n")
-        
-        let neg = Corgy.Neg()
-        
-        print("Inplace Neg: \ninput:\n")
-        print(input)
-        _ = neg(input)
-        print("\noutput:\n")
-        print(input)
-        print("\n")
-    }
-    
     static func testPoolMax() {
         let input = Variable(1, 1, 32, 16)
-        for i in 0..<input.size {
+        for i in 0..<input.count {
             input.value[i] = Variable.DataType(i)
         }
         let poolMax = Corgy.Pool(poolSize: (2, 2), poolType: .Max)
@@ -142,7 +122,7 @@ enum GPUTest {
     
     static func testPoolAvg() {
         let input = Variable(1, 1, 32, 16)
-        for i in 0..<input.size {
+        for i in 0..<input.count {
             input.value[i] = Variable.DataType(i)
         }
         let poolAve = Corgy.Pool(poolSize: (2, 2), poolType: .Average)
@@ -155,7 +135,7 @@ enum GPUTest {
     
     static func testDropout() {
         let input = Variable(1, 1, 32, 16)
-        for i in 0..<input.size {
+        for i in 0..<input.count {
             input.value[i] = Variable.DataType(i)
         }
         let poolAve = Corgy.Dropout(p: 0.9)
@@ -168,12 +148,13 @@ enum GPUTest {
     
     static func testConv2D() {
         let weight = Variable(2, 1, 3, 3)
-        for i in 0..<weight.size {
+        for i in 0..<weight.count {
             weight.value[i] = Variable.DataType(i)
         }
     
         let bias   = Variable(2)
-        bias.value = [1, 2]
+        bias.value[0] = Float(1)
+        bias.value[1] = Float(2)
 
         let conv2d = Corgy.Conv2D(inChannels:  1,
                                   outChannels: 2,
@@ -184,7 +165,7 @@ enum GPUTest {
         )
 
         let input = Variable(1, 1, 4, 4)
-        for i in 0..<input.size {
+        for i in 0..<input.count {
             input.value[i] = Variable.DataType(i)
         }
 
@@ -197,12 +178,12 @@ enum GPUTest {
     @available(iOS 10.0, *)
     static func testMultiply() {
         let v1 = Variable(4, 4)
-        for i in 0..<v1.size {
+        for i in 0..<v1.count {
             v1.value[i] = Variable.DataType(i);
         }
         
         let v2 = Variable(4, 4)
-        for i in 0..<v2.size {
+        for i in 0..<v2.count {
             v2.value[i] = Variable.DataType(i);
         }
         
@@ -211,7 +192,7 @@ enum GPUTest {
     
     static func testVariabel() {
         let v = Variable(3, 3, 3)
-        for i in 0..<v.size {
+        for i in 0..<v.count {
             v.value[i] = Variable.DataType(i)
         }
         
