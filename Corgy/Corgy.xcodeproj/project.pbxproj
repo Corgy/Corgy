@@ -31,8 +31,8 @@
 		1EB2F9AF2089991A00DDFEEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9AD2089991A00DDFEEC /* Main.storyboard */; };
 		1EB2F9B12089991A00DDFEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9B02089991A00DDFEEC /* Assets.xcassets */; };
 		1EB2F9B42089991A00DDFEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB2F9B22089991A00DDFEEC /* LaunchScreen.storyboard */; };
-		1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
-		1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */; };
+		1EC174D0208EDDAB00783CB8 /* Variable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Variable+Image.swift */; };
+		1EC174D1208EDDAB00783CB8 /* Variable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Variable+Image.swift */; };
 		7921FCF7209D5BD4002425AE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921FCF6209D5BD4002425AE /* Math.swift */; };
 		7921FCF8209D5BD4002425AE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921FCF6209D5BD4002425AE /* Math.swift */; };
 		797F0EEA209A0A10009247A9 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -149,7 +149,7 @@
 		1EB2F9B02089991A00DDFEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1EB2F9B32089991A00DDFEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1EB2F9B52089991A00DDFEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Virable+Image.swift"; sourceTree = "<group>"; };
+		1EC174CF208EDDAB00783CB8 /* Variable+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Variable+Image.swift"; sourceTree = "<group>"; };
 		7921FCF6209D5BD4002425AE /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		797F0EED209A2BAA009247A9 /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		797F0EF6209A97D4009247A9 /* Variable+File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Variable+File.swift"; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				B903C4882095386E000D362B /* Variable.swift */,
-				1EC174CF208EDDAB00783CB8 /* Virable+Image.swift */,
+				1EC174CF208EDDAB00783CB8 /* Variable+Image.swift */,
 				797F0EF6209A97D4009247A9 /* Variable+File.swift */,
 				B903C48520953813000D362B /* Variable+Operation.swift */,
 			);
@@ -578,7 +578,7 @@
 			files = (
 				1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */,
 				7921FCF7209D5BD4002425AE /* Math.swift in Sources */,
-				1EC174D0208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
+				1EC174D0208EDDAB00783CB8 /* Variable+Image.swift in Sources */,
 				797F0EFA209A9804009247A9 /* TinyYolo.swift in Sources */,
 				B99E87EB2094042800E21C10 /* Dropout.swift in Sources */,
 				B997AA16209AB14900185CA3 /* LeakyReLU.swift in Sources */,
@@ -618,7 +618,7 @@
 				7921FCF8209D5BD4002425AE /* Math.swift in Sources */,
 				B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */,
 				797F0EFB209A9804009247A9 /* TinyYolo.swift in Sources */,
-				1EC174D1208EDDAB00783CB8 /* Virable+Image.swift in Sources */,
+				1EC174D1208EDDAB00783CB8 /* Variable+Image.swift in Sources */,
 				B997AA17209AB14900185CA3 /* LeakyReLU.swift in Sources */,
 				B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */,
 				797F0EEF209A2BAA009247A9 /* Async.swift in Sources */,
