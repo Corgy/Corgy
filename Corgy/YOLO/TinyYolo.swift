@@ -123,7 +123,6 @@ public extension ModelImporter {
     /// input is the output of YOLO network, must be of shape [1, 125, 13, 13}
     public static func getResult(input: Variable) -> [Box] {
 //        assert(input.count == 125*13*13)
-        print(input)
         let numCellX = 13
         let numCellY = 13
         let layerSize = 169 // 13 * 13

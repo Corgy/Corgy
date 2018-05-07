@@ -24,7 +24,7 @@ func test () {
 //        let imageName = "four"
 //        let imageName = "four_colored"
         timing("10 times") {
-            for i in 1...10 {
+            for _ in 1...10 {
                 for imageName in name {
                     #if os(iOS)
                     let image = Image(named: imageName)!
@@ -102,11 +102,15 @@ func testYolo(image: Image, computeOn: ComputeOn) {
         return a.score > b.score
     }).forEach { print($0) }
     
-    for box in boxes {
-        image = image.drawRect(CGRect(x: Double(box.x), y: Double(box.y), width: Double(box.w), height: Double(box.h)))!
+    
+    async_main {
+        for box in boxes {
+            image = image.drawBox(box)!
+        }
     }
+    
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-    let filePath = "\(paths[0])/predict.png"
+    let filePath = "\(paths[0])/predict\(NSDate().timeIntervalSince1970).png"
     let fileURL = NSURL.fileURL(withPath: filePath)
     image.writePNG(toURL: fileURL)
 }

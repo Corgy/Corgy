@@ -13,3 +13,9 @@ public func async(_ block: @escaping () -> Void) {
         block()
     }
 }
+
+public func async_main(_ block: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        block()
+    }
+}
