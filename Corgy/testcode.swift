@@ -23,19 +23,21 @@ func test () {
         let name = ["dog", "dog2", "dog3", "dog4", "dog5", "car", "car2", "cat"]
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        timing("10 times") {
+//        timing("10 times") {
             for _ in 1...10 {
                 for imageName in name {
+                    var image : Image
                     #if os(iOS)
-                    let image = Image(named: imageName)!
+                    image = Image(named: imageName)!
                     #elseif os(OSX)
-                    let image = Image(named: Image.Name(imageName))!
+                    image = Image(named: Image.Name(imageName))!
                     #endif
                     // GPUTest.MNIST(image: image)
                     testYolo(image: image, computeOn: .GPU)
+                    image.setName(nil)
                 }
             }            
-        }
+//        }
     }
 }
 
@@ -90,23 +92,19 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func testYolo(image: Image, computeOn: ComputeOn) {
-    var image = image
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
 
     var boxes = ModelImporter.getResult(input: output)
-    boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.5)
+    boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.1)
         
     boxes.sorted(by: { (a, b) -> Bool in
         return a.score > b.score
     }).forEach { print($0) }
-    
-    
-    async_main {
-        for box in boxes {
-            image = image.drawBox(box)!
-        }
+//    print(boxes.count)
+    for box in boxes {
+        image.drawBox(box)
     }
     
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)

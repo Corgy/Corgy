@@ -112,7 +112,7 @@ public extension ModelImporter {
     }
     
     fileprivate static let anchors: [Float] = [1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52]
-    fileprivate static let confidenceThreshold: Float = 0.3
+    fileprivate static let confidenceThreshold: Float = 0.209
     
     public static let voc_labels = [
         "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
