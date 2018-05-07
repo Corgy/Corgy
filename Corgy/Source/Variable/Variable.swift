@@ -83,6 +83,10 @@ public class Variable : CustomStringConvertible {
         value = UnsafeMutableBufferPointer(start: xvector?.assumingMemoryBound(to: DataType.self), count: count)
     }
     
+    deinit {
+        free(pointer)
+    }
+    
     func validIndex(_ indices: [Int]) -> Bool {
         if indices.count != shape.count {
             return false
