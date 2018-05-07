@@ -16,7 +16,7 @@ func test () {
         
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        let imageName = "dog"
+        let imageName = "cat"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
@@ -85,11 +85,11 @@ func testYolo(image: Image, computeOn: ComputeOn) {
 //     input.printOneLayer()
 //    print(input.shape)
     let output = network.forward(input)
-//    print(output.shape)
-    output.printOneLayer(channel: 0)
-    output.printTransposed()
-//    let boxes = ModelImporter.getResult(input: output)
-//    print(boxes)
+    let boxes = ModelImporter.getResult(input: output)
+    boxes.sorted(by: { (a, b) -> Bool in
+        return a.score > b.score
+    }).forEach { print($0) }
+    
 //    print(output.shape)
 }
 

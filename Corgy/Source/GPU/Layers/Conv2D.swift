@@ -38,17 +38,18 @@ public extension Corgy {
             t1 = currentMillsecond()
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize, padding: padding)
             t2 = currentMillsecond()
-//            print(String(format: "img 2 mat: %.4f", t2-t1), terminator: ",\t")
+            print(String(format: "img 2 mat: %.4f", t2-t1), terminator: ",\t")
             
             t1 = currentMillsecond()
             let m2 = weightToMatrix(weight: weight)
             t2 = currentMillsecond()
-//            print(String(format: "wgt 2 mat: %.4f", t2-t1), terminator: ",\t")
+            print(String(format: "wgt 2 mat: %.4f", t2-t1), terminator: ",\t")
             
             t1 = currentMillsecond()
+            print("mat mul(", terminator: "")
             let res = m1 × m2
             t2 = currentMillsecond()
-//            print(String(format: "mat mul: %.4f", t2-t1), terminator: ",\t")
+            print(String(format: "): %.4f", t2-t1), terminator: ",\t")
             
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
@@ -61,14 +62,14 @@ public extension Corgy {
             t1 = currentMillsecond()
             resultToVariable(input: res, output: output, bias: bias)
             t2 = currentMillsecond()
-//            print(String(format: "result 2 var: %.4f", t2-t1), terminator: ",\t")
+            print(String(format: "result 2 var: %.4f", t2-t1), terminator: ",\t")
             
             // FIXME: preassume that number of image is 1
             var outputShape = output.shape
             outputShape.insert(1, at: 0)
             output.shape = outputShape
             
-//            print("Total: \(currentMillsecond()-start)")
+            print("Total: \(currentMillsecond()-start)")
             
             return output
         }

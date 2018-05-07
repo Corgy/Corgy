@@ -117,9 +117,9 @@ struct ImageToMatParam: LayerParam {
         self.outputParam = outputParam
         self.kernelSize = Int32(kernelSize)
         self.kernelSizeSquared = self.kernelSize * self.kernelSize
-        self.kernelPerRow = inputParam.width - Int32(kernelSize) + 1
-        self.kernelPerCol = inputParam.height - Int32(kernelSize) + 1
         self.padding = Int32(padding)
+        self.kernelPerRow = inputParam.width - Int32(kernelSize) + 1 + 2 * self.padding
+        self.kernelPerCol = inputParam.height - Int32(kernelSize) + 1 + 2 * self.padding
     }
 }
 

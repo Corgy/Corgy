@@ -8,9 +8,9 @@
 import Foundation
 
 public extension ModelImporter {
-    struct Box {
-        let x, y, w, h, score: Variable.DataType
-        let klassIndex: Int
+    public struct Box {
+        public let x, y, w, h, score: Variable.DataType
+        public let klassIndex: Int
     }
     
     public static func importYolo(computeOn: ComputeOn) -> NeuralNetwork {
@@ -37,20 +37,20 @@ public extension ModelImporter {
         case .GPU:
             ret
                 .add(convLayer(1, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-//                .add(convLayer(2, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-//                .add(convLayer(3, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-//                .add(convLayer(4, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-//                .add(convLayer(5, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
-//                .add(convLayer(6, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(Corgy.Pool(poolSize: (1, 1), stride: (1, 1), poolType: .Max))
-//                .add(convLayer(7, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(convLayer(8, padding: 1)).add(Corgy.LeakyReLU())
-//                .add(convLayer(9, kernelSize: 1))//.add(Corgy.ReLU)
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(convLayer(2, padding: 1)).add(Corgy.LeakyReLU())
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(convLayer(3, padding: 1)).add(Corgy.LeakyReLU())
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(convLayer(4, padding: 1)).add(Corgy.LeakyReLU())
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(convLayer(5, padding: 1)).add(Corgy.LeakyReLU())
+                .add(Corgy.Pool(poolSize: (2, 2), poolType: .Max))
+                .add(convLayer(6, padding: 1)).add(Corgy.LeakyReLU())
+                .add(Corgy.Pool(poolSize: (1, 1), stride: (1, 1), poolType: .Max))
+                .add(convLayer(7, padding: 1)).add(Corgy.LeakyReLU())
+                .add(convLayer(8, padding: 1)).add(Corgy.LeakyReLU())
+                .add(convLayer(9, kernelSize: 1))//.add(Corgy.ReLU)
         }
         
         return ret
@@ -97,13 +97,17 @@ public extension ModelImporter {
         
         let numCellX = 13
         let numCellY = 13
+        let layerSize = 169 // 13 * 13
         let numBox = 5
         let numClasses = 20
+        let inputWidth  = 416
+        let cellSize = Float(inputWidth) / Float(numCellY)
         
         /// get box info at box b at cell (cx, cy)
         /// b must be between 0 and 4
         /// cx and cy must be between 0 and 12
         func get(cx: Int, cy: Int, b: Int) -> Box {
+            
             let oy = Math.sigmoid(input[0, b * 25, cy, cx])
             let ox = Math.sigmoid(input[0, b * 25 + 1, cy, cx])
             let ow = input[0, b * 25 + 2, cy, cx]
@@ -115,9 +119,6 @@ public extension ModelImporter {
             }
             klasses = Math.softMax(klasses)
             let (klassIndex, klass) = klasses.argmax()
-            let inputWidth  = 416
-            
-            let cellSize = Float(inputWidth) / Float(numCellY)
             
             // the real pixel of the center of infenrenced box
             let realy = (Float(cy) + oy) * cellSize
