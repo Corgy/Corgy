@@ -8,6 +8,7 @@
 import Foundation
 import Corgy
 import QuartzCore
+import Cocoa
 
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
@@ -16,7 +17,7 @@ func test () {
         
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        let imageName = "car"
+        let imageName = "dog5"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
@@ -78,13 +79,53 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func testYolo(image: Image, computeOn: ComputeOn) {
+    var image = image
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
     let boxes = ModelImporter.getResult(input: output)
+    
     boxes.sorted(by: { (a, b) -> Bool in
         return a.score > b.score
     }).forEach { print($0) }
+    
+    for box in boxes {
+        image = image.drawRect(CGRect(x: Double(box.x), y: Double(box.y), width: Double(box.w), height: Double(box.h)))!
+    }
+    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    let filePath = "\(paths[0])/predict.png"
+    let fileURL = NSURL.fileURL(withPath: filePath)
+    image.writePNG(toURL: fileURL)
+}
+
+extension NSImage {
+    public func drawRect(_ rect: CGRect) -> NSImage? {
+        self.lockFocus()
+        let rectangle = NSBezierPath(rect: rect)
+        
+        NSColor.red.set()
+        rectangle.lineWidth = 5
+        rectangle.stroke()
+        
+        self.unlockFocus()
+        return self
+    }
+    
+    public func writePNG(toURL url: URL) {
+        guard let data = tiffRepresentation,
+            let rep = NSBitmapImageRep(data: data),
+            let imgData = rep.representation(using: .png, properties: [.compressionFactor : NSNumber(floatLiteral: 1.0)]) else {
+                
+                Swift.print("\(self.self) Error Function '\(#function)' Line: \(#line) No tiff rep found for image writing to \(url)")
+                return
+        }
+        
+        do {
+            try imgData.write(to: url)
+        }catch let error {
+            Swift.print("\(self.self) Error Function '\(#function)' Line: \(#line) \(error.localizedDescription)")
+        }
+    }
 }
 
 @available(OSX 10.13, *)
