@@ -17,7 +17,7 @@ func test () {
         
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        let imageName = "dog"
+        let imageName = "car2"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
@@ -83,8 +83,9 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
-    let boxes = ModelImporter.getResult(input: output)
-    
+    var boxes = ModelImporter.getResult(input: output)
+    boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.5)
+        
     boxes.sorted(by: { (a, b) -> Bool in
         return a.score > b.score
     }).forEach { print($0) }
