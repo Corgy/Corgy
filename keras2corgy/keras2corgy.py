@@ -9,7 +9,7 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers.advanced_activations import LeakyReLU
 
 # generated using YAD2K
-model_path = "yolov2-tiny-voc.h5"
+model_path = "model_data/yolov2-tiny-voc.h5"
 
 # Load the model that was exported by YAD2K.
 model = load_model(model_path)
@@ -83,7 +83,7 @@ model_nobn.set_weights(W_nobn)
 print("Comparing models...")
 
 # order: [ batch, height, width, inputChannel ]
-image_data = np.fromfile(open('imagedata.bin', 'r'), dtype=np.float32).reshape(1,416,416,3)
+image_data = np.fromfile(open('model_data/imagedata.bin', 'r'), dtype=np.float32).reshape(1,416,416,3)
 # order: [ batch, inputChannel, height, width ]
 corgy_image_data = image_data.transpose(0,3,1,2)
 

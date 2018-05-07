@@ -34,7 +34,7 @@ public extension ModelImporter {
                 .add(CPU.Pool(poolSize: (1, 1), stride: (1, 1), poolType: .Max))
                 .add(convLayer(7, computeOn: .CPU)).add(CPU.LeakyReLU())
                 .add(convLayer(8, computeOn: .CPU)).add(CPU.LeakyReLU())
-                .add(convLayer(9, computeOn: .CPU, kernelSize: 1)).add(CPU.ReLU)
+                .add(convLayer(9, computeOn: .CPU, kernelSize: 1))
         case .GPU:
             ret
                 .add(convLayer(1, padding: 1)).add(Corgy.LeakyReLU())
@@ -51,7 +51,7 @@ public extension ModelImporter {
                 .add(Corgy.Pool(poolSize: (1, 1), stride: (1, 1), poolType: .Max))
                 .add(convLayer(7, padding: 1)).add(Corgy.LeakyReLU())
                 .add(convLayer(8, padding: 1)).add(Corgy.LeakyReLU())
-                .add(convLayer(9, kernelSize: 1))//.add(Corgy.ReLU)
+                .add(convLayer(9, kernelSize: 1))
         }
         
         return ret

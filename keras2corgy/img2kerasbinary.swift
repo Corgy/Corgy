@@ -17,6 +17,7 @@ for i in 0..<416 {
     }
 }
 
+// when using this, pointer and actualCount should be declared as public
 let data = NSData(bytes: output.pointer, length: output.actualCount * 4)
 
-try! data.write(toFile: "/Users/zbq/Desktop/shouldbecorrect/imagedata.bin")
+try! data.write(toFile: "imagedata.bin")

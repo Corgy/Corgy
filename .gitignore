@@ -3,3 +3,8 @@
 xcuserdata
 mnist/data/*
 xcshareddata
+
+keras2corgy/model_data
+keras2corgy/Parameters
+
+

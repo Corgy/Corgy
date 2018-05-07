@@ -9,21 +9,28 @@ import Foundation
 import Corgy
 import QuartzCore
 
+let classes = [
+    "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
+    "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person",
+    "pottedplant", "sheep", "sofa", "train", "tvmonitor"
+]
+
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func test () {
     async {
-        
+        let name = ["dog", "dog2", "dog3", "dog4", "dog5", "car", "car2", "cat"]
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        let imageName = "car"
-        #if os(iOS)
-        let image = Image(named: imageName)!
-        #elseif os(OSX)
-        let image = Image(named: Image.Name(imageName))!
-        #endif
-        // GPUTest.MNIST(image: image)
-        testYolo(image: image, computeOn: .GPU)
+        for imageName in name {
+            #if os(iOS)
+            let image = Image(named: imageName)!
+            #elseif os(OSX)
+            let image = Image(named: Image.Name(imageName))!
+            #endif
+            // GPUTest.MNIST(image: image)
+            testYolo(image: image, computeOn: .GPU)
+        }
     }
 }
 
@@ -84,7 +91,7 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let boxes = ModelImporter.getResult(input: output)
     boxes.sorted(by: { (a, b) -> Bool in
         return a.score > b.score
-    }).forEach { print($0) }
+    })[0...2].forEach { print("\(classes[$0.klassIndex]): \($0.score)") }
 }
 
 @available(OSX 10.13, *)
