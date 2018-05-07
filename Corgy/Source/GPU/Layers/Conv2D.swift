@@ -12,6 +12,17 @@ import Metal
 @available(iOS 10.0, *)
 public extension Corgy {
     
+    /// `weight` should be of dimension `[outChannel, inChannel, kernelSize, kernelSize]`
+    /// in this situation `weightTransformed` should be `false`.
+    ///
+    /// But we use a trick to speedup the convolution computation, as described in
+    /// this [link](http://15418.courses.cs.cmu.edu/fall2017/lecture/dnn/slide_023)
+    /// you can pass in a 2D pre-transformed `weight` matrix, then pass `true` for
+    /// `weightTransformed`, then we'll not do the transformation again, which can
+    /// bring better runtime performance.
+    ///
+    /// To get transformed weights from original weights, use the weight_transform.py
+    /// script provided in this repo.
     public static func Conv2D(inChannels: Int,
                               outChannels: Int,
                               kernelSize: Int,
@@ -20,7 +31,8 @@ public extension Corgy {
                               dilation: Int = 1,
                               groups: Int = 1,
                               weight: Variable,
-                              bias: Variable? = nil
+                              bias: Variable? = nil,
+                              weightTransformed: Bool = false
         ) -> Layer {
         return { (_ input) in
             
@@ -38,18 +50,18 @@ public extension Corgy {
             t1 = currentMillsecond()
             let m1 = imageToMatrix(image: input, kernelSize: kernelSize, padding: padding)
             t2 = currentMillsecond()
-            print(String(format: "img 2 mat: %.4f", t2-t1), terminator: ",\t")
+//            print(String(format: "img 2 mat: %.4f", t2-t1), terminator: ",\t")
             
             t1 = currentMillsecond()
-            let m2 = weightToMatrix(weight: weight)
+            let m2 = weightTransformed ? weight : weightToMatrix(weight: weight)
             t2 = currentMillsecond()
-            print(String(format: "wgt 2 mat: %.4f", t2-t1), terminator: ",\t")
+//            print(String(format: "wgt 2 mat: %.4f", t2-t1), terminator: ",\t")
             
             t1 = currentMillsecond()
-            print("mat mul(", terminator: "")
+//            print("mat mul(", terminator: "")
             let res = m1 × m2
             t2 = currentMillsecond()
-            print(String(format: "): %.4f", t2-t1), terminator: ",\t")
+//            print(String(format: "): %.4f", t2-t1), terminator: ",\t")
             
             let inputHeight = inputShape[1]
             let inputWidth  = inputShape[2]
@@ -62,14 +74,14 @@ public extension Corgy {
             t1 = currentMillsecond()
             resultToVariable(input: res, output: output, bias: bias)
             t2 = currentMillsecond()
-            print(String(format: "result 2 var: %.4f", t2-t1), terminator: ",\t")
+//            print(String(format: "result 2 var: %.4f", t2-t1), terminator: ",\t")
             
             // FIXME: preassume that number of image is 1
             var outputShape = output.shape
             outputShape.insert(1, at: 0)
             output.shape = outputShape
             
-            print("Total: \(currentMillsecond()-start)")
+//            print("Total: \(currentMillsecond()-start)")
             
             return output
         }
@@ -106,7 +118,7 @@ public extension Corgy {
         return output
     }
     
-    fileprivate static func weightToMatrix(weight: Variable) -> Variable {
+    public static func weightToMatrix(weight: Variable) -> Variable {
         let weightShape = weight.shape
         let inChannel = weightShape[1]
         

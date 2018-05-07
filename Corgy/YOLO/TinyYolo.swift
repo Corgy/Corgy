@@ -57,35 +57,57 @@ public extension ModelImporter {
         return ret
     }
     
-    fileprivate static let ConvLayerFileNamePrefix = "corgy_voc_conv"
-    fileprivate static let ConvLayerFileDirectory = "Models/yolo-voc"
+    
+    /*
+     * The difference between t-yolo and yolo-voc is that,
+     * weights in t-yolo is pretransformed into matrix as describted [here](http://15418.courses.cs.cmu.edu/fall2017/lecture/dnn/slide_023)
+     * But to use pretransformed weights, original shape of weights must also be provided.
+     * convLayer distinguish this by check if there is original shape file in folder.
+     * To get transformed weights from original weights, use the weight_transform.py script
+     * provided in this repo.
+     */
+    fileprivate static let ConvLayerFileNamePrefix = "t_corgy_voc_conv" // "corgy_voc_conv"
+    fileprivate static let ConvLayerFileDirectory = "Models/t-yolo"     // "Models/yolo-voc"
+    
     fileprivate static func convLayer(_ n: Int,
                                       computeOn: ComputeOn = .GPU,
                                       kernelSize: Int = 3,
                                       padding: Int = 0) -> Layer {
         let weightFileName = "\(ConvLayerFileNamePrefix)\(n)_W"
+        /// transformed 2d weight shape
         let weightShapeFileName = "\(ConvLayerFileNamePrefix)\(n)_W_shape"
+        /// original 4d weight shape
+        let weightRealShapeFileName = "\(ConvLayerFileNamePrefix)\(n)_W_real_shape"
         let biasFileName = "\(ConvLayerFileNamePrefix)\(n)_b"
         let weightFilePath = Bundle.main.path(forResource: weightFileName, ofType: "bin", inDirectory: ConvLayerFileDirectory)!
         let shapePath = Bundle.main.path(forResource: weightShapeFileName, ofType: nil, inDirectory: ConvLayerFileDirectory)!
+        let realShapePath = Bundle.main.path(forResource: weightRealShapeFileName, ofType: nil, inDirectory: ConvLayerFileDirectory)
         let biasPath = Bundle.main.path(forResource: biasFileName, ofType: "bin", inDirectory: ConvLayerFileDirectory)!
         let weight = Variable.of(binaryFile: weightFilePath, shapeFile: shapePath)
+        var weightShape = weight.shape
+        var weightTransformed = false
+        if realShapePath != nil {
+            let shapeString = try! String(contentsOfFile: realShapePath!).replacingOccurrences(of: "[(),\n]+", with: "", options: .regularExpression, range: nil)
+            weightShape = shapeString.split(separator: " ").map { Int($0)! }
+            weightTransformed = true
+        }
         let bias = Variable.of(binaryFile: biasPath)
         switch computeOn {
         case .CPU:
-            return CPU.Conv2D(inChannels: weight.shape[1],
-                              outChannels: weight.shape[0],
+            return CPU.Conv2D(inChannels: weightShape[1],
+                              outChannels: weightShape[0],
                               kernelSize: kernelSize,
                               padding: padding,
                               weight: weight,
                               bias: bias)
         case .GPU:
-            return Corgy.Conv2D(inChannels: weight.shape[1],
-                                outChannels: weight.shape[0],
+            return Corgy.Conv2D(inChannels: weightShape[1],
+                                outChannels: weightShape[0],
                                 kernelSize: kernelSize,
                                 padding: padding,
                                 weight: weight,
-                                bias: bias)
+                                bias: bias,
+                                weightTransformed: weightTransformed)
         }
     }
     

@@ -82,7 +82,7 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     let v2m = v2.toMPSMatrix()
     
     t2 = currentMillsecond()
-    print(String(format: "var to mps: %.4f", t2-t1), terminator: ",\t")
+//    print(String(format: "var to mps: %.4f", t2-t1), terminator: ",\t")
     
     let mul = MPSMatrixMultiplication(device: Corgy.resource.device,
                                       transposeLeft: false, transposeRight: false,
@@ -95,7 +95,7 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     commandBuffer!.commit()
     commandBuffer!.waitUntilCompleted()
     
-    print(String(format: "mps mul: %.4f", currentMillsecond()-t2), terminator: "")
+//    print(String(format: "mps mul: %.4f", currentMillsecond()-t2), terminator: "")
     // doesn't need to create a variable out of resm since the underlying memory of resm is from
     // result, which is from makeBuffer(bytesNoCopy:). So return result directly is fine.
     return result

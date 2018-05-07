@@ -80,8 +80,6 @@
 		B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87FA2094063000E21C10 /* CorgyResource.swift */; };
 		B99E880120940B3800E21C10 /* PoolKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880020940B3800E21C10 /* PoolKernel.metal */; };
 		B99E880220940B3800E21C10 /* PoolKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880020940B3800E21C10 /* PoolKernel.metal */; };
-		B99E880720940B6500E21C10 /* Conv2DKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880620940B6500E21C10 /* Conv2DKernel.metal */; };
-		B99E880820940B6500E21C10 /* Conv2DKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880620940B6500E21C10 /* Conv2DKernel.metal */; };
 		B99E880A20940B7200E21C10 /* DropoutKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880920940B7200E21C10 /* DropoutKernel.metal */; };
 		B99E880B20940B7200E21C10 /* DropoutKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880920940B7200E21C10 /* DropoutKernel.metal */; };
 		B99E880D20940B8200E21C10 /* ReLUKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B99E880C20940B8200E21C10 /* ReLUKernel.metal */; };
@@ -171,7 +169,6 @@
 		B99E87F72094058400E21C10 /* Miscellaneous.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Miscellaneous.swift; sourceTree = "<group>"; };
 		B99E87FA2094063000E21C10 /* CorgyResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorgyResource.swift; sourceTree = "<group>"; };
 		B99E880020940B3800E21C10 /* PoolKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PoolKernel.metal; sourceTree = "<group>"; };
-		B99E880620940B6500E21C10 /* Conv2DKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Conv2DKernel.metal; sourceTree = "<group>"; };
 		B99E880920940B7200E21C10 /* DropoutKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DropoutKernel.metal; sourceTree = "<group>"; };
 		B99E880C20940B8200E21C10 /* ReLUKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ReLUKernel.metal; sourceTree = "<group>"; };
 		B99E880F20940BC100E21C10 /* Utils.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Utils.metal; sourceTree = "<group>"; };
@@ -361,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				B99E880020940B3800E21C10 /* PoolKernel.metal */,
-				B99E880620940B6500E21C10 /* Conv2DKernel.metal */,
 				B99E880920940B7200E21C10 /* DropoutKernel.metal */,
 				B99E880C20940B8200E21C10 /* ReLUKernel.metal */,
 				797F0EFC209BCD5D009247A9 /* ImageToMatrix.metal */,
@@ -612,7 +608,6 @@
 				797F0F00209BF798009247A9 /* MatrixToVariable.metal in Sources */,
 				B99E87E82094041600E21C10 /* Conv2D.swift in Sources */,
 				1EB2F9762089945700DDFEEC /* NeuralNetwork.swift in Sources */,
-				B99E880720940B6500E21C10 /* Conv2DKernel.metal in Sources */,
 				B903C4892095386E000D362B /* Variable.swift in Sources */,
 				B99E87E52094040400E21C10 /* ReLU.swift in Sources */,
 				B903C48620953813000D362B /* Variable+Operation.swift in Sources */,
@@ -647,7 +642,6 @@
 				B99E87F2209404EC00E21C10 /* FullConnected.swift in Sources */,
 				797F0F01209BF798009247A9 /* MatrixToVariable.metal in Sources */,
 				1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */,
-				B99E880820940B6500E21C10 /* Conv2DKernel.metal in Sources */,
 				B903C48A2095386E000D362B /* Variable.swift in Sources */,
 				B99E87E62094040400E21C10 /* ReLU.swift in Sources */,
 				B903C48720953813000D362B /* Variable+Operation.swift in Sources */,

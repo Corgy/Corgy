@@ -39,4 +39,10 @@ public extension Variable {
         data.getBytes(v.pointer, length: data.length)
         return v
     }
+    
+    /// - parameter shapeFileName: if is nil, shape will not be write to file
+    public func toFile(_ name: String, shapeFileName: String? = nil) {
+        let data = NSData(bytes: pointer, length: actualCount * MemoryLayout<DataType>.stride)
+        try! data.write(toFile: name)
+    }
 }

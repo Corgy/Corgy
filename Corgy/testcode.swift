@@ -22,14 +22,18 @@ func test () {
         let name = ["dog", "dog2", "dog3", "dog4", "dog5", "car", "car2", "cat"]
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        for imageName in name {
-            #if os(iOS)
-            let image = Image(named: imageName)!
-            #elseif os(OSX)
-            let image = Image(named: Image.Name(imageName))!
-            #endif
-            // GPUTest.MNIST(image: image)
-            testYolo(image: image, computeOn: .GPU)
+        timing("10 times") {
+            for i in 1...10 {
+                for imageName in name {
+                    #if os(iOS)
+                    let image = Image(named: imageName)!
+                    #elseif os(OSX)
+                    let image = Image(named: Image.Name(imageName))!
+                    #endif
+                    // GPUTest.MNIST(image: image)
+                    testYolo(image: image, computeOn: .GPU)
+                }
+            }            
         }
     }
 }
@@ -88,10 +92,10 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
-    let boxes = ModelImporter.getResult(input: output)
-    boxes.sorted(by: { (a, b) -> Bool in
-        return a.score > b.score
-    })[0...2].forEach { print("\(classes[$0.klassIndex]): \($0.score)") }
+//    let boxes = ModelImporter.getResult(input: output)
+//    boxes.sorted(by: { (a, b) -> Bool in
+//        return a.score > b.score
+//    })[0...2].forEach { print("\(classes[$0.klassIndex]): \($0.score)") }
 }
 
 @available(OSX 10.13, *)
