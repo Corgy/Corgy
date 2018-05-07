@@ -56,6 +56,7 @@
 		B903C48720953813000D362B /* Variable+Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C48520953813000D362B /* Variable+Operation.swift */; };
 		B903C4892095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
 		B903C48A2095386E000D362B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903C4882095386E000D362B /* Variable.swift */; };
+		B95DFF6F20A0DD480005A6C4 /* NSImage+DrawUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95DFF6E20A0DD480005A6C4 /* NSImage+DrawUtils.swift */; };
 		B997AA13209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */; };
 		B997AA14209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */; };
 		B997AA16209AB14900185CA3 /* LeakyReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B997AA15209AB14900185CA3 /* LeakyReLU.swift */; };
@@ -158,6 +159,7 @@
 		797F0EFF209BF798009247A9 /* MatrixToVariable.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = MatrixToVariable.metal; sourceTree = "<group>"; };
 		B903C48520953813000D362B /* Variable+Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Variable+Operation.swift"; sourceTree = "<group>"; };
 		B903C4882095386E000D362B /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		B95DFF6E20A0DD480005A6C4 /* NSImage+DrawUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+DrawUtils.swift"; sourceTree = "<group>"; };
 		B997AA12209AAFF000185CA3 /* LeakyReLUKernel.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = LeakyReLUKernel.metal; sourceTree = "<group>"; };
 		B997AA15209AB14900185CA3 /* LeakyReLU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeakyReLU.swift; sourceTree = "<group>"; };
 		B99E87CD208E56BD00E21C10 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		792308C020A05125001FCD04 /* YOLO */ = {
 			isa = PBXGroup;
 			children = (
+				B95DFF6D20A0DD0A0005A6C4 /* Utils */,
 				797F0EF9209A9804009247A9 /* TinyYolo.swift */,
 			);
 			path = YOLO;
@@ -330,6 +333,14 @@
 				B99E87D2208E5FA100E21C10 /* MNIST.swift */,
 			);
 			path = MNIST;
+			sourceTree = "<group>";
+		};
+		B95DFF6D20A0DD0A0005A6C4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B95DFF6E20A0DD480005A6C4 /* NSImage+DrawUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		B99E87E3209403B100E21C10 /* Layers */ = {
@@ -583,6 +594,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B95DFF6F20A0DD480005A6C4 /* NSImage+DrawUtils.swift in Sources */,
 				1E859A622089A1C500379883 /* AppDelegate.swift in Sources */,
 				792308C520A05214001FCD04 /* MNIST.swift in Sources */,
 				792308C320A0520A001FCD04 /* TinyYolo.swift in Sources */,

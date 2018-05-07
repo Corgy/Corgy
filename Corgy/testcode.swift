@@ -17,7 +17,7 @@ func test () {
         
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        let imageName = "dog5"
+        let imageName = "dog"
         #if os(iOS)
         let image = Image(named: imageName)!
         #elseif os(OSX)
@@ -96,36 +96,6 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let filePath = "\(paths[0])/predict.png"
     let fileURL = NSURL.fileURL(withPath: filePath)
     image.writePNG(toURL: fileURL)
-}
-
-extension NSImage {
-    public func drawRect(_ rect: CGRect) -> NSImage? {
-        self.lockFocus()
-        let rectangle = NSBezierPath(rect: rect)
-        
-        NSColor.red.set()
-        rectangle.lineWidth = 5
-        rectangle.stroke()
-        
-        self.unlockFocus()
-        return self
-    }
-    
-    public func writePNG(toURL url: URL) {
-        guard let data = tiffRepresentation,
-            let rep = NSBitmapImageRep(data: data),
-            let imgData = rep.representation(using: .png, properties: [.compressionFactor : NSNumber(floatLiteral: 1.0)]) else {
-                
-                Swift.print("\(self.self) Error Function '\(#function)' Line: \(#line) No tiff rep found for image writing to \(url)")
-                return
-        }
-        
-        do {
-            try imgData.write(to: url)
-        }catch let error {
-            Swift.print("\(self.self) Error Function '\(#function)' Line: \(#line) \(error.localizedDescription)")
-        }
-    }
 }
 
 @available(OSX 10.13, *)
