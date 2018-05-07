@@ -35,14 +35,16 @@
 		1EC174D1208EDDAB00783CB8 /* Variable+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC174CF208EDDAB00783CB8 /* Variable+Image.swift */; };
 		7921FCF7209D5BD4002425AE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921FCF6209D5BD4002425AE /* Math.swift */; };
 		7921FCF8209D5BD4002425AE /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921FCF6209D5BD4002425AE /* Math.swift */; };
+		792308C220A0520A001FCD04 /* TinyYolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF9209A9804009247A9 /* TinyYolo.swift */; };
+		792308C320A0520A001FCD04 /* TinyYolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF9209A9804009247A9 /* TinyYolo.swift */; };
+		792308C420A05214001FCD04 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
+		792308C520A05214001FCD04 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
 		797F0EEA209A0A10009247A9 /* Corgy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		797F0EEB209A0A10009247A9 /* Corgy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EB2F94C208992AD00DDFEEC /* Corgy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		797F0EEE209A2BAA009247A9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EED209A2BAA009247A9 /* Async.swift */; };
 		797F0EEF209A2BAA009247A9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EED209A2BAA009247A9 /* Async.swift */; };
 		797F0EF7209A97D4009247A9 /* Variable+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF6209A97D4009247A9 /* Variable+File.swift */; };
 		797F0EF8209A97D4009247A9 /* Variable+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF6209A97D4009247A9 /* Variable+File.swift */; };
-		797F0EFA209A9804009247A9 /* TinyYolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF9209A9804009247A9 /* TinyYolo.swift */; };
-		797F0EFB209A9804009247A9 /* TinyYolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF9209A9804009247A9 /* TinyYolo.swift */; };
 		797F0EFD209BCD5D009247A9 /* ImageToMatrix.metal in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFC209BCD5D009247A9 /* ImageToMatrix.metal */; };
 		797F0EFE209BCD5D009247A9 /* ImageToMatrix.metal in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFC209BCD5D009247A9 /* ImageToMatrix.metal */; };
 		797F0F00209BF798009247A9 /* MatrixToVariable.metal in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFF209BF798009247A9 /* MatrixToVariable.metal */; };
@@ -60,8 +62,6 @@
 		B997AA17209AB14900185CA3 /* LeakyReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B997AA15209AB14900185CA3 /* LeakyReLU.swift */; };
 		B99E87D0208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
 		B99E87D1208E56BD00E21C10 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B99E87CD208E56BD00E21C10 /* Models */; };
-		B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
-		B99E87D4208E5FA100E21C10 /* MNIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87D2208E5FA100E21C10 /* MNIST.swift */; };
 		B99E87E52094040400E21C10 /* ReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E42094040400E21C10 /* ReLU.swift */; };
 		B99E87E62094040400E21C10 /* ReLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E42094040400E21C10 /* ReLU.swift */; };
 		B99E87E82094041600E21C10 /* Conv2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E87E72094041600E21C10 /* Conv2D.swift */; };
@@ -241,6 +241,8 @@
 				B99E87CD208E56BD00E21C10 /* Models */,
 				1EB2F962208992DF00DDFEEC /* Source */,
 				1E9CCDA7208BCB2500DA6C55 /* testcode.swift */,
+				792308C020A05125001FCD04 /* YOLO */,
+				792308C120A051E8001FCD04 /* MNIST */,
 				1EB2F9A82089991A00DDFEEC /* CorgyiOS */,
 				1E859A602089A1C500379883 /* CorgyMac */,
 				1EB2F94D208992AD00DDFEEC /* Products */,
@@ -314,6 +316,22 @@
 			path = CorgyiOS;
 			sourceTree = "<group>";
 		};
+		792308C020A05125001FCD04 /* YOLO */ = {
+			isa = PBXGroup;
+			children = (
+				797F0EF9209A9804009247A9 /* TinyYolo.swift */,
+			);
+			path = YOLO;
+			sourceTree = "<group>";
+		};
+		792308C120A051E8001FCD04 /* MNIST */ = {
+			isa = PBXGroup;
+			children = (
+				B99E87D2208E5FA100E21C10 /* MNIST.swift */,
+			);
+			path = MNIST;
+			sourceTree = "<group>";
+		};
 		B99E87E3209403B100E21C10 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,8 +388,6 @@
 		B99E87FF2094083B00E21C10 /* Importers */ = {
 			isa = PBXGroup;
 			children = (
-				797F0EF9209A9804009247A9 /* TinyYolo.swift */,
-				B99E87D2208E5FA100E21C10 /* MNIST.swift */,
 			);
 			path = Importers;
 			sourceTree = "<group>";
@@ -568,6 +584,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E859A622089A1C500379883 /* AppDelegate.swift in Sources */,
+				792308C520A05214001FCD04 /* MNIST.swift in Sources */,
+				792308C320A0520A001FCD04 /* TinyYolo.swift in Sources */,
 				1E9CCDAB208BCB2500DA6C55 /* testcode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -579,7 +597,6 @@
 				1EB2F9752089945700DDFEEC /* CPULayer.swift in Sources */,
 				7921FCF7209D5BD4002425AE /* Math.swift in Sources */,
 				1EC174D0208EDDAB00783CB8 /* Variable+Image.swift in Sources */,
-				797F0EFA209A9804009247A9 /* TinyYolo.swift in Sources */,
 				B99E87EB2094042800E21C10 /* Dropout.swift in Sources */,
 				B997AA16209AB14900185CA3 /* LeakyReLU.swift in Sources */,
 				B99E87F1209404EC00E21C10 /* FullConnected.swift in Sources */,
@@ -602,7 +619,6 @@
 				B99E880120940B3800E21C10 /* PoolKernel.metal in Sources */,
 				B99E880A20940B7200E21C10 /* DropoutKernel.metal in Sources */,
 				79BEE70120993B29001381AC /* Timing.swift in Sources */,
-				B99E87D3208E5FA100E21C10 /* MNIST.swift in Sources */,
 				B99E880D20940B8200E21C10 /* ReLUKernel.metal in Sources */,
 				797F0EFD209BCD5D009247A9 /* ImageToMatrix.metal in Sources */,
 				B997AA13209AAFF000185CA3 /* LeakyReLUKernel.metal in Sources */,
@@ -617,7 +633,6 @@
 				1EB2F9792089946700DDFEEC /* CPULayer.swift in Sources */,
 				7921FCF8209D5BD4002425AE /* Math.swift in Sources */,
 				B99E87F62094053900E21C10 /* SubmitWork.swift in Sources */,
-				797F0EFB209A9804009247A9 /* TinyYolo.swift in Sources */,
 				1EC174D1208EDDAB00783CB8 /* Variable+Image.swift in Sources */,
 				B997AA17209AB14900185CA3 /* LeakyReLU.swift in Sources */,
 				B99E87FC2094063000E21C10 /* CorgyResource.swift in Sources */,
@@ -631,7 +646,6 @@
 				1E400E482092A95900502D98 /* ParamType.swift in Sources */,
 				B99E87F2209404EC00E21C10 /* FullConnected.swift in Sources */,
 				797F0F01209BF798009247A9 /* MatrixToVariable.metal in Sources */,
-				B99E87D4208E5FA100E21C10 /* MNIST.swift in Sources */,
 				1EB2F97B2089946700DDFEEC /* NeuralNetwork.swift in Sources */,
 				B99E880820940B6500E21C10 /* Conv2DKernel.metal in Sources */,
 				B903C48A2095386E000D362B /* Variable.swift in Sources */,
@@ -652,6 +666,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				792308C420A05214001FCD04 /* MNIST.swift in Sources */,
+				792308C220A0520A001FCD04 /* TinyYolo.swift in Sources */,
 				1EB2F9AC2089991A00DDFEEC /* ViewController.swift in Sources */,
 				1EB2F9AA2089991A00DDFEEC /* AppDelegate.swift in Sources */,
 				79B4BA90209952400077CB09 /* testcode.swift in Sources */,

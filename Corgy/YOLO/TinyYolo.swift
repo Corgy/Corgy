@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Corgy
 
 public extension ModelImporter {
     public struct Box {

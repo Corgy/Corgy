@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Corgy
 
 public enum ComputeOn {
     case CPU, GPU
 }
 
-//@available(OSX 10.13, *)
-//@available(iOS 10.0, *)
+@available(OSX 10.13, *)
+@available(iOS 10.0, *)
 public class ModelImporter {
     public static func loadMNISTCNN(_ path: String, computeOn: ComputeOn) -> NeuralNetwork {
         let ret = NeuralNetwork()

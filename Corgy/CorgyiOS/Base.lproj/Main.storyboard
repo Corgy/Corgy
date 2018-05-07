@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,28 +19,69 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpP-49-Vx1">
-                                <rect key="frame" x="90" y="319.5" width="194" height="48"/>
+                                <rect key="frame" x="93" y="547" width="189" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <size key="titleShadowOffset" width="3" height="6"/>
-                                <state key="normal" title="Do Not Press!!!">
+                                <state key="normal" title="Select Photo!!!">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.8012205958366394" green="0.073901258409023285" blue="0.16153854131698608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vMJ-S2-1mf"/>
+                                    <action selector="selectPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vMJ-S2-1mf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hf6-uJ-Ta7">
+                                <rect key="frame" x="64.5" y="83" width="245" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <size key="titleShadowOffset" width="3" height="6"/>
+                                <state key="normal" title="Realtime Camera!!!">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.80122059580000005" green="0.073901258410000004" blue="0.1615385413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lOJ-na-791"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYy-S0-bAQ">
+                                <rect key="frame" x="16" y="172" width="343" height="343"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZYy-S0-bAQ" secondAttribute="height" id="fQS-hL-HVx"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjw-mo-EC0">
+                                <rect key="frame" x="105" y="599" width="165" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <size key="titleShadowOffset" width="3" height="6"/>
+                                <state key="normal" title="Run Default test!">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.80122059580000005" green="0.073901258410000004" blue="0.1615385413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="runDefaultTest" destination="BYZ-38-t0r" eventType="touchUpInside" id="9kx-VX-weH"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ZYy-S0-bAQ" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="4R0-6G-Gew"/>
                             <constraint firstItem="bpP-49-Vx1" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="GJd-wX-vAj"/>
-                            <constraint firstItem="bpP-49-Vx1" firstAttribute="centerY" secondItem="fTC-e1-bOX" secondAttribute="centerY" id="nN1-nD-xLA"/>
+                            <constraint firstItem="hf6-uJ-Ta7" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="Noy-h0-XzT"/>
+                            <constraint firstItem="ZYy-S0-bAQ" firstAttribute="centerY" secondItem="fTC-e1-bOX" secondAttribute="centerY" id="hW3-TF-Ggc"/>
+                            <constraint firstItem="zjw-mo-EC0" firstAttribute="centerX" secondItem="bpP-49-Vx1" secondAttribute="centerX" id="hmK-4j-r1w"/>
+                            <constraint firstItem="zjw-mo-EC0" firstAttribute="top" secondItem="bpP-49-Vx1" secondAttribute="bottom" constant="4" id="ire-Hk-Pe8"/>
+                            <constraint firstItem="ZYy-S0-bAQ" firstAttribute="top" secondItem="hf6-uJ-Ta7" secondAttribute="bottom" constant="41" id="m73-oU-Szd"/>
+                            <constraint firstItem="ZYy-S0-bAQ" firstAttribute="leading" secondItem="fTC-e1-bOX" secondAttribute="leading" constant="16" id="tc4-XQ-1ZT"/>
+                            <constraint firstItem="bpP-49-Vx1" firstAttribute="top" secondItem="ZYy-S0-bAQ" secondAttribute="bottom" constant="32" id="uMu-q0-OzX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fTC-e1-bOX"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="ZYy-S0-bAQ" id="f84-V6-ZjS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="31.934032983508249"/>
         </scene>
     </scenes>
 </document>
