@@ -7,10 +7,10 @@
 
 import Foundation
 import Metal
+import AppKit
+
 extension Corgy {
     static func getGroupNum(_ eleNum: Int, _ eleNumPerGroup: Int) -> Int {
         return  (eleNum + eleNumPerGroup - 1) / eleNumPerGroup
     }
 }
-
-

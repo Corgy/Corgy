@@ -8,6 +8,7 @@
 import Foundation
 import Corgy
 import QuartzCore
+import Cocoa
 
 let classes = [
     "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
@@ -89,13 +90,25 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func testYolo(image: Image, computeOn: ComputeOn) {
+    var image = image
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
-//    let boxes = ModelImporter.getResult(input: output)
-//    boxes.sorted(by: { (a, b) -> Bool in
-//        return a.score > b.score
-//    })[0...2].forEach { print("\(classes[$0.klassIndex]): \($0.score)") }
+
+    var boxes = ModelImporter.getResult(input: output)
+    boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.5)
+        
+    boxes.sorted(by: { (a, b) -> Bool in
+        return a.score > b.score
+    }).forEach { print($0) }
+    
+    for box in boxes {
+        image = image.drawRect(CGRect(x: Double(box.x), y: Double(box.y), width: Double(box.w), height: Double(box.h)))!
+    }
+    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    let filePath = "\(paths[0])/predict.png"
+    let fileURL = NSURL.fileURL(withPath: filePath)
+    image.writePNG(toURL: fileURL)
 }
 
 @available(OSX 10.13, *)
