@@ -92,6 +92,12 @@ public extension ModelImporter {
     fileprivate static let anchors: [Float] = [1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52]
     fileprivate static let confidenceThreshold: Float = 0.3
     
+    public static let voc_labels = [
+        "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
+        "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person",
+        "pottedplant", "sheep", "sofa", "train", "tvmonitor"
+    ]
+    
     /// input is the output of YOLO network, must be of shape [1, 125, 13, 13}
     public static func getResult(input: Variable) -> [Box] {
 //        assert(input.count == 125*13*13)
