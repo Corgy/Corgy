@@ -60,8 +60,6 @@ extension Variable {
 }
 infix operator ×
 public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
-    
-    var t1, t2: CFTimeInterval
 
     let v1shape = v1.shape
     let v2shape = v2.shape
@@ -74,15 +72,11 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     
     let result = Variable(v1row, v2col)
     
-    t1 = currentMillsecond()
-    
     let resm = result.toMPSMatrix()
     
     let v1m = v1.toMPSMatrix()
     let v2m = v2.toMPSMatrix()
     
-    t2 = currentMillsecond()
-//    print(String(format: "var to mps: %.4f", t2-t1), terminator: ",\t")
     
     let mul = MPSMatrixMultiplication(device: Corgy.resource.device,
                                       transposeLeft: false, transposeRight: false,
@@ -95,7 +89,6 @@ public func ×(_ v1: Variable, _ v2: Variable) -> Variable {
     commandBuffer!.commit()
     commandBuffer!.waitUntilCompleted()
     
-//    print(String(format: "mps mul: %.4f", currentMillsecond()-t2), terminator: "")
     // doesn't need to create a variable out of resm since the underlying memory of resm is from
     // result, which is from makeBuffer(bytesNoCopy:). So return result directly is fine.
     return result

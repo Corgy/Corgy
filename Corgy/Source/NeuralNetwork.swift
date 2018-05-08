@@ -9,6 +9,10 @@
 import Foundation
 import Metal
 
+/// TODO: There must be a better way to do this but I don't have
+/// time, tomorrow is deadline so I'll stick with this ugly solution
+public let CorgyApproachingLastLayer = "CorgyApproachingLastLayer"
+
 public class NeuralNetwork {
     var layers : [Layer]
     
@@ -18,15 +22,13 @@ public class NeuralNetwork {
     
     public func forward(_ x: Variable) -> Variable {
         var output = x
-        var totalTime: CFTimeInterval = 0
         for (i, layer) in layers.enumerated() {
-            let t = timing() {
-                output = layer(output)
+            output = layer(output)
+            if i == layers.count - 2 {
+                let notification = NSNotification.Name(rawValue: CorgyApproachingLastLayer)
+                NotificationCenter.default.post(name: notification, object: nil)
             }
-//            print(String(format: "\(i)th layer: shape:\t\(output.shape)  \ttime: %.4f ms", t*1000))
-            totalTime += t
         }
-//        print("Total time: \(totalTime)")
         return output
     }
     

@@ -35,6 +35,14 @@ class ImageSource: NSObject {
     
     public override init() {
         super.init()
+        let notification = NSNotification.Name(rawValue: CorgyApproachingLastLayer)
+        NotificationCenter.default.addObserver(self, selector: #selector(ImageSource.didReceiveNotification), name: notification, object: nil)
+    }
+    
+    var shouldPrepareNext = true
+    let prepareLock: DispatchSemaphore = DispatchSemaphore(value: 1)
+    @objc private func didReceiveNotification() {
+        shouldPrepareNext = true
     }
     
     func start() {
@@ -105,6 +113,17 @@ extension ImageSource {
 
 extension ImageSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        if !shouldPrepareNext {
+            return
+        }
+        prepareLock.wait()
+        if !shouldPrepareNext {
+            prepareLock.signal()
+            return
+        }
+        shouldPrepareNext = false
+        prepareLock.signal()
+        
         let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         let delta = time - lastTime
         if delta >= CMTimeMake(1, Int32(fps)) {
@@ -132,3 +151,5 @@ fileprivate extension UIImage {
         return image
     }
 }
+
+
