@@ -11,20 +11,27 @@ import Corgy
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let imagePicker = UIImagePickerController()
+//    let yolo = ModelImporter.importYolo(computeOn: .GPU)
     
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.white
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imageView.contentMode = .scaleAspectFit
-        test()
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func enterCamera() {
+        let camVC = CameraViewController()
+        navigationController?.pushViewController(camVC, animated: true)
     }
     
     @IBAction func selectPhoto(_ sender: UIButton) {

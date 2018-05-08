@@ -7,6 +7,12 @@
 
 import Foundation
 import Corgy
+#if os(iOS)
+import UIKit
+#elseif os(OSX)
+import AppKit
+#endif
+
 
 public extension ModelImporter {
     public struct Box {

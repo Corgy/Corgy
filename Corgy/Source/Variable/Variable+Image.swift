@@ -30,6 +30,9 @@ public extension Variable {
     /// - parameter size: if provided, image will be resized to size.width and size.height
     public static func of(image: Image, to size: (Int, Int)? = nil) -> Variable {
         let cgImage = cgImageOf(image: image)
+        return Variable.of(cgImage: cgImage)
+    }
+    public static func of(cgImage: CGImage, to size: (Int, Int)? = nil) -> Variable {
         let (width, height) = size ?? (cgImage.width, cgImage.height)
         let bitsPerComponent = cgImage.bitsPerComponent
         let bytesPerRow = cgImage.bytesPerRow

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rCH-wn-D4W">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpP-49-Vx1">
-                                <rect key="frame" x="93" y="547" width="189" height="48"/>
+                                <rect key="frame" x="93" y="548" width="189" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <size key="titleShadowOffset" width="3" height="6"/>
                                 <state key="normal" title="Select Photo!!!">
@@ -31,7 +31,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hf6-uJ-Ta7">
-                                <rect key="frame" x="64.5" y="83" width="245" height="48"/>
+                                <rect key="frame" x="64.5" y="84" width="245" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <size key="titleShadowOffset" width="3" height="6"/>
                                 <state key="normal" title="Realtime Camera!!!">
@@ -39,17 +39,17 @@
                                     <color key="titleShadowColor" red="0.80122059580000005" green="0.073901258410000004" blue="0.1615385413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="selectPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lOJ-na-791"/>
+                                    <action selector="enterCamera" destination="BYZ-38-t0r" eventType="touchUpInside" id="caf-3e-m3c"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYy-S0-bAQ">
-                                <rect key="frame" x="16" y="172" width="343" height="343"/>
+                                <rect key="frame" x="16" y="173" width="343" height="343"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ZYy-S0-bAQ" secondAttribute="height" id="fQS-hL-HVx"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjw-mo-EC0">
-                                <rect key="frame" x="105" y="599" width="165" height="40"/>
+                                <rect key="frame" x="105" y="600" width="165" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <size key="titleShadowOffset" width="3" height="6"/>
                                 <state key="normal" title="Run Default test!">
@@ -66,22 +66,39 @@
                             <constraint firstItem="ZYy-S0-bAQ" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="4R0-6G-Gew"/>
                             <constraint firstItem="bpP-49-Vx1" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="GJd-wX-vAj"/>
                             <constraint firstItem="hf6-uJ-Ta7" firstAttribute="centerX" secondItem="fTC-e1-bOX" secondAttribute="centerX" id="Noy-h0-XzT"/>
-                            <constraint firstItem="ZYy-S0-bAQ" firstAttribute="centerY" secondItem="fTC-e1-bOX" secondAttribute="centerY" id="hW3-TF-Ggc"/>
                             <constraint firstItem="zjw-mo-EC0" firstAttribute="centerX" secondItem="bpP-49-Vx1" secondAttribute="centerX" id="hmK-4j-r1w"/>
                             <constraint firstItem="zjw-mo-EC0" firstAttribute="top" secondItem="bpP-49-Vx1" secondAttribute="bottom" constant="4" id="ire-Hk-Pe8"/>
+                            <constraint firstItem="hf6-uJ-Ta7" firstAttribute="top" secondItem="fTC-e1-bOX" secondAttribute="top" constant="20" id="j00-SA-6kM"/>
                             <constraint firstItem="ZYy-S0-bAQ" firstAttribute="top" secondItem="hf6-uJ-Ta7" secondAttribute="bottom" constant="41" id="m73-oU-Szd"/>
                             <constraint firstItem="ZYy-S0-bAQ" firstAttribute="leading" secondItem="fTC-e1-bOX" secondAttribute="leading" constant="16" id="tc4-XQ-1ZT"/>
                             <constraint firstItem="bpP-49-Vx1" firstAttribute="top" secondItem="ZYy-S0-bAQ" secondAttribute="bottom" constant="32" id="uMu-q0-OzX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fTC-e1-bOX"/>
                     </view>
+                    <navigationItem key="navigationItem" id="YQx-N7-kU5"/>
                     <connections>
                         <outlet property="imageView" destination="ZYy-S0-bAQ" id="f84-V6-ZjS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="31.934032983508249"/>
+            <point key="canvasLocation" x="474" y="-76"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="CKr-bG-nGS">
+            <objects>
+                <navigationController id="rCH-wn-D4W" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jeD-pq-MIp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="7l2-Pd-yTF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fdj-1k-ZIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-313" y="-76"/>
         </scene>
     </scenes>
 </document>

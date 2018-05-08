@@ -8,7 +8,6 @@
 import Foundation
 import Corgy
 import QuartzCore
-import Cocoa
 
 let classes = [
     "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
@@ -98,21 +97,21 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     var boxes = ModelImporter.getResult(input: output)
     boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.5)
         
-    boxes.sorted(by: { (a, b) -> Bool in
-        return a.score > b.score
-    }).forEach { print($0) }
+//    boxes.sorted(by: { (a, b) -> Bool in
+//        return a.score > b.score
+//    }).forEach { print($0) }
     
     
-    async_main {
-        for box in boxes {
-            image = image.drawBox(box)!
-        }
-    }
-    
-    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-    let filePath = "\(paths[0])/predict\(NSDate().timeIntervalSince1970).png"
-    let fileURL = NSURL.fileURL(withPath: filePath)
-    image.writePNG(toURL: fileURL)
+//    async_main {
+//        for box in boxes {
+//            image = image.drawBox(box)!
+//        }
+//    }
+//
+//    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+//    let filePath = "\(paths[0])/predict\(NSDate().timeIntervalSince1970).png"
+//    let fileURL = NSURL.fileURL(withPath: filePath)
+//    image.writePNG(toURL: fileURL)
 }
 
 @available(OSX 10.13, *)
