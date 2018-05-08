@@ -18,6 +18,13 @@ public extension ModelImporter {
     public struct Box {
         public let x, y, w, h, score: Variable.DataType
         public let klassIndex: Int
+        public func rect(in frame: CGRect) -> CGRect {
+            let scaledX = CGFloat(x / 416.0) * frame.size.width
+            let scaledY = CGFloat(y / 416.0) * frame.size.height
+            let scaledW = CGFloat(w / 416.0) * frame.size.width
+            let scaledH = CGFloat(h / 416.0) * frame.size.height
+            return CGRect(x: scaledX, y: scaledY, width: scaledW, height: scaledH)
+        }
     }
     
     public static func importYolo(computeOn: ComputeOn) -> NeuralNetwork {

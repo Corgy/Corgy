@@ -14,6 +14,9 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var cameraView: UIImageView!
     let imageSource = ImageSource()
     let yolo: YOLO = YOLO.sharedInstance
+    var colors: [UIColor] = []
+    let maxBoxes: Int = 5
+    var boundingBoxes: [BoundingBox] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         if !imageSource.setup() {
@@ -23,6 +26,19 @@ class CameraViewController: UIViewController {
         imageSource.delegate = self
         cameraView.layer.addSublayer(imageSource.previewLayer!)
         imageSource.previewLayer?.frame = cameraView.bounds
+        for r: CGFloat in [0.2, 0.4, 0.6, 0.8, 1.0] {
+            for g: CGFloat in [0.3, 0.7] {
+                for b: CGFloat in [0.4, 0.8] {
+                    let color = UIColor(red: r, green: g, blue: b, alpha: 1)
+                    colors.append(color)
+                }
+            }
+        }
+        for _ in 0..<maxBoxes {
+            let box = BoundingBox()
+            box.addToLayer(cameraView.layer)
+            boundingBoxes.append(box)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,25 +59,23 @@ class CameraViewController: UIViewController {
             sender.titleLabel?.text = "Tap to Start!!!"
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 extension CameraViewController: ImageSourceDelegate {
     func captured(_ variable: Variable) {
         let boxes = yolo.predict(input: variable)
-        for box in boxes {
-            print("\(classes[box.klassIndex])", terminator: ", ")
+        DispatchQueue.main.async {
+            for i in 0..<self.boundingBoxes.count {
+                if i >= boxes.count {
+                    self.boundingBoxes[i].hide()
+                    continue
+                }
+                let box = boxes[i]
+                let label = String(format: "%@ %.1f", classes[box.klassIndex], box.score * 100)
+                let color = self.colors[box.klassIndex]
+                self.boundingBoxes[i].show(frame: box.rect(in: self.cameraView.bounds), label: label, color: color)
+            }
         }
-        print("")
     }
 }

@@ -11,7 +11,6 @@ import Corgy
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let imagePicker = UIImagePickerController()
-//    let yolo = ModelImporter.importYolo(computeOn: .GPU)
     
     @IBOutlet weak var imageView: UIImageView!
     
