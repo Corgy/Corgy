@@ -56,7 +56,6 @@ public class Variable : CustomStringConvertible {
     public convenience init(_ dimensions: Int...) {
         self.init(dimensions)
     }
-    
     public init(_ dimensions: [Int]) {
         indexAuxilary = []
         count = 1

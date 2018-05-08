@@ -20,7 +20,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imageView.contentMode = .scaleAspectFit
-        
     }
     
     override func didReceiveMemoryWarning() {

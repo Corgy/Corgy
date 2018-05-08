@@ -26,7 +26,6 @@ class ImageSource: NSObject {
     let videoOutput = AVCaptureVideoDataOutput()
     
     let queue = DispatchQueue(label: "org.Corgy.camera-queue")
-    let imageQueue = DispatchQueue(label: "org.Corgy.image-preprocess-queue")
     
     var delegate: ImageSourceDelegate?
     
@@ -99,7 +98,7 @@ extension ImageSource {
     /// - parameter completion: completion handler will run on imageQueue,
     ///         switch back to original queue if necessary
     func resize(_ image: UIImage, to newSize: CGSize, completion: ((UIImage) -> ())? = nil) {
-        imageQueue.async {
+        DispatchQueue.global().async {
             UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
             image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
             let img = UIGraphicsGetImageFromCurrentImageContext()!
@@ -129,7 +128,7 @@ extension ImageSource: AVCaptureVideoDataOutputSampleBufferDelegate {
         if delta >= CMTimeMake(1, Int32(fps)) {
             lastTime = time
             if let delegate = delegate {
-                imageQueue.async {
+                DispatchQueue.global().async {
                     let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
                     let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
                     let image : UIImage = UIImage.of(ciImage: ciimage)
