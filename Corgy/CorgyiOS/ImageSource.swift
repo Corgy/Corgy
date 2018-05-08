@@ -30,6 +30,9 @@ class ImageSource: NSObject {
     
     var delegate: ImageSourceDelegate?
     
+    let fps = 2
+    var lastTime = CMTime()
+    
     public override init() {
         super.init()
     }
@@ -89,12 +92,12 @@ extension ImageSource {
     ///         switch back to original queue if necessary
     func resize(_ image: UIImage, to newSize: CGSize, completion: ((UIImage) -> ())? = nil) {
         imageQueue.async {
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
             image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-            let image = UIGraphicsGetImageFromCurrentImageContext()!
+            let img = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
             if let completion = completion {
-                completion(image)
+                completion(img)
             }
         }
     }
@@ -102,14 +105,19 @@ extension ImageSource {
 
 extension ImageSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if let delegate = delegate {
-            imageQueue.async {
-                let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
-                let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
-                let image : UIImage = UIImage.of(ciImage: ciimage)
-                self.resize(image, to: CGSize(width: 416, height: 416)) { (image: UIImage) in
-                    let variable = Variable.of(image: image)
-                    delegate.captured(variable)
+        let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        let delta = time - lastTime
+        if delta >= CMTimeMake(1, Int32(fps)) {
+            lastTime = time
+            if let delegate = delegate {
+                imageQueue.async {
+                    let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
+                    let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
+                    let image : UIImage = UIImage.of(ciImage: ciimage)
+                    self.resize(image, to: CGSize(width: 416, height: 416)) { (image: UIImage) in
+                        let variable = Variable.of(image: image, to: (416, 416))
+                        delegate.captured(variable)
+                    }
                 }
             }
         }

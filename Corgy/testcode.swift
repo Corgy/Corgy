@@ -22,19 +22,15 @@ func test () {
         let name = ["dog", "dog2", "dog3", "dog4", "dog5", "car", "car2", "cat"]
 //        let imageName = "four"
 //        let imageName = "four_colored"
-        timing("10 times") {
-            for _ in 1...10 {
-                for imageName in name {
-                    #if os(iOS)
-                    let image = Image(named: imageName)!
-                    #elseif os(OSX)
-                    let image = Image(named: Image.Name(imageName))!
-                    #endif
-                    // GPUTest.MNIST(image: image)
-                    testYolo(image: image, computeOn: .GPU)
-                }
-            }            
-        }
+            for imageName in name {
+                #if os(iOS)
+                let image = Image(named: imageName)!
+                #elseif os(OSX)
+                let image = Image(named: Image.Name(imageName))!
+                #endif
+                // GPUTest.MNIST(image: image)
+                testYolo(image: image, computeOn: .GPU)
+            }
     }
 }
 
@@ -93,13 +89,13 @@ func testYolo(image: Image, computeOn: ComputeOn) {
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
-
+    print(output.shape)
     var boxes = ModelImporter.getResult(input: output)
-    boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.5)
-        
-//    boxes.sorted(by: { (a, b) -> Bool in
-//        return a.score > b.score
-//    }).forEach { print($0) }
+//    boxes = ModelImporter.nonMaxSuppression(boxes: boxes, limit: 5, threshold: 0.05)
+    
+    boxes.sorted(by: { (a, b) -> Bool in
+        return a.score > b.score
+    })[0...1].forEach { print($0) }
     
     
 //    async_main {

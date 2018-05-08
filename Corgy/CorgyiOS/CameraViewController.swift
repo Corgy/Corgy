@@ -55,10 +55,13 @@ class CameraViewController: UIViewController {
     */
 
 }
-var count = 0
+
 extension CameraViewController: ImageSourceDelegate {
     func captured(_ variable: Variable) {
-        print("\(count): ", terminator: "")
-        print(yolo.predict(input: variable))
+        let boxes = yolo.predict(input: variable)
+        for box in boxes {
+            print("\(classes[box.klassIndex])", terminator: ", ")
+        }
+        print("")
     }
 }

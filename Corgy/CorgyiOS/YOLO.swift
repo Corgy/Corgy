@@ -21,10 +21,13 @@ class YOLO {
     /// this method will block until predict is finished.
     /// try always to all in background thread
     func predict(input: Variable) -> [ModelImporter.Box] {
-        semaphore.wait()
-        let output = network!.forward(input)
-        semaphore.signal()
-        let boxes = ModelImporter.getResult(input: output)
-        return ModelImporter.nonMaxSuppression(boxes: boxes, limit: 3, threshold: 0.3)
+        var output: Variable?
+        timing("YOLO") {
+            semaphore.wait()
+            output = network!.forward(input)
+            semaphore.signal()
+        }
+        let boxes = ModelImporter.getResult(input: output!)
+        return ModelImporter.nonMaxSuppression(boxes: boxes, limit: 3, threshold: 0.01)
     }
 }
