@@ -22,15 +22,15 @@ func test () {
         let name = ["dog", "dog2", "dog3", "dog4", "dog5", "car", "car2", "cat"]
 //        let imageName = "four"
 //        let imageName = "four_colored"
-            for imageName in name {
-                #if os(iOS)
-                let image = Image(named: imageName)!
-                #elseif os(OSX)
-                let image = Image(named: Image.Name(imageName))!
-                #endif
-                // GPUTest.MNIST(image: image)
-                testYolo(image: image, computeOn: .GPU)
-            }
+        for imageName in name {
+            #if os(iOS)
+            let image = Image(named: imageName)!
+            #elseif os(OSX)
+            let image = Image(named: Image.Name(imageName))!
+            #endif
+            // GPUTest.MNIST(image: image)
+            testYolo(image: image, computeOn: .GPU)
+        }
     }
 }
 
@@ -85,7 +85,6 @@ func testMNIST(image: Image, computeOn: ComputeOn) {
 @available(OSX 10.13, *)
 @available(iOS 10.0, *)
 func testYolo(image: Image, computeOn: ComputeOn) {
-    var image = image
     let network = ModelImporter.importYolo(computeOn: computeOn)
     let input = Variable.of(image: image, to: (416, 416))
     let output = network.forward(input)
