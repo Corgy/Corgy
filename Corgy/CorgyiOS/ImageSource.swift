@@ -47,11 +47,13 @@ class ImageSource: NSObject {
     func start() {
         if !captureSession.isRunning {
             captureSession.startRunning()
+            shouldPrepareNext = true
         }
     }
     func stop() {
         if captureSession.isRunning {
             captureSession.stopRunning()
+            shouldPrepareNext = false
         }
     }
     
@@ -60,12 +62,10 @@ class ImageSource: NSObject {
         captureSession.sessionPreset = .vga640x480
         
         guard let captureDevice = AVCaptureDevice.default(for: .video) else {
-            print("Error on create capture device")
             return false
         }
         
         guard let videoInput = try? AVCaptureDeviceInput(device: captureDevice) else {
-            print("Error on create AVCaptureDeviceInput")
             return false
         }
         
@@ -112,6 +112,7 @@ extension ImageSource {
 
 extension ImageSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
         if !shouldPrepareNext {
             return
         }
@@ -123,19 +124,14 @@ extension ImageSource: AVCaptureVideoDataOutputSampleBufferDelegate {
         shouldPrepareNext = false
         prepareLock.signal()
         
-        let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-        let delta = time - lastTime
-        if delta >= CMTimeMake(1, Int32(fps)) {
-            lastTime = time
-            if let delegate = delegate {
-                DispatchQueue.global().async {
-                    let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
-                    let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
-                    let image : UIImage = UIImage.of(ciImage: ciimage)
-                    self.resize(image, to: CGSize(width: 416, height: 416)) { (image: UIImage) in
-                        let variable = Variable.of(image: image, to: (416, 416))
-                        delegate.captured(variable)
-                    }
+        if let delegate = delegate {
+            DispatchQueue.global().async {
+                let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
+                let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
+                let image : UIImage = UIImage.of(ciImage: ciimage)
+                self.resize(image, to: CGSize(width: 416, height: 416)) { (image: UIImage) in
+                    let variable = Variable.of(image: image, to: (416, 416))
+                    delegate.captured(variable)
                 }
             }
         }
