@@ -4,6 +4,8 @@ By [Buqian Zheng](https://github.com/zhengbuqian)(buqianz) and [Yongkang Huang](
 
 We implemented Corgy, a neural network framework in Swift and Metal. Corgy can be embedded into both macOS and iOS applications and be used to construct trained neural networks and evaluate them with ease. We achieved more than 60x speedup on different devices with different GPUs.
 
+[![Demo Video](img/demo_video_screenshot.png)](https://youtu.be/ziXaMvtbhPU)
+
 ## Background
 
 Metal 2 framework is an interface provided by Apple that provides near-direct access to the graphics processing unit (GPU) on iPhone/iPad and Mac. Besides graphics, Metal 2 incorporated a bunch of libraries that provide excellent parallelize support to the necessary linear algebra operations and signal processing functions that capable of running in various kind of Apple devices. These libraries made it possible for us to build a well implemented GPU-accelerated deep learning models on the iOS devices based on the trained model given by other frameworks.<sup id="a1">[1](#f1)</sup> 
