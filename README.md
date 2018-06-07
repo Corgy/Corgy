@@ -1,8 +1,8 @@
-# Corgy - A Neural Network Framework for macOS and iOS parallelized by Metal
+# Corgy - A Deep Learning Framework for macOS and iOS parallelized by Metal
 
 By [Buqian Zheng](https://github.com/zhengbuqian)(buqianz) and [Yongkang Huang](https://github.com/MrDwZ)(yongkan1)
 
-We implemented Corgy, a neural network framework in Swift and Metal. Corgy can be embedded into both macOS and iOS applications and be used to construct trained neural networks and evaluate them with ease. We achieved more than 60x speedup on different devices with different GPUs.
+We implemented Corgy, a deep learning framework in Swift and Metal. Corgy can be embedded into both macOS and iOS applications and be used to construct trained neural networks and evaluate them with ease. We achieved more than 60x speedup on different devices with different GPUs.
 
 [![Demo Video](img/demo_video_screenshot.png)](https://youtu.be/ziXaMvtbhPU)
 
