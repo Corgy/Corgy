@@ -2,6 +2,8 @@
 
 By [Buqian Zheng](https://github.com/zhengbuqian)(buqianz) and [Yongkang Huang](https://github.com/MrDwZ)(yongkan1)
 
+[Poster](https://drive.google.com/open?id=1zE_IeN7x2yjGQOwfPC-jGZFwm8uSxZor)
+
 We implemented Corgy, a deep learning framework in Swift and Metal. Corgy can be embedded into both macOS and iOS applications and be used to construct trained neural networks and evaluate them with ease. We achieved more than 60x speedup on different devices with different GPUs.
 
 [![Demo Video](img/demo_video_screenshot.png)](https://youtu.be/ziXaMvtbhPU)
